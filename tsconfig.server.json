@@ -1,0 +1,10 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "module": "esnext",
+    "outDir": "dist",
+    "lib": ["ES2023", "DOM"],
+    "isolatedModules": false,
+    "noEmit": false
+  }
+}

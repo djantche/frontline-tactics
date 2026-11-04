@@ -1,0 +1,244 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+datasource db {
+  provider = "postgres"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+  binaryTargets = ["native", "windows", "linux-musl-openssl-3.0.x"]
+}
+
+generator json {
+  provider = "prisma-json-types-generator"
+}
+
+enum UserState {
+  active
+  disabled
+  banned
+}
+
+enum Role {
+  admin
+  moderator
+}
+
+model User {
+  id            String    @id @default(cuid())
+  state         UserState @default(active)
+  role          Role?
+  name          String?
+  password      String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  identities    Player[]
+  accounts      Account[]
+  maps          WWMap[]
+}
+
+model Account {
+  id                String  @id @default(cuid())
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.Text
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+enum CO {
+  adder
+}
+
+enum Unit {
+  pipeRunner
+}
+
+enum Game {
+  advanceDatingByWeb
+}
+
+enum Achievement {
+  fieldTrainingComplete
+  winStreak
+  underdog
+  handicap
+  lightningStrike
+  destroyer
+  fixer
+  goldRush
+  champion
+  grizzledYet
+}
+
+model Clan {
+  id          String   @id @default(cuid())
+  name        String
+  description String
+  owner       Player   @relation("owner", fields: [ownerId], references: [id])
+  ownerId     String
+  members     Player[] @relation("member")
+}
+
+model Player {
+  id          String        @id @default(cuid())
+  MMR         MMR[]
+  name        String        @unique
+  displayName String
+  secret      Boolean       @default(false) // secret = true means that parent user is hidden on profile
+  ChatMessage ChatMessage[]
+
+  user   User   @relation(fields: [userId], references: [id])
+  userId String
+
+  /// [PrismaPreferences]
+  preferences  Json?
+  achievements Achievement[]
+
+  matches Match[]
+
+  Notes Notes[]
+
+  ownedClans Clan[] @relation(name: "owner")
+  clans      Clan[] @relation(name: "member")
+}
+
+// A map can only be edited as long as no match uses it (see the map router).
+model WWMap {
+  id   String @id @default(cuid())
+  name String
+
+  // null for the maps that come with the game
+  author   User?   @relation(fields: [authorId], references: [id])
+  authorId String?
+
+  /// [PrismaTiles]
+  tiles            Json
+  /// [PrismaUnits]
+  predeployedUnits Json
+  numberOfPlayers  Int
+  matches          Match[]
+  createdAt        DateTime @default(now())
+
+  // TODO maps should have different sets of captureLimits and bannedUnitTypes
+  // per league type.
+
+  @@map("Map")
+}
+
+model ChatMessage {
+  id        String   @id @default(cuid())
+  content   String
+  createdAt DateTime @default(now())
+
+  author   Player @relation(fields: [authorId], references: [id])
+  authorId String
+
+  match   Match?  @relation(fields: [matchId], references: [id]) // if no match, it's the public channel
+  matchId String? @map("matchId")
+}
+
+enum MatchStatus {
+  setup
+  playing
+  finished
+}
+
+enum LeagueType {
+  standard
+  fog
+  highFunds
+  dualLeague
+  standardTeams
+  broken
+}
+
+model Notes {
+  content String
+  public  Boolean @default(false)
+
+  Player   Player @relation(fields: [playerId], references: [id])
+  playerId String
+
+  Match   Match  @relation(fields: [matchId], references: [id])
+  matchId String
+
+  @@id([playerId, matchId])
+}
+
+model MMR {
+  leagueType LeagueType
+  Player     Player     @relation(fields: [playerId], references: [id])
+  playerId   String
+  mmr        Int        @default(800)
+  topMmr     Int        @default(800)
+
+  @@id([leagueType, playerId])
+}
+
+model Match {
+  id         String     @id @default(cuid())
+  name       String?
+  leagueType LeagueType
+
+  /// [PrismaMatchRules]
+  rules  Json
+  status MatchStatus
+
+  map   WWMap  @relation(fields: [mapId], references: [id])
+  mapId String
+
+  /// [PrismaPlayerState]
+  playerState Json
+  // playersConsentingToPublishChat Player[]
+
+  chatMessages ChatMessage[]
+  chatIsPublic Boolean       @default(false)
+
+  createdAt DateTime @default(now())
+  Notes     Notes[]
+  Event     Event[]
+  Player    Player[]
+
+  @@map("match")
+}
+
+model Event {
+  match   Match  @relation(fields: [matchId], references: [id])
+  matchId String
+
+  /// the index describes the order of events. they are not universally unique, but unique per match.
+  index Int @default(autoincrement()) @map("eventIndex")
+
+  /// [PrismaEvent]
+  content Json
+
+  // at some point i considered removing the "index" field/column and using this createdAt
+  // instead, but then it'd have to be part of the id and unique and
+  // that will probably become awkward at some point.
+  // so i decided to keep the index, even though createdAt *should*
+  // in theory always be usable for processing events in order as well.
+  // - Function
+
+  createdAt DateTime @default(now())
+
+  @@id([matchId, index])
+}
+
+// 2. move/map data structures
+// 3. tiers in general, map/league tiers?

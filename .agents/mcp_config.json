@@ -1,0 +1,11 @@
+{
+  "mcpServers": {
+    "concord": {
+      "command": "concord-mcp",
+      "env": {
+        "CONCORD_REPO_ROOT": "/home/davcodeur/Projects/warsworld",
+        "CONCORD_AGENT_KIND": "antigravity"
+      }
+    }
+  }
+}

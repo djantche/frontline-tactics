@@ -1,0 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  ::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+  }
+
+  ::-webkit-scrollbar-track {
+    background: theme("colors.canvas");
+  }
+
+  ::-webkit-scrollbar-thumb {
+    background: theme("colors.line-strong");
+  }
+
+  ::-webkit-scrollbar-thumb:hover {
+    background: theme("colors.fg-subtle");
+  }
+
+  html {
+    background-color: theme("colors.canvas");
+    color: theme("colors.fg");
+    font-family: theme("fontFamily.sans");
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1,
+  h2,
+  h3 {
+    font-family: theme("fontFamily.display");
+    font-weight: 600;
+    letter-spacing: 0.01em;
+  }
+
+  a {
+    color: inherit;
+  }
+
+  :focus-visible {
+    outline: 2px solid theme("colors.accent");
+    outline-offset: 2px;
+  }
+
+  /* Keep autofilled inputs on the dark theme */
+  input:-webkit-autofill,
+  input:-webkit-autofill:hover,
+  input:-webkit-autofill:focus {
+    -webkit-text-fill-color: theme("colors.fg");
+    -webkit-box-shadow: 0 0 0 1000px theme("colors.raised") inset !important;
+  }
+}
+
+@layer components {
+  .pixelated {
+    image-rendering: pixelated;
+  }
+}

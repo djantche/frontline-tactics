@@ -1,0 +1,18 @@
+# editor / IDE / OS stuff
+.DS_Store
+/.idea
+
+# secrets
+.env
+
+# generated files
+/.next
+/next-env.d.ts
+/dist
+/node_modules
+# https://www.typescriptlang.org/tsconfig#tsBuildInfoFile
+tsconfig.tsbuildinfo
+prisma/migrations/20230510171142_amogus/migration.sql
+
+# local state of the Concord coordination tool
+/.concord

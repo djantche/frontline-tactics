@@ -1,0 +1,18 @@
+{
+  "mcpServers": {
+    "concord": {
+      "command": "concord-mcp",
+      "env": {
+        "CONCORD_REPO_ROOT": "/home/davcodeur/Projects/warsworld"
+      }
+    }
+  },
+  "tools": {
+    "shell": {
+      "backgroundCompletionBehavior": "inject"
+    }
+  },
+  "experimental": {
+    "modelSteering": true
+  }
+}
