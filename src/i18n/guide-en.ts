@@ -1,3 +1,4 @@
+import { englishEffectPhrases } from "shared/match-logic/game-constants/cos/commander-wars";
 import type { guideFr } from "./guide-fr";
 
 export const guideEn: typeof guideFr = {
@@ -159,6 +160,7 @@ export const guideEn: typeof guideFr = {
     power: "CO Power",
     superPower: "Super Power",
     stars: (stars: number) => `${stars} ★`,
+    effects: englishEffectPhrases,
     // The descriptions of the game engine are in English
     texts: {},
   },

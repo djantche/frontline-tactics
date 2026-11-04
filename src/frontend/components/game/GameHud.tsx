@@ -1,3 +1,4 @@
+import { coTextsOf } from "frontend/game/playable-cos";
 import { ArmyChip } from "frontend/components/rooms/ArmyChip";
 import { playSound } from "frontend/game/audio";
 import { Button } from "frontend/ui/Button";
@@ -134,7 +135,7 @@ export function COPowerControls({
   const powerMutation = trpc.action.send.useMutation();
 
   const { COPower, superCOPower } = getCOProperties(player.data.coId).powers;
-  const texts = t.guide.cos.texts[player.data.coId.name];
+  const texts = coTextsOf(player.data.coId.name, t.guide.cos);
   const filledStars = player.data.powerMeter / player.getPowerStarCost();
   const powerState = player.data.COPowerState;
 

@@ -119,7 +119,7 @@ export const calculateDamage = (
   const defenseFactor =
     Math.floor(200 - (defenseModifier + defenderTerrainStars * visualHPOfDefender)) / 100;
 
-  const damageAsPercentage = Math.floor(attackHPFactor * defenseFactor);
+  const damageAsPercentage = Math.max(0, Math.floor(attackHPFactor * defenseFactor));
 
   return damageAsPercentage;
 };

@@ -1,5 +1,4 @@
-import { aw2COs, coDisplayName } from "frontend/game/aw2-cos";
-import { assetUrl, useBattleManifest } from "frontend/game/battle-manifest";
+import { coDisplayName, coTextsOf, playableCOs } from "frontend/game/playable-cos";
 import { Card } from "frontend/ui/Card";
 import { COPortrait } from "frontend/ui/COPortrait";
 import { MapCanvas } from "frontend/ui/MapCanvas";
@@ -255,12 +254,11 @@ function DamageExplorer() {
   );
 }
 
-function COCard({ co }: { co: (typeof aw2COs)[number] }) {
+function COCard({ co }: { co: (typeof playableCOs)[number] }) {
   const t = useT();
   const labels = t.guide.cos;
   const { dayToDay, powers } = getCOProperties({ name: co, version: "AW2" });
-  const texts = labels.texts[co];
-  const full = useBattleManifest()?.cos[co]?.full;
+  const texts = coTextsOf(co, labels);
 
   const powerRows = [
     { label: labels.power, power: powers.COPower, text: texts?.power },
@@ -270,13 +268,7 @@ function COCard({ co }: { co: (typeof aw2COs)[number] }) {
   return (
     <Card className="@flex @flex-col @gap-2 @p-3 @text-fg">
       <div className="@flex @items-center @gap-3">
-        {full === undefined ? (
-          <COPortrait co={co} className="@h-12 @w-12" />
-        ) : (
-          <span className="@block @h-20 @w-16 @shrink-0 @overflow-hidden" aria-hidden>
-            <img src={assetUrl(full)} alt="" className="pixelated @w-full" draggable={false} />
-          </span>
-        )}
+        <COPortrait co={co} className="@h-12 @w-12 @shrink-0" />
         <h3 className="@text-2xl @leading-none">{coDisplayName(co)}</h3>
       </div>
       <p className="@text-xs @text-fg-muted">
@@ -393,7 +385,7 @@ export default function HowToPlayPage() {
           <Section id="cos">
             <p>{guide.cos.intro}</p>
             <div className="@grid @gap-3 smallscreen:@grid-cols-2">
-              {aw2COs.map((co) => (
+              {playableCOs.map((co) => (
                 <COCard key={co} co={co} />
               ))}
             </div>

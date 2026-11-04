@@ -5,16 +5,18 @@ type Props = {
   co: CO | undefined;
   /** Accessible name; the portrait is decorative when left out. */
   alt?: string;
-  variant?: "small" | "full";
   className?: string;
 };
 
-export function COPortrait({ co, alt = "", variant = "small", className }: Props) {
-  const fileName = co === undefined ? "no-co-small" : `${co}-${variant}`;
-
+/** The face of a CO. They all have the same frame, so they line up wherever they are shown. */
+export function COPortrait({ co, alt = "", className }: Props) {
   return (
     <img
-      src={`/img/CO/pixelated/${fileName}.png`}
+      src={
+        co === undefined
+          ? "/img/CO/pixelated/no-co-small.png"
+          : `/commander-wars/portraits/${co}.png`
+      }
       alt={alt}
       className={cx("pixelated", className)}
       draggable={false}

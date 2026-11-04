@@ -8,6 +8,7 @@ import { adderAWDS } from "./game-constants/cos/adder/adder-awds";
 import { andyAW1 } from "./game-constants/cos/andy/andy-aw1";
 import { andyAW2 } from "./game-constants/cos/andy/andy-aw2";
 import { andyAWDS } from "./game-constants/cos/andy/andy-awds";
+import { commanderWarsCOProperties } from "./game-constants/cos/commander-wars";
 import { colinAW2 } from "./game-constants/cos/colin/colin-aw2";
 import { colinAWDS } from "./game-constants/cos/colin/colin-awds";
 import { drakeAW1 } from "./game-constants/cos/drake/drake-aw1";
@@ -124,6 +125,17 @@ const COIndex: Record<GameVersion, Map<CO, COProperties>> = {
     ["adder", adderAW2],
     ["lash", lashAW2],
     ["flak", flakAW2],
+    // rooms are always created in AW2: the other COs join it with their own rules
+    ["jake", jakeAWDS],
+    ["rachel", rachelAWDS],
+    ["sasha", sashaAWDS],
+    ["javier", javierAWDS],
+    ["grimm", grimmAWDS],
+    ["jugger", juggerAWDS],
+    ["koal", koalAWDS],
+    ["kindle", kindleAWDS],
+    ["von-bolt", vonBoltAWDS],
+    ...commanderWarsCOProperties,
   ]),
   AWDS: new Map<CO, COProperties>([
     ["andy", andyAWDS],

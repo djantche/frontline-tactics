@@ -58,6 +58,8 @@ export const applyCOPowerEvent = (match: MatchWrapper, event: COPowerEvent) => {
     ++player.data.timesPowerUsed;
   }
 
+  player.data.COPowerState = event.isSuper ? "super-co-power" : "co-power";
+
   //event.positions are for rachel, sturm, von-bolt supers
   power.instantEffect?.(player, event.positions);
 

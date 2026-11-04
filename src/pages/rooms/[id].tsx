@@ -1,7 +1,7 @@
 import { ProtectPage } from "frontend/components/auth/ProtectPage";
 import { ArmyChip } from "frontend/components/rooms/ArmyChip";
 import { usePlayers } from "frontend/context/players";
-import { aw2COs, coDisplayName } from "frontend/game/aw2-cos";
+import { playableCOs, coDisplayName } from "frontend/game/playable-cos";
 import { Badge } from "frontend/ui/Badge";
 import { Button, ButtonLink } from "frontend/ui/Button";
 import { Card } from "frontend/ui/Card";
@@ -164,7 +164,7 @@ function Room({ matchId, playerId }: { matchId: string; playerId: string }) {
               onChange={(name) =>
                 switchOptions.mutate({ ...ids, selectedCO: { name, version: "AW2" } })
               }
-              options={aw2COs.map((co) => ({
+              options={playableCOs.map((co) => ({
                 value: co,
                 label: coDisplayName(co),
                 icon: <COPortrait co={co} className="@h-5 @w-5" />,

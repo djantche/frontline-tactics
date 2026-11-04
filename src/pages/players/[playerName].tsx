@@ -1,4 +1,4 @@
-import { coDisplayName } from "frontend/game/aw2-cos";
+import { coDisplayName } from "frontend/game/playable-cos";
 import { Badge } from "frontend/ui/Badge";
 import type { BadgeTone } from "frontend/ui/Badge";
 import { ButtonLink } from "frontend/ui/Button";

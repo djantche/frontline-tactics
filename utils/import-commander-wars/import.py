@@ -116,7 +116,12 @@ PLACEMENTS = {
 COS = [
     "adder", "andy", "sami", "max", "hawke", "sturm", "lash", "flak", "kanbei", "sonja", "sensei",
     "colin", "drake", "eagle", "nell", "hachi", "olaf", "grit", "jess", "kindle", "grimm", "jake",
-    "javier", "jugger", "koal", "von-bolt", "sasha", "rachel",
+    "javier", "jugger", "koal", "von-bolt", "sasha", "rachel", "adam", "aira", "alexander", "alexis",
+    "amy", "beast", "brenner", "cairn", "cassidy", "caulder", "conrad", "davis", "epoch", "forsythe",
+    "gage", "graves", "greyfield", "ik-486-b7", "isabella", "joey", "julia", "lin", "mary", "meiyo",
+    "melanthe", "mina", "minamoto", "nana", "napoleon", "ozzy", "penny", "peter", "rattigan",
+    "roboandy", "robosturm", "sabaki", "sanjuro", "smitan", "sophie", "tabitha", "tasha", "varlot",
+    "walter", "waylon", "will", "xavier", "yukio", "zandra",
 ]
 
 
@@ -327,6 +332,12 @@ def co_entry(co):
         folder = faces[0].parent.relative_to(source / "images")
         entry["face"] = f"images/{folder}/{file_name}+face.png"
         entry["full"] = f"images/{folder}/{file_name}+nrm.png"
+
+        # the first face of the sheet, for the small portraits of the app
+        sheet = Image.open(faces[0]).convert("RGBA")
+        portraits = target / "portraits"
+        portraits.mkdir(exist_ok=True)
+        sheet.crop((0, 0, sheet.height, sheet.height)).save(portraits / f"{co}.png")
 
     music = source / "music" / "cos" / f"{co.replace('-', '_')}.ogg"
     if music.exists():
