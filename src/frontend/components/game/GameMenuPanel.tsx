@@ -1,3 +1,4 @@
+import { playSound } from "frontend/game/audio";
 import { Button } from "frontend/ui/Button";
 import { cx } from "frontend/ui/cx";
 import { UnitSprite } from "frontend/ui/UnitSprite";
@@ -117,7 +118,10 @@ export function GameMenuPanel({ menu, tileSize, mapWidth, mapHeight, onCancel }:
                 key={item.id}
                 type="button"
                 role="menuitem"
-                onClick={item.onSelect}
+                onClick={() => {
+                  playSound("okay.wav");
+                  item.onSelect();
+                }}
                 className="@flex @w-full @items-center @gap-2.5 @px-2.5 @py-2 @text-left @text-sm @font-medium @transition-colors hover:@bg-accent hover:@text-accent-fg focus-visible:@bg-accent focus-visible:@text-accent-fg focus-visible:@outline-none"
               >
                 <Icon className="@h-4 @w-4 @shrink-0" aria-hidden />
@@ -132,7 +136,10 @@ export function GameMenuPanel({ menu, tileSize, mapWidth, mapHeight, onCancel }:
               type="button"
               role="menuitem"
               disabled={item.disabled}
-              onClick={item.onSelect}
+              onClick={() => {
+                playSound("okay.wav");
+                item.onSelect();
+              }}
               className="@flex @w-full @items-center @gap-2 @px-2 @py-1 @text-left @text-sm @font-medium @transition-colors enabled:hover:@bg-accent enabled:hover:@text-accent-fg focus-visible:@bg-accent focus-visible:@text-accent-fg focus-visible:@outline-none disabled:@cursor-not-allowed disabled:@text-fg-subtle"
             >
               <UnitSprite
@@ -154,7 +161,15 @@ export function GameMenuPanel({ menu, tileSize, mapWidth, mapHeight, onCancel }:
         })}
       </div>
       <div className="@border-t @border-line @p-1">
-        <Button variant="ghost" size="sm" fullWidth onClick={onCancel}>
+        <Button
+          variant="ghost"
+          size="sm"
+          fullWidth
+          onClick={() => {
+            playSound("cancel.wav");
+            onCancel();
+          }}
+        >
           {t.common.cancel}
         </Button>
       </div>

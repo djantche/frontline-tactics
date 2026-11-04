@@ -1,3 +1,4 @@
+import type { BattleView } from "frontend/game/battle-timeline";
 import type { Application, Container } from "pixi.js";
 import type { MutableRefObject } from "react";
 import type { AvailableSubActions } from "shared/match-logic/events/available-sub-actions";
@@ -50,6 +51,7 @@ export type ForecastView = BattleForecast & {
 export type GameUI = {
   openMenu: (menu: GameMenu | null) => void;
   showForecast: (forecast: ForecastView | null) => void;
+  playBattle: (battle: BattleView) => void;
 };
 
 export type GameContext = {

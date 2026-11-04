@@ -1,9 +1,11 @@
 import { ShaderPicker } from "frontend/components/settings/ShaderPicker";
-import { useShader } from "frontend/settings/game-settings";
+import { playSound } from "frontend/game/audio";
+import { updateSettings, useGameSettings } from "frontend/settings/game-settings";
 import { Card } from "frontend/ui/Card";
 import { Page, PageHeader } from "frontend/ui/Page";
 import { Select } from "frontend/ui/Select";
 import { Skeleton } from "frontend/ui/Skeleton";
+import { Switch } from "frontend/ui/Switch";
 import type { Locale } from "i18n";
 import { localeNames, locales, useLocale, useT } from "i18n";
 import dynamic from "next/dynamic";
@@ -21,7 +23,7 @@ export default function SettingsPage() {
   const t = useT();
   const locale = useLocale();
   const router = useRouter();
-  const [shader, setShader] = useShader();
+  const { shader, soundVolume, musicVolume, battleAnimations } = useGameSettings();
   const labels = t.settings;
 
   const changeLocale = (next: Locale) => {
@@ -48,10 +50,52 @@ export default function SettingsPage() {
         </Card>
 
         <Card className="@p-4">
+          <h2 className="@text-2xl @leading-tight">{labels.audio}</h2>
+          <p className="@mb-3 @text-sm @text-fg-muted">{labels.audioHint}</p>
+          <div className="@flex @max-w-md @flex-col @gap-4">
+            <label className="@flex @flex-col @gap-1 @text-sm @font-medium">
+              {labels.soundVolume}
+              {t.common.colon}
+              {soundVolume} %
+              <input
+                type="range"
+                min={0}
+                max={100}
+                step={5}
+                value={soundVolume}
+                className="@accent-accent"
+                onChange={(event) => updateSettings({ soundVolume: Number(event.target.value) })}
+                onPointerUp={() => playSound("okay.wav")}
+              />
+            </label>
+            <label className="@flex @flex-col @gap-1 @text-sm @font-medium">
+              {labels.musicVolume}
+              {t.common.colon}
+              {musicVolume} %
+              <input
+                type="range"
+                min={0}
+                max={100}
+                step={5}
+                value={musicVolume}
+                className="@accent-accent"
+                onChange={(event) => updateSettings({ musicVolume: Number(event.target.value) })}
+              />
+            </label>
+            <Switch
+              label={labels.battleAnimations}
+              description={labels.battleAnimationsHint}
+              checked={battleAnimations}
+              onChange={(checked) => updateSettings({ battleAnimations: checked })}
+            />
+          </div>
+        </Card>
+
+        <Card className="@p-4">
           <h2 className="@text-2xl @leading-tight">{labels.graphics}</h2>
           <p className="@mb-3 @text-sm @text-fg-muted">{labels.graphicsHint}</p>
           <div className="@flex @flex-col @gap-4">
-            <ShaderPicker value={shader} onChange={setShader} />
+            <ShaderPicker value={shader} onChange={(kind) => updateSettings({ shader: kind })} />
             <ShaderPreview shader={shader} />
           </div>
         </Card>

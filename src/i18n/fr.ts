@@ -167,6 +167,8 @@ export const fr = {
     menuActions: "Actions",
     menuUnload: "Décharger",
     settings: "Paramètres",
+    battle: "Combat",
+    battleSkip: "Cliquez pour passer",
     hp: "PV",
     fuel: "Carburant",
     ammo: "Munitions",
@@ -354,6 +356,12 @@ export const fr = {
     description: "Vos préférences sont enregistrées dans ce navigateur.",
     language: "Langue",
     languageHint: "La langue de toute l'interface et du guide.",
+    audio: "Son et combats",
+    audioHint: "Le volume du jeu et les animations de combat.",
+    soundVolume: "Effets sonores",
+    musicVolume: "Musique",
+    battleAnimations: "Animations de combat",
+    battleAnimationsHint: "Affiche la scène de combat à chaque attaque.",
     graphics: "Rendu du jeu",
     graphicsHint:
       "Les shaders changent la façon dont les sprites sont agrandis pendant une partie. Comparez-les ci-dessous : le choix s'applique tout de suite.",
@@ -400,6 +408,7 @@ export const fr = {
     copyright:
       "Advance Wars est © 1990-2001 Nintendo et © 2001 Intelligent Systems. Les images appartiennent à leurs propriétaires respectifs.",
     basedOn: "Basé sur WarsWorld",
+    assetsFrom: "Images et sons : Commander Wars",
     sourceCode: "Code source",
   },
 };

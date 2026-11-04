@@ -168,6 +168,8 @@ export const en: Dictionary = {
     menuActions: "Actions",
     menuUnload: "Unload",
     settings: "Settings",
+    battle: "Battle",
+    battleSkip: "Click to skip",
     hp: "HP",
     fuel: "Fuel",
     ammo: "Ammo",
@@ -354,6 +356,12 @@ export const en: Dictionary = {
     description: "Your preferences are saved in this browser.",
     language: "Language",
     languageHint: "The language of the whole interface and of the guide.",
+    audio: "Sound and battles",
+    audioHint: "The volume of the game and the battle animations.",
+    soundVolume: "Sound effects",
+    musicVolume: "Music",
+    battleAnimations: "Battle animations",
+    battleAnimationsHint: "Shows the battle scene on every attack.",
     graphics: "Game rendering",
     graphicsHint:
       "Shaders change how sprites are scaled up during a game. Compare them below: your choice applies right away.",
@@ -400,6 +408,7 @@ export const en: Dictionary = {
     copyright:
       "Advance Wars is © 1990-2001 Nintendo and © 2001 Intelligent Systems. All images are copyright of their respective owners.",
     basedOn: "Based on WarsWorld",
+    assetsFrom: "Art and sounds: Commander Wars",
     sourceCode: "Source code",
   },
 };

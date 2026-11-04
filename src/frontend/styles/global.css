@@ -70,6 +70,10 @@
     animation: game-panel-in 120ms ease-out;
   }
 
+  .game-battle-in {
+    animation: game-battle-in 180ms ease-out;
+  }
+
   .game-turn-banner {
     animation: game-turn-banner 1500ms ease-in-out both;
   }
@@ -83,6 +87,12 @@
   from {
     opacity: 0;
     transform: translateY(4px);
+  }
+}
+
+@keyframes game-battle-in {
+  from {
+    opacity: 0;
   }
 }
 
@@ -110,6 +120,7 @@
 
 @media (prefers-reduced-motion: reduce) {
   .game-panel-in,
+  .game-battle-in,
   .game-turn-banner,
   .game-power-active {
     animation: none;

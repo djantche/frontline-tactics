@@ -4,6 +4,8 @@ Frontline Tactics is a turn-based tactics game for the browser, based on Advance
 
 This project is a fork of [WarsWorld](https://github.com/WarsWorld/WarsWorld), and like it is licensed under the [GNU AGPL-3.0](LICENSE.md). Advance Wars is (c) Nintendo and Intelligent Systems; this is an unofficial fan project.
 
+Battle animations, generals, sounds and music come from [Commander Wars](https://github.com/Robosturm/Commander_Wars) (LGPL-3.0, see [its license and credits](public/commander-wars)). `utils/import-commander-wars/import.py` imports them again from a checkout of that project.
+
 Want to help? See the [contribution guidelines](CONTRIBUTING.md).
 
 # Setting up your local environment

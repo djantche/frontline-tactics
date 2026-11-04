@@ -1,6 +1,9 @@
 import { baseTileSize, mapBorder } from "components/client-only/MatchRenderer";
+import { playSound } from "frontend/game/audio";
 import type { Application, Container, Resource, Texture } from "pixi.js";
 import { AnimatedSprite, Sprite, Texture as PixiTexture } from "pixi.js";
+import type { MovementType } from "shared/match-logic/game-constants/unit-properties";
+import { unitPropertiesMap } from "shared/match-logic/game-constants/unit-properties";
 import type { Army } from "shared/schemas/army";
 import type { Position } from "shared/schemas/position";
 import type { UnitType } from "shared/schemas/unit";
@@ -11,6 +14,17 @@ export const movingUnitName = "movingUnit";
 const msPerTile = 110;
 const maxWalkMs = 900;
 const flashMs = 420;
+
+const moveSounds: Record<MovementType, string> = {
+  foot: "infantry_move.wav",
+  boots: "moveboots.wav",
+  treads: "movetank.wav",
+  tires: "movetire.wav",
+  air: "moveair.wav",
+  sea: "moveship.wav",
+  lander: "moveship.wav",
+  pipe: "movepipe.wav",
+};
 
 const prefersReducedMotion = () => window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
@@ -73,6 +87,9 @@ export const walkAlongPath = ({ app, parent, spriteSheets, unitType, army, path 
       return;
     }
 
+    const stopSound = playSound(moveSounds[unitPropertiesMap[unitType].movementType], {
+      loop: true,
+    });
     const tileDuration = Math.min(msPerTile, maxWalkMs / lastSegment);
     let elapsed = 0;
     let currentSegment = -1;
@@ -81,6 +98,7 @@ export const walkAlongPath = ({ app, parent, spriteSheets, unitType, army, path 
       // the scene was rebuilt during the walk
       if (walker.destroyed) {
         app.ticker.remove(onTick);
+        stopSound();
         resolve(walker);
         return;
       }
@@ -108,6 +126,7 @@ export const walkAlongPath = ({ app, parent, spriteSheets, unitType, army, path 
 
       if (progress >= lastSegment) {
         app.ticker.remove(onTick);
+        stopSound();
         walker.textures = textureListOf(spriteSheets, army, unitType);
         walker.scale.x = 1;
         walker.play();

@@ -1,4 +1,5 @@
 import { aw2COs, coDisplayName } from "frontend/game/aw2-cos";
+import { assetUrl, useBattleManifest } from "frontend/game/battle-manifest";
 import { Card } from "frontend/ui/Card";
 import { COPortrait } from "frontend/ui/COPortrait";
 import { MapCanvas } from "frontend/ui/MapCanvas";
@@ -259,6 +260,7 @@ function COCard({ co }: { co: (typeof aw2COs)[number] }) {
   const labels = t.guide.cos;
   const { dayToDay, powers } = getCOProperties({ name: co, version: "AW2" });
   const texts = labels.texts[co];
+  const full = useBattleManifest()?.cos[co]?.full;
 
   const powerRows = [
     { label: labels.power, power: powers.COPower, text: texts?.power },
@@ -268,7 +270,13 @@ function COCard({ co }: { co: (typeof aw2COs)[number] }) {
   return (
     <Card className="@flex @flex-col @gap-2 @p-3 @text-fg">
       <div className="@flex @items-center @gap-3">
-        <COPortrait co={co} className="@h-12 @w-12" />
+        {full === undefined ? (
+          <COPortrait co={co} className="@h-12 @w-12" />
+        ) : (
+          <span className="@block @h-20 @w-16 @shrink-0 @overflow-hidden" aria-hidden>
+            <img src={assetUrl(full)} alt="" className="pixelated @w-full" draggable={false} />
+          </span>
+        )}
         <h3 className="@text-2xl @leading-none">{coDisplayName(co)}</h3>
       </div>
       <p className="@text-xs @text-fg-muted">

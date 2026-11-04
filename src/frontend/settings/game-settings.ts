@@ -3,14 +3,48 @@ import { useSyncExternalStore } from "react";
 export const shaderKinds = ["pixel", "sharp", "soft", "scale2x", "xbr", "crt"] as const;
 export type ShaderKind = (typeof shaderKinds)[number];
 
-const shaderKey = "frontline-tactics-shader";
-const defaultShader: ShaderKind = "pixel";
+export type GameSettings = {
+  shader: ShaderKind;
+  /** from 0 to 100 */
+  soundVolume: number;
+  /** from 0 to 100 */
+  musicVolume: number;
+  battleAnimations: boolean;
+};
+
+const storageKey = "frontline-tactics-settings";
+
+const defaultSettings: GameSettings = {
+  shader: "pixel",
+  soundVolume: 70,
+  musicVolume: 30,
+  battleAnimations: true,
+};
+
+let cached: { raw: string | null; settings: GameSettings } | undefined;
+
+/** The same object as long as nothing changed, as required by useSyncExternalStore. */
+export const readSettings = (): GameSettings => {
+  const raw = window.localStorage.getItem(storageKey);
+
+  if (cached === undefined || cached.raw !== raw) {
+    cached = {
+      raw,
+      settings: {
+        ...defaultSettings,
+        ...(raw === null ? {} : (JSON.parse(raw) as Partial<GameSettings>)),
+      },
+    };
+  }
+
+  return cached.settings;
+};
 
 const listeners = new Set<() => void>();
 
 const subscribe = (listener: () => void) => {
   listeners.add(listener);
-  // the choice may also change from another tab
+  // the settings may also change from another tab
   window.addEventListener("storage", listener);
 
   return () => {
@@ -19,18 +53,10 @@ const subscribe = (listener: () => void) => {
   };
 };
 
-const readShader = (): ShaderKind => {
-  const stored = window.localStorage.getItem(shaderKey);
-  return shaderKinds.find((kind) => kind === stored) ?? defaultShader;
+export const updateSettings = (change: Partial<GameSettings>) => {
+  window.localStorage.setItem(storageKey, JSON.stringify({ ...readSettings(), ...change }));
+  listeners.forEach((listener) => listener());
 };
 
-export const useShader = () => {
-  const shader = useSyncExternalStore(subscribe, readShader, () => defaultShader);
-
-  const setShader = (kind: ShaderKind) => {
-    window.localStorage.setItem(shaderKey, kind);
-    listeners.forEach((listener) => listener());
-  };
-
-  return [shader, setShader] as const;
-};
+export const useGameSettings = () =>
+  useSyncExternalStore(subscribe, readSettings, () => defaultSettings);

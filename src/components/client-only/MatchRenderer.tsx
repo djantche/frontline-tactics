@@ -6,9 +6,13 @@ import {
   TileInfo,
   TurnBanner,
 } from "frontend/components/game/GameHud";
+import { BattleScene } from "frontend/components/game/BattleScene";
 import { GameMenuPanel } from "frontend/components/game/GameMenuPanel";
 import { ShaderPicker } from "frontend/components/settings/ShaderPicker";
-import { useShader } from "frontend/settings/game-settings";
+import { playMusic, setMusicVolume } from "frontend/game/audio";
+import { useBattleManifest } from "frontend/game/battle-manifest";
+import type { BattleView } from "frontend/game/battle-timeline";
+import { readSettings, updateSettings, useGameSettings } from "frontend/settings/game-settings";
 import { Button, ButtonLink } from "frontend/ui/Button";
 import { cx } from "frontend/ui/cx";
 import { Dialog } from "frontend/ui/Dialog";
@@ -52,7 +56,9 @@ export function MatchRenderer({ match, player, spriteSheets, pendingEventRef }: 
   const [zoomSteps, setZoomSteps] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
-  const [shader, setShader] = useShader();
+  const [battle, setBattle] = useState<BattleView | null>(null);
+  const { shader, musicVolume } = useGameSettings();
+  const manifest = useBattleManifest();
   const playfieldRef = useRef<HTMLDivElement>(null);
 
   const tileSize = Math.min(
@@ -63,7 +69,10 @@ export function MatchRenderer({ match, player, spriteSheets, pendingEventRef }: 
   const widthInTiles = match.map.width + 1;
   const heightInTiles = match.map.height + 1;
 
-  const ui: GameUI = useMemo(() => ({ openMenu: setMenu, showForecast: setForecast }), []);
+  const ui: GameUI = useMemo(
+    () => ({ openMenu: setMenu, showForecast: setForecast, playBattle: setBattle }),
+    [],
+  );
   const onTileHover = useCallback((position: Position | null) => setHovered(position), []);
 
   const { pixiContainerRef, actionError, cancelSelection } = usePixi({
@@ -135,6 +144,22 @@ export function MatchRenderer({ match, player, spriteSheets, pendingEventRef }: 
   const [firstPlayer, secondPlayer] = [...match.getAllPlayers()].sort(
     (a, b) => a.data.slot - b.data.slot,
   );
+
+  const currentMusic = manifest?.cos[currentPlayer.data.coId.name]?.music;
+
+  // Each commander has a theme, played during their turn.
+  useEffect(() => {
+    playMusic(musicVolume > 0 ? currentMusic : undefined);
+    setMusicVolume(musicVolume);
+
+    // browsers only start music after an interaction with the page
+    const retry = () => setMusicVolume(readSettings().musicVolume);
+    window.addEventListener("pointerdown", retry, { once: true });
+
+    return () => window.removeEventListener("pointerdown", retry);
+  }, [currentMusic, musicVolume]);
+
+  useEffect(() => () => playMusic(undefined), []);
 
   const turnText = isMyTurn ? t.game.yourTurn : t.game.opponentTurn(currentPlayer.data.name);
 
@@ -257,8 +282,10 @@ export function MatchRenderer({ match, player, spriteSheets, pendingEventRef }: 
           </ButtonLink>
         }
       >
-        <ShaderPicker value={shader} onChange={setShader} />
+        <ShaderPicker value={shader} onChange={(kind) => updateSettings({ shader: kind })} />
       </Dialog>
+
+      {battle !== null && <BattleScene view={battle} onEnd={() => setBattle(null)} />}
 
       <TurnBanner
         turnKey={`${match.turn}-${currentPlayer.data.id}`}

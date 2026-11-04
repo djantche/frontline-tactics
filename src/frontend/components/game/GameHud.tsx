@@ -1,4 +1,5 @@
 import { ArmyChip } from "frontend/components/rooms/ArmyChip";
+import { playSound } from "frontend/game/audio";
 import { Button } from "frontend/ui/Button";
 import { COPortrait } from "frontend/ui/COPortrait";
 import { cx } from "frontend/ui/cx";
@@ -343,6 +344,7 @@ export function TurnBanner({
     }
 
     lastTurnKey.current = turnKey;
+    playSound("player_turn.wav");
     setIsVisible(true);
     const timeout = setTimeout(() => setIsVisible(false), turnBannerMs);
 

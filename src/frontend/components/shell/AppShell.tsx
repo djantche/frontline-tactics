@@ -116,6 +116,14 @@ function Footer() {
             {t.footer.basedOn}
           </a>
           <a
+            href="https://github.com/Robosturm/Commander_Wars"
+            target="_blank"
+            rel="noreferrer"
+            className="hover:@text-fg"
+          >
+            {t.footer.assetsFrom}
+          </a>
+          <a
             href="https://github.com/djantche/frontline-tactics"
             target="_blank"
             rel="noreferrer"

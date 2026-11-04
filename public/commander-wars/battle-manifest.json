@@ -1,0 +1,3436 @@
+{
+ "units": {
+  "infantry": {
+   "kind": "foot",
+   "maxCount": 5,
+   "fireMs": 600,
+   "fireSounds": [
+    "mg_weapon_fire.wav"
+   ],
+   "position": [
+    -10,
+    5
+   ],
+   "flash": {
+    "src": "images/battleanimations/GeneralSprites/mg_shot.png",
+    "frames": 6
+   },
+   "flashOffset": [
+    14,
+    13
+   ],
+   "flashTravel": null,
+   "impact": {
+    "src": "images/battleanimations/GeneralSprites/mg_hit.png",
+    "frames": 10
+   },
+   "impactSounds": [
+    "mg_impact.wav"
+   ],
+   "armies": {
+    "orange-star": {
+     "idle": {
+      "src": "baked/infantry/infantry+os@os.png",
+      "frames": 1
+     },
+     "center": [
+      13,
+      15
+     ],
+     "fire": {
+      "src": "baked/infantry/infantry+os+fire@os.png",
+      "frames": 2
+     },
+     "move": {
+      "src": "baked/infantry/infantry+os+walk@os.png",
+      "frames": 6
+     },
+     "stop": {
+      "src": "baked/infantry/infantry+os+stop@os.png",
+      "frames": 2
+     },
+     "dying": {
+      "src": "baked/infantry/infantry+os+dying@os.png",
+      "frames": 1
+     },
+     "parts": []
+    },
+    "blue-moon": {
+     "idle": {
+      "src": "baked/infantry/infantry+bm@bm.png",
+      "frames": 1
+     },
+     "center": [
+      13,
+      15
+     ],
+     "fire": {
+      "src": "baked/infantry/infantry+bm+fire@bm.png",
+      "frames": 2
+     },
+     "move": {
+      "src": "baked/infantry/infantry+bm+walk@bm.png",
+      "frames": 6
+     },
+     "stop": {
+      "src": "baked/infantry/infantry+bm+stop@bm.png",
+      "frames": 2
+     },
+     "dying": {
+      "src": "baked/infantry/infantry+bm+dying@bm.png",
+      "frames": 1
+     },
+     "parts": []
+    },
+    "green-earth": {
+     "idle": {
+      "src": "baked/infantry/infantry+ge@ge.png",
+      "frames": 1
+     },
+     "center": [
+      12,
+      16
+     ],
+     "fire": {
+      "src": "baked/infantry/infantry+ge+fire@ge.png",
+      "frames": 2
+     },
+     "move": {
+      "src": "baked/infantry/infantry+ge+walk@ge.png",
+      "frames": 6
+     },
+     "stop": {
+      "src": "baked/infantry/infantry+ge+stop@ge.png",
+      "frames": 2
+     },
+     "dying": {
+      "src": "baked/infantry/infantry+ge+dying@ge.png",
+      "frames": 1
+     },
+     "parts": []
+    },
+    "yellow-comet": {
+     "idle": {
+      "src": "baked/infantry/infantry+yc@yc.png",
+      "frames": 1
+     },
+     "center": [
+      16,
+      15
+     ],
+     "fire": {
+      "src": "baked/infantry/infantry+yc+fire@yc.png",
+      "frames": 2
+     },
+     "move": {
+      "src": "baked/infantry/infantry+yc+walk@yc.png",
+      "frames": 6
+     },
+     "stop": {
+      "src": "baked/infantry/infantry+yc+stop@yc.png",
+      "frames": 2
+     },
+     "dying": {
+      "src": "baked/infantry/infantry+yc+dying@yc.png",
+      "frames": 1
+     },
+     "parts": []
+    },
+    "black-hole": {
+     "idle": {
+      "src": "baked/infantry/infantry+bh@bh.png",
+      "frames": 1
+     },
+     "center": [
+      15,
+      16
+     ],
+     "fire": {
+      "src": "baked/infantry/infantry+bh+fire@bh.png",
+      "frames": 2
+     },
+     "move": {
+      "src": "baked/infantry/infantry+bh+walk@bh.png",
+      "frames": 6
+     },
+     "stop": {
+      "src": "baked/infantry/infantry+bh+stop@bh.png",
+      "frames": 2
+     },
+     "dying": {
+      "src": "baked/infantry/infantry+bh+dying@bh.png",
+      "frames": 1
+     },
+     "parts": []
+    }
+   }
+  },
+  "mech": {
+   "kind": "foot",
+   "maxCount": 5,
+   "fireMs": 700,
+   "fireSounds": [
+    "baazoka_fire.wav"
+   ],
+   "position": [
+    -10,
+    5
+   ],
+   "flash": {
+    "src": "images/battleanimations/GeneralSprites/bazooka_os.png",
+    "frames": 1
+   },
+   "flashOffset": [
+    18,
+    17
+   ],
+   "flashTravel": [
+    160,
+    0,
+    500
+   ],
+   "impact": {
+    "src": "images/battleanimations/GeneralSprites/mg_hit.png",
+    "frames": 10
+   },
+   "impactSounds": [
+    "impact_explosion.wav"
+   ],
+   "armies": {
+    "orange-star": {
+     "idle": {
+      "src": "baked/mech/mech+os@os.png",
+      "frames": 1
+     },
+     "center": [
+      17,
+      16
+     ],
+     "fire": {
+      "src": "baked/mech/mech+os+fire@os.png",
+      "frames": 3
+     },
+     "move": {
+      "src": "baked/mech/mech+os+walk@os.png",
+      "frames": 6
+     },
+     "stop": {
+      "src": "baked/mech/mech+os+stop@os.png",
+      "frames": 2
+     },
+     "dying": {
+      "src": "baked/mech/mech+os+dying@os.png",
+      "frames": 1
+     },
+     "parts": []
+    },
+    "blue-moon": {
+     "idle": {
+      "src": "baked/mech/mech+bm@bm.png",
+      "frames": 1
+     },
+     "center": [
+      17,
+      16
+     ],
+     "fire": {
+      "src": "baked/mech/mech+bm+fire@bm.png",
+      "frames": 3
+     },
+     "move": {
+      "src": "baked/mech/mech+bm+walk@bm.png",
+      "frames": 6
+     },
+     "stop": {
+      "src": "baked/mech/mech+bm+stop@bm.png",
+      "frames": 2
+     },
+     "dying": {
+      "src": "baked/mech/mech+bm+dying@bm.png",
+      "frames": 1
+     },
+     "parts": []
+    },
+    "green-earth": {
+     "idle": {
+      "src": "baked/mech/mech+ge@ge.png",
+      "frames": 1
+     },
+     "center": [
+      17,
+      15
+     ],
+     "fire": {
+      "src": "baked/mech/mech+ge+fire@ge.png",
+      "frames": 3
+     },
+     "move": {
+      "src": "baked/mech/mech+ge+walk@ge.png",
+      "frames": 6
+     },
+     "stop": {
+      "src": "baked/mech/mech+ge+stop@ge.png",
+      "frames": 2
+     },
+     "dying": {
+      "src": "baked/mech/mech+ge+dying@ge.png",
+      "frames": 1
+     },
+     "parts": []
+    },
+    "yellow-comet": {
+     "idle": {
+      "src": "baked/mech/mech+yc@yc.png",
+      "frames": 1
+     },
+     "center": [
+      16,
+      15
+     ],
+     "fire": {
+      "src": "baked/mech/mech+yc+fire@yc.png",
+      "frames": 3
+     },
+     "move": {
+      "src": "baked/mech/mech+yc+walk@yc.png",
+      "frames": 6
+     },
+     "stop": {
+      "src": "baked/mech/mech+yc+stop@yc.png",
+      "frames": 2
+     },
+     "dying": {
+      "src": "baked/mech/mech+yc+dying@yc.png",
+      "frames": 1
+     },
+     "parts": []
+    },
+    "black-hole": {
+     "idle": {
+      "src": "baked/mech/mech+bh@bh.png",
+      "frames": 1
+     },
+     "center": [
+      16,
+      16
+     ],
+     "fire": {
+      "src": "baked/mech/mech+bh+fire@bh.png",
+      "frames": 3
+     },
+     "move": {
+      "src": "baked/mech/mech+bh+walk@bh.png",
+      "frames": 6
+     },
+     "stop": {
+      "src": "baked/mech/mech+bh+stop@bh.png",
+      "frames": 2
+     },
+     "dying": {
+      "src": "baked/mech/mech+bh+dying@bh.png",
+      "frames": 1
+     },
+     "parts": []
+    }
+   }
+  },
+  "recon": {
+   "kind": "land",
+   "maxCount": 5,
+   "fireMs": 600,
+   "fireSounds": [
+    "mg_weapon_fire.wav"
+   ],
+   "position": [
+    -5,
+    5
+   ],
+   "flash": {
+    "src": "images/battleanimations/GeneralSprites/mg_shot.png",
+    "frames": 6
+   },
+   "flashOffset": [
+    35,
+    44
+   ],
+   "flashTravel": null,
+   "impact": {
+    "src": "images/battleanimations/GeneralSprites/mg_hit.png",
+    "frames": 10
+   },
+   "impactSounds": [
+    "mg_impact.wav"
+   ],
+   "armies": {
+    "orange-star": {
+     "idle": {
+      "src": "baked/recon/recon+os@os.png",
+      "frames": 1
+     },
+     "center": [
+      23,
+      28
+     ],
+     "fire": {
+      "src": "baked/recon/recon+os+fire@os.png",
+      "frames": 2
+     },
+     "move": {
+      "src": "baked/recon/recon+os+move@os.png",
+      "frames": 4
+     },
+     "stop": {
+      "src": "baked/recon/recon+os+stop@os.png",
+      "frames": 4
+     },
+     "dying": null,
+     "parts": []
+    },
+    "blue-moon": {
+     "idle": {
+      "src": "baked/recon/recon+bm@bm.png",
+      "frames": 1
+     },
+     "center": [
+      24,
+      24
+     ],
+     "fire": {
+      "src": "baked/recon/recon+bm+fire@bm.png",
+      "frames": 2
+     },
+     "move": {
+      "src": "baked/recon/recon+bm+move@bm.png",
+      "frames": 4
+     },
+     "stop": {
+      "src": "baked/recon/recon+bm+stop@bm.png",
+      "frames": 4
+     },
+     "dying": null,
+     "parts": []
+    },
+    "green-earth": {
+     "idle": {
+      "src": "baked/recon/recon+ge@ge.png",
+      "frames": 1
+     },
+     "center": [
+      24,
+      26
+     ],
+     "fire": {
+      "src": "baked/recon/recon+ge+fire@ge.png",
+      "frames": 2
+     },
+     "move": {
+      "src": "baked/recon/recon+ge+move@ge.png",
+      "frames": 4
+     },
+     "stop": {
+      "src": "baked/recon/recon+ge+stop@ge.png",
+      "frames": 4
+     },
+     "dying": null,
+     "parts": []
+    },
+    "yellow-comet": {
+     "idle": {
+      "src": "baked/recon/recon+yc@yc.png",
+      "frames": 1
+     },
+     "center": [
+      25,
+      28
+     ],
+     "fire": {
+      "src": "baked/recon/recon+yc+fire@yc.png",
+      "frames": 2
+     },
+     "move": {
+      "src": "baked/recon/recon+yc+move@yc.png",
+      "frames": 4
+     },
+     "stop": {
+      "src": "baked/recon/recon+yc+stop@yc.png",
+      "frames": 4
+     },
+     "dying": null,
+     "parts": []
+    },
+    "black-hole": {
+     "idle": {
+      "src": "baked/recon/recon+bh@bh.png",
+      "frames": 1
+     },
+     "center": [
+      24,
+      21
+     ],
+     "fire": {
+      "src": "baked/recon/recon+bh+fire@bh.png",
+      "frames": 2
+     },
+     "move": {
+      "src": "baked/recon/recon+bh+move@bh.png",
+      "frames": 4
+     },
+     "stop": {
+      "src": "baked/recon/recon+bh+stop@bh.png",
+      "frames": 4
+     },
+     "dying": null,
+     "parts": []
+    }
+   }
+  },
+  "apc": {
+   "kind": "land",
+   "maxCount": 1,
+   "fireMs": 600,
+   "fireSounds": [],
+   "position": [
+    10,
+    10
+   ],
+   "flash": null,
+   "flashOffset": null,
+   "flashTravel": null,
+   "impact": {
+    "src": "images/battleanimations/GeneralSprites/cannon_hit.png",
+    "frames": 4
+   },
+   "impactSounds": [
+    "tank_hit.wav",
+    "impact_explosion.wav"
+   ],
+   "armies": {
+    "orange-star": {
+     "idle": {
+      "src": "baked/apc/apc+os@os.png",
+      "frames": 1
+     },
+     "center": [
+      32,
+      35
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "blue-moon": {
+     "idle": {
+      "src": "baked/apc/apc+bm@bm.png",
+      "frames": 1
+     },
+     "center": [
+      32,
+      35
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "green-earth": {
+     "idle": {
+      "src": "baked/apc/apc+ge@ge.png",
+      "frames": 1
+     },
+     "center": [
+      32,
+      36
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "yellow-comet": {
+     "idle": {
+      "src": "baked/apc/apc+yc@yc.png",
+      "frames": 1
+     },
+     "center": [
+      32,
+      32
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "black-hole": {
+     "idle": {
+      "src": "baked/apc/apc+bh@bh.png",
+      "frames": 1
+     },
+     "center": [
+      31,
+      30
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    }
+   }
+  },
+  "artillery": {
+   "kind": "land",
+   "maxCount": 5,
+   "fireMs": 1000,
+   "fireSounds": [
+    "artillery_weapon_load.wav",
+    "cannon_weapon_fire.wav"
+   ],
+   "position": [
+    -5,
+    5
+   ],
+   "flash": {
+    "src": "images/battleanimations/GeneralSprites/artillery_shot.png",
+    "frames": 5
+   },
+   "flashOffset": [
+    40,
+    38
+   ],
+   "flashTravel": null,
+   "impact": {
+    "src": "images/battleanimations/GeneralSprites/artillery_hit.png",
+    "frames": 9
+   },
+   "impactSounds": [
+    "artillery_explode.wav"
+   ],
+   "armies": {
+    "orange-star": {
+     "idle": {
+      "src": "baked/artillery/artillery+os@os.png",
+      "frames": 2
+     },
+     "center": [
+      25,
+      27
+     ],
+     "fire": {
+      "src": "baked/artillery/artillery+os+fire@os.png",
+      "frames": 8
+     },
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "blue-moon": {
+     "idle": {
+      "src": "baked/artillery/artillery+bm@bm.png",
+      "frames": 2
+     },
+     "center": [
+      25,
+      25
+     ],
+     "fire": {
+      "src": "baked/artillery/artillery+bm+fire@bm.png",
+      "frames": 8
+     },
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "green-earth": {
+     "idle": {
+      "src": "baked/artillery/artillery+ge@ge.png",
+      "frames": 2
+     },
+     "center": [
+      25,
+      27
+     ],
+     "fire": {
+      "src": "baked/artillery/artillery+ge+fire@ge.png",
+      "frames": 8
+     },
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "yellow-comet": {
+     "idle": {
+      "src": "baked/artillery/artillery+yc@yc.png",
+      "frames": 2
+     },
+     "center": [
+      25,
+      25
+     ],
+     "fire": {
+      "src": "baked/artillery/artillery+yc+fire@yc.png",
+      "frames": 8
+     },
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "black-hole": {
+     "idle": {
+      "src": "baked/artillery/artillery+bh@bh.png",
+      "frames": 2
+     },
+     "center": [
+      25,
+      21
+     ],
+     "fire": {
+      "src": "baked/artillery/artillery+bh+fire@bh.png",
+      "frames": 8
+     },
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    }
+   }
+  },
+  "tank": {
+   "kind": "land",
+   "maxCount": 5,
+   "fireMs": 600,
+   "fireSounds": [
+    "tank_shot.wav",
+    "mg_weapon_fire.wav"
+   ],
+   "position": [
+    -15,
+    5
+   ],
+   "flash": {
+    "src": "images/battleanimations/GeneralSprites/light_shot.png",
+    "frames": 6
+   },
+   "flashOffset": [
+    13,
+    24
+   ],
+   "flashTravel": null,
+   "impact": {
+    "src": "images/battleanimations/GeneralSprites/cannon_hit.png",
+    "frames": 4
+   },
+   "impactSounds": [
+    "tank_hit.wav",
+    "impact_explosion.wav"
+   ],
+   "armies": {
+    "orange-star": {
+     "idle": {
+      "src": "baked/light_tank/light_tank+os@os.png",
+      "frames": 1
+     },
+     "center": [
+      20,
+      26
+     ],
+     "fire": {
+      "src": "baked/light_tank/light_tank+os+fire@os.png",
+      "frames": 4
+     },
+     "move": {
+      "src": "baked/light_tank/light_tank+os+move@os.png",
+      "frames": 4
+     },
+     "stop": {
+      "src": "baked/light_tank/light_tank+os+stop@os.png",
+      "frames": 4
+     },
+     "dying": null,
+     "parts": []
+    },
+    "blue-moon": {
+     "idle": {
+      "src": "baked/light_tank/light_tank+bm@bm.png",
+      "frames": 1
+     },
+     "center": [
+      22,
+      24
+     ],
+     "fire": {
+      "src": "baked/light_tank/light_tank+bm+fire@bm.png",
+      "frames": 4
+     },
+     "move": {
+      "src": "baked/light_tank/light_tank+bm+move@bm.png",
+      "frames": 4
+     },
+     "stop": {
+      "src": "baked/light_tank/light_tank+bm+stop@bm.png",
+      "frames": 4
+     },
+     "dying": null,
+     "parts": []
+    },
+    "green-earth": {
+     "idle": {
+      "src": "baked/light_tank/light_tank+ge@ge.png",
+      "frames": 1
+     },
+     "center": [
+      22,
+      25
+     ],
+     "fire": {
+      "src": "baked/light_tank/light_tank+ge+fire@ge.png",
+      "frames": 4
+     },
+     "move": {
+      "src": "baked/light_tank/light_tank+ge+move@ge.png",
+      "frames": 4
+     },
+     "stop": {
+      "src": "baked/light_tank/light_tank+ge+stop@ge.png",
+      "frames": 4
+     },
+     "dying": null,
+     "parts": []
+    },
+    "yellow-comet": {
+     "idle": {
+      "src": "baked/light_tank/light_tank+yc@yc.png",
+      "frames": 1
+     },
+     "center": [
+      21,
+      22
+     ],
+     "fire": {
+      "src": "baked/light_tank/light_tank+yc+fire@yc.png",
+      "frames": 4
+     },
+     "move": {
+      "src": "baked/light_tank/light_tank+yc+move@yc.png",
+      "frames": 4
+     },
+     "stop": {
+      "src": "baked/light_tank/light_tank+yc+stop@yc.png",
+      "frames": 4
+     },
+     "dying": null,
+     "parts": []
+    },
+    "black-hole": {
+     "idle": {
+      "src": "baked/light_tank/light_tank+bh@bh.png",
+      "frames": 1
+     },
+     "center": [
+      21,
+      20
+     ],
+     "fire": {
+      "src": "baked/light_tank/light_tank+bh+fire@bh.png",
+      "frames": 4
+     },
+     "move": {
+      "src": "baked/light_tank/light_tank+bh+move@bh.png",
+      "frames": 4
+     },
+     "stop": {
+      "src": "baked/light_tank/light_tank+bh+stop@bh.png",
+      "frames": 4
+     },
+     "dying": null,
+     "parts": []
+    }
+   }
+  },
+  "antiAir": {
+   "kind": "land",
+   "maxCount": 5,
+   "fireMs": 600,
+   "fireSounds": [
+    "vulcan_weapon_fire.wav"
+   ],
+   "position": [
+    -10,
+    5
+   ],
+   "flash": {
+    "src": "images/battleanimations/GeneralSprites/mg_shot+flak.png",
+    "frames": 8
+   },
+   "flashOffset": [
+    31,
+    26
+   ],
+   "flashTravel": null,
+   "impact": {
+    "src": "images/battleanimations/GeneralSprites/mg_hit.png",
+    "frames": 10
+   },
+   "impactSounds": [
+    "mg_impact.wav"
+   ],
+   "armies": {
+    "orange-star": {
+     "idle": {
+      "src": "baked/flak/flak+os@os.png",
+      "frames": 1
+     },
+     "center": [
+      23,
+      25
+     ],
+     "fire": {
+      "src": "baked/flak/flak+os+fire@os.png",
+      "frames": 4
+     },
+     "move": {
+      "src": "baked/flak/flak+os+move@os.png",
+      "frames": 4
+     },
+     "stop": {
+      "src": "baked/flak/flak+os+stop@os.png",
+      "frames": 4
+     },
+     "dying": null,
+     "parts": []
+    },
+    "blue-moon": {
+     "idle": {
+      "src": "baked/flak/flak+bm@bm.png",
+      "frames": 1
+     },
+     "center": [
+      23,
+      25
+     ],
+     "fire": {
+      "src": "baked/flak/flak+bm+fire@bm.png",
+      "frames": 4
+     },
+     "move": {
+      "src": "baked/flak/flak+bm+move@bm.png",
+      "frames": 4
+     },
+     "stop": {
+      "src": "baked/flak/flak+bm+stop@bm.png",
+      "frames": 4
+     },
+     "dying": null,
+     "parts": []
+    },
+    "green-earth": {
+     "idle": {
+      "src": "baked/flak/flak+ge@ge.png",
+      "frames": 1
+     },
+     "center": [
+      24,
+      28
+     ],
+     "fire": {
+      "src": "baked/flak/flak+ge+fire@ge.png",
+      "frames": 4
+     },
+     "move": {
+      "src": "baked/flak/flak+ge+move@ge.png",
+      "frames": 4
+     },
+     "stop": {
+      "src": "baked/flak/flak+ge+stop@ge.png",
+      "frames": 4
+     },
+     "dying": null,
+     "parts": []
+    },
+    "yellow-comet": {
+     "idle": {
+      "src": "baked/flak/flak+yc@yc.png",
+      "frames": 1
+     },
+     "center": [
+      24,
+      22
+     ],
+     "fire": {
+      "src": "baked/flak/flak+yc+fire@yc.png",
+      "frames": 4
+     },
+     "move": {
+      "src": "baked/flak/flak+yc+move@yc.png",
+      "frames": 4
+     },
+     "stop": {
+      "src": "baked/flak/flak+yc+stop@yc.png",
+      "frames": 4
+     },
+     "dying": null,
+     "parts": []
+    },
+    "black-hole": {
+     "idle": {
+      "src": "baked/flak/flak+bh@bh.png",
+      "frames": 1
+     },
+     "center": [
+      26,
+      24
+     ],
+     "fire": {
+      "src": "baked/flak/flak+bh+fire@bh.png",
+      "frames": 4
+     },
+     "move": {
+      "src": "baked/flak/flak+bh+move@bh.png",
+      "frames": 4
+     },
+     "stop": {
+      "src": "baked/flak/flak+bh+stop@bh.png",
+      "frames": 4
+     },
+     "dying": null,
+     "parts": []
+    }
+   }
+  },
+  "missile": {
+   "kind": "land",
+   "maxCount": 5,
+   "fireMs": 500,
+   "fireSounds": [
+    "rocket_launch.wav"
+   ],
+   "position": [
+    -10,
+    5
+   ],
+   "flash": {
+    "src": "images/battleanimations/GeneralSprites/rocket_up.png",
+    "frames": 3
+   },
+   "flashOffset": [
+    11,
+    35
+   ],
+   "flashTravel": [
+    128,
+    64,
+    400
+   ],
+   "impact": {
+    "src": "images/battleanimations/GeneralSprites/rocket_hit_air.png",
+    "frames": 5
+   },
+   "impactSounds": [
+    "rockets_explode.wav"
+   ],
+   "armies": {
+    "orange-star": {
+     "idle": {
+      "src": "baked/missile/missile+os@os.png",
+      "frames": 1
+     },
+     "center": [
+      24,
+      24
+     ],
+     "fire": {
+      "src": "baked/missile/missile+os+fire@os.png",
+      "frames": 2
+     },
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "blue-moon": {
+     "idle": {
+      "src": "baked/missile/missile+bm@bm.png",
+      "frames": 1
+     },
+     "center": [
+      24,
+      24
+     ],
+     "fire": {
+      "src": "baked/missile/missile+bm+fire@bm.png",
+      "frames": 2
+     },
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "green-earth": {
+     "idle": {
+      "src": "baked/missile/missile+ge@ge.png",
+      "frames": 1
+     },
+     "center": [
+      24,
+      24
+     ],
+     "fire": {
+      "src": "baked/missile/missile+ge+fire@ge.png",
+      "frames": 2
+     },
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "yellow-comet": {
+     "idle": {
+      "src": "baked/missile/missile+yc@yc.png",
+      "frames": 1
+     },
+     "center": [
+      24,
+      24
+     ],
+     "fire": {
+      "src": "baked/missile/missile+yc+fire@yc.png",
+      "frames": 2
+     },
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "black-hole": {
+     "idle": {
+      "src": "baked/missile/missile+bh@bh.png",
+      "frames": 1
+     },
+     "center": [
+      23,
+      24
+     ],
+     "fire": {
+      "src": "baked/missile/missile+bh+fire@bh.png",
+      "frames": 2
+     },
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    }
+   }
+  },
+  "rocket": {
+   "kind": "land",
+   "maxCount": 5,
+   "fireMs": 500,
+   "fireSounds": [
+    "rocket_launch.wav"
+   ],
+   "position": [
+    -10,
+    5
+   ],
+   "flash": {
+    "src": "images/battleanimations/GeneralSprites/rocket_up.png",
+    "frames": 3
+   },
+   "flashOffset": [
+    0,
+    31
+   ],
+   "flashTravel": [
+    128,
+    64,
+    400
+   ],
+   "impact": {
+    "src": "images/battleanimations/GeneralSprites/rocket_hit.png",
+    "frames": 10
+   },
+   "impactSounds": [
+    "rockets_explode.wav"
+   ],
+   "armies": {
+    "orange-star": {
+     "idle": {
+      "src": "baked/rocketthrower/rocketthrower+os@os.png",
+      "frames": 1
+     },
+     "center": [
+      24,
+      24
+     ],
+     "fire": {
+      "src": "baked/rocketthrower/rocketthrower+os+fire@os.png",
+      "frames": 2
+     },
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "blue-moon": {
+     "idle": {
+      "src": "baked/rocketthrower/rocketthrower+bm@bm.png",
+      "frames": 1
+     },
+     "center": [
+      24,
+      24
+     ],
+     "fire": {
+      "src": "baked/rocketthrower/rocketthrower+bm+fire@bm.png",
+      "frames": 2
+     },
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "green-earth": {
+     "idle": {
+      "src": "baked/rocketthrower/rocketthrower+ge@ge.png",
+      "frames": 1
+     },
+     "center": [
+      24,
+      24
+     ],
+     "fire": {
+      "src": "baked/rocketthrower/rocketthrower+ge+fire@ge.png",
+      "frames": 2
+     },
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "yellow-comet": {
+     "idle": {
+      "src": "baked/rocketthrower/rocketthrower+yc@yc.png",
+      "frames": 1
+     },
+     "center": [
+      24,
+      24
+     ],
+     "fire": {
+      "src": "baked/rocketthrower/rocketthrower+yc+fire@yc.png",
+      "frames": 2
+     },
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "black-hole": {
+     "idle": {
+      "src": "baked/rocketthrower/rocketthrower+bh@bh.png",
+      "frames": 1
+     },
+     "center": [
+      23,
+      24
+     ],
+     "fire": {
+      "src": "baked/rocketthrower/rocketthrower+bh+fire@bh.png",
+      "frames": 2
+     },
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    }
+   }
+  },
+  "mediumTank": {
+   "kind": "land",
+   "maxCount": 5,
+   "fireMs": 600,
+   "fireSounds": [
+    "tank_shot.wav",
+    "mg_weapon_fire.wav"
+   ],
+   "position": [
+    -25,
+    5
+   ],
+   "flash": {
+    "src": "images/battleanimations/GeneralSprites/medium_shot.png",
+    "frames": 6
+   },
+   "flashOffset": [
+    15,
+    22
+   ],
+   "flashTravel": null,
+   "impact": {
+    "src": "images/battleanimations/GeneralSprites/cannon_hit.png",
+    "frames": 4
+   },
+   "impactSounds": [
+    "tank_hit.wav",
+    "impact_explosion.wav"
+   ],
+   "armies": {
+    "orange-star": {
+     "idle": {
+      "src": "baked/heavy_tank/heavy_tank+os@os.png",
+      "frames": 1
+     },
+     "center": [
+      25,
+      28
+     ],
+     "fire": {
+      "src": "baked/heavy_tank/heavy_tank+os+fire@os.png",
+      "frames": 5
+     },
+     "move": {
+      "src": "baked/heavy_tank/heavy_tank+os+move@os.png",
+      "frames": 4
+     },
+     "stop": {
+      "src": "baked/heavy_tank/heavy_tank+os+stop@os.png",
+      "frames": 4
+     },
+     "dying": null,
+     "parts": []
+    },
+    "blue-moon": {
+     "idle": {
+      "src": "baked/heavy_tank/heavy_tank+bm@bm.png",
+      "frames": 1
+     },
+     "center": [
+      25,
+      28
+     ],
+     "fire": {
+      "src": "baked/heavy_tank/heavy_tank+bm+fire@bm.png",
+      "frames": 5
+     },
+     "move": {
+      "src": "baked/heavy_tank/heavy_tank+bm+move@bm.png",
+      "frames": 4
+     },
+     "stop": {
+      "src": "baked/heavy_tank/heavy_tank+bm+stop@bm.png",
+      "frames": 4
+     },
+     "dying": null,
+     "parts": []
+    },
+    "green-earth": {
+     "idle": {
+      "src": "baked/heavy_tank/heavy_tank+ge@ge.png",
+      "frames": 1
+     },
+     "center": [
+      25,
+      31
+     ],
+     "fire": {
+      "src": "baked/heavy_tank/heavy_tank+ge+fire@ge.png",
+      "frames": 5
+     },
+     "move": {
+      "src": "baked/heavy_tank/heavy_tank+ge+move@ge.png",
+      "frames": 4
+     },
+     "stop": {
+      "src": "baked/heavy_tank/heavy_tank+ge+stop@ge.png",
+      "frames": 4
+     },
+     "dying": null,
+     "parts": []
+    },
+    "yellow-comet": {
+     "idle": {
+      "src": "baked/heavy_tank/heavy_tank+yc@yc.png",
+      "frames": 1
+     },
+     "center": [
+      24,
+      31
+     ],
+     "fire": {
+      "src": "baked/heavy_tank/heavy_tank+yc+fire@yc.png",
+      "frames": 5
+     },
+     "move": {
+      "src": "baked/heavy_tank/heavy_tank+yc+move@yc.png",
+      "frames": 4
+     },
+     "stop": {
+      "src": "baked/heavy_tank/heavy_tank+yc+stop@yc.png",
+      "frames": 4
+     },
+     "dying": null,
+     "parts": []
+    },
+    "black-hole": {
+     "idle": {
+      "src": "baked/heavy_tank/heavy_tank+bh@bh.png",
+      "frames": 1
+     },
+     "center": [
+      25,
+      24
+     ],
+     "fire": {
+      "src": "baked/heavy_tank/heavy_tank+bh+fire@bh.png",
+      "frames": 5
+     },
+     "move": {
+      "src": "baked/heavy_tank/heavy_tank+bh+move@bh.png",
+      "frames": 4
+     },
+     "stop": {
+      "src": "baked/heavy_tank/heavy_tank+bh+stop@bh.png",
+      "frames": 4
+     },
+     "dying": null,
+     "parts": []
+    }
+   }
+  },
+  "pipeRunner": {
+   "kind": "land",
+   "maxCount": 1,
+   "fireMs": 500,
+   "fireSounds": [
+    "pipecannon_weapon_fire.wav"
+   ],
+   "position": [
+    0,
+    30
+   ],
+   "flash": {
+    "src": "images/battleanimations/GeneralSprites/pipe_rocket_up.png",
+    "frames": 3
+   },
+   "flashOffset": [
+    50,
+    82
+   ],
+   "flashTravel": [
+    128,
+    64,
+    400
+   ],
+   "impact": {
+    "src": "images/battleanimations/GeneralSprites/rocket_hit.png",
+    "frames": 10
+   },
+   "impactSounds": [
+    "impact_explosion.wav"
+   ],
+   "armies": {
+    "orange-star": {
+     "idle": {
+      "src": "baked/piperunner/piperunner@os.png",
+      "frames": 1
+     },
+     "center": [
+      46,
+      43
+     ],
+     "fire": {
+      "src": "baked/piperunner/piperunner+fire@os.png",
+      "frames": 3
+     },
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "blue-moon": {
+     "idle": {
+      "src": "baked/piperunner/piperunner@bm.png",
+      "frames": 1
+     },
+     "center": [
+      46,
+      43
+     ],
+     "fire": {
+      "src": "baked/piperunner/piperunner+fire@bm.png",
+      "frames": 3
+     },
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "green-earth": {
+     "idle": {
+      "src": "baked/piperunner/piperunner@ge.png",
+      "frames": 1
+     },
+     "center": [
+      46,
+      43
+     ],
+     "fire": {
+      "src": "baked/piperunner/piperunner+fire@ge.png",
+      "frames": 3
+     },
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "yellow-comet": {
+     "idle": {
+      "src": "baked/piperunner/piperunner@yc.png",
+      "frames": 1
+     },
+     "center": [
+      46,
+      43
+     ],
+     "fire": {
+      "src": "baked/piperunner/piperunner+fire@yc.png",
+      "frames": 3
+     },
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "black-hole": {
+     "idle": {
+      "src": "baked/piperunner/piperunner@bh.png",
+      "frames": 1
+     },
+     "center": [
+      46,
+      43
+     ],
+     "fire": {
+      "src": "baked/piperunner/piperunner+fire@bh.png",
+      "frames": 3
+     },
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    }
+   }
+  },
+  "neoTank": {
+   "kind": "land",
+   "maxCount": 5,
+   "fireMs": 600,
+   "fireSounds": [
+    "neocannonweapon_fire.wav",
+    "mg_weapon_fire.wav"
+   ],
+   "position": [
+    -15,
+    5
+   ],
+   "flash": {
+    "src": "images/battleanimations/GeneralSprites/medium_shot.png",
+    "frames": 6
+   },
+   "flashOffset": [
+    25,
+    23
+   ],
+   "flashTravel": null,
+   "impact": {
+    "src": "images/battleanimations/GeneralSprites/cannon_hit.png",
+    "frames": 4
+   },
+   "impactSounds": [
+    "tank_hit.wav",
+    "impact_explosion.wav"
+   ],
+   "armies": {
+    "orange-star": {
+     "idle": {
+      "src": "baked/neotank/neotank+os@os.png",
+      "frames": 1
+     },
+     "center": [
+      24,
+      24
+     ],
+     "fire": {
+      "src": "baked/neotank/neotank+os+cannon+fire@os.png",
+      "frames": 4
+     },
+     "move": {
+      "src": "baked/neotank/neotank+os+move@os.png",
+      "frames": 4
+     },
+     "stop": {
+      "src": "baked/neotank/neotank+os+stop@os.png",
+      "frames": 4
+     },
+     "dying": null,
+     "parts": []
+    },
+    "blue-moon": {
+     "idle": {
+      "src": "baked/neotank/neotank+os@bm.png",
+      "frames": 1
+     },
+     "center": [
+      24,
+      24
+     ],
+     "fire": {
+      "src": "baked/neotank/neotank+os+cannon+fire@bm.png",
+      "frames": 4
+     },
+     "move": {
+      "src": "baked/neotank/neotank+os+move@bm.png",
+      "frames": 4
+     },
+     "stop": {
+      "src": "baked/neotank/neotank+os+stop@bm.png",
+      "frames": 4
+     },
+     "dying": null,
+     "parts": []
+    },
+    "green-earth": {
+     "idle": {
+      "src": "baked/neotank/neotank+os@ge.png",
+      "frames": 1
+     },
+     "center": [
+      24,
+      24
+     ],
+     "fire": {
+      "src": "baked/neotank/neotank+os+cannon+fire@ge.png",
+      "frames": 4
+     },
+     "move": {
+      "src": "baked/neotank/neotank+os+move@ge.png",
+      "frames": 4
+     },
+     "stop": {
+      "src": "baked/neotank/neotank+os+stop@ge.png",
+      "frames": 4
+     },
+     "dying": null,
+     "parts": []
+    },
+    "yellow-comet": {
+     "idle": {
+      "src": "baked/neotank/neotank+os@yc.png",
+      "frames": 1
+     },
+     "center": [
+      24,
+      24
+     ],
+     "fire": {
+      "src": "baked/neotank/neotank+os+cannon+fire@yc.png",
+      "frames": 4
+     },
+     "move": {
+      "src": "baked/neotank/neotank+os+move@yc.png",
+      "frames": 4
+     },
+     "stop": {
+      "src": "baked/neotank/neotank+os+stop@yc.png",
+      "frames": 4
+     },
+     "dying": null,
+     "parts": []
+    },
+    "black-hole": {
+     "idle": {
+      "src": "baked/neotank/neotank+os@bh.png",
+      "frames": 1
+     },
+     "center": [
+      24,
+      24
+     ],
+     "fire": {
+      "src": "baked/neotank/neotank+os+cannon+fire@bh.png",
+      "frames": 4
+     },
+     "move": {
+      "src": "baked/neotank/neotank+os+move@bh.png",
+      "frames": 4
+     },
+     "stop": {
+      "src": "baked/neotank/neotank+os+stop@bh.png",
+      "frames": 4
+     },
+     "dying": null,
+     "parts": []
+    }
+   }
+  },
+  "megaTank": {
+   "kind": "land",
+   "maxCount": 1,
+   "fireMs": 700,
+   "fireSounds": [
+    "megacannon_weapon_fire.wav",
+    "mg_weapon_fire.wav"
+   ],
+   "position": [
+    0,
+    10
+   ],
+   "flash": {
+    "src": "images/battleanimations/GeneralSprites/medium_shot.png",
+    "frames": 6
+   },
+   "flashOffset": [
+    102,
+    80
+   ],
+   "flashTravel": null,
+   "impact": {
+    "src": "images/battleanimations/GeneralSprites/flak_hit.png",
+    "frames": 10
+   },
+   "impactSounds": [
+    "tank_hit.wav",
+    "impact_explosion.wav"
+   ],
+   "armies": {
+    "orange-star": {
+     "idle": {
+      "src": "baked/megatank/megatank+os@os.png",
+      "frames": 1
+     },
+     "center": [
+      59,
+      60
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": [
+      {
+       "src": "baked/megatank/megatank+os+cannon@os.png",
+       "frames": 7,
+       "offset": [
+        64,
+        32
+       ]
+      }
+     ]
+    },
+    "blue-moon": {
+     "idle": {
+      "src": "baked/megatank/megatank+bm@bm.png",
+      "frames": 1
+     },
+     "center": [
+      59,
+      60
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": [
+      {
+       "src": "baked/megatank/megatank+bm+cannon@bm.png",
+       "frames": 7,
+       "offset": [
+        64,
+        32
+       ]
+      }
+     ]
+    },
+    "green-earth": {
+     "idle": {
+      "src": "baked/megatank/megatank+ge@ge.png",
+      "frames": 1
+     },
+     "center": [
+      59,
+      60
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": [
+      {
+       "src": "baked/megatank/megatank+ge+cannon@ge.png",
+       "frames": 7,
+       "offset": [
+        64,
+        32
+       ]
+      }
+     ]
+    },
+    "yellow-comet": {
+     "idle": {
+      "src": "baked/megatank/megatank+yc@yc.png",
+      "frames": 1
+     },
+     "center": [
+      59,
+      59
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": [
+      {
+       "src": "baked/megatank/megatank+yc+cannon@yc.png",
+       "frames": 7,
+       "offset": [
+        64,
+        32
+       ]
+      }
+     ]
+    },
+    "black-hole": {
+     "idle": {
+      "src": "baked/megatank/megatank+bh@bh.png",
+      "frames": 1
+     },
+     "center": [
+      59,
+      55
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": [
+      {
+       "src": "baked/megatank/megatank+bh+cannon@bh.png",
+       "frames": 7,
+       "offset": [
+        64,
+        32
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "transportCopter": {
+   "kind": "copter",
+   "maxCount": 1,
+   "fireMs": 600,
+   "fireSounds": [],
+   "position": [
+    0,
+    40
+   ],
+   "flash": null,
+   "flashOffset": null,
+   "flashTravel": null,
+   "impact": {
+    "src": "images/battleanimations/GeneralSprites/cannon_hit.png",
+    "frames": 4
+   },
+   "impactSounds": [
+    "tank_hit.wav",
+    "impact_explosion.wav"
+   ],
+   "armies": {
+    "orange-star": {
+     "idle": {
+      "src": "baked/t_heli/t_heli+os@os.png",
+      "frames": 2
+     },
+     "center": [
+      60,
+      59
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "blue-moon": {
+     "idle": {
+      "src": "baked/t_heli/t_heli+bm@bm.png",
+      "frames": 2
+     },
+     "center": [
+      56,
+      58
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "green-earth": {
+     "idle": {
+      "src": "baked/t_heli/t_heli+ge@ge.png",
+      "frames": 2
+     },
+     "center": [
+      61,
+      59
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "yellow-comet": {
+     "idle": {
+      "src": "baked/t_heli/t_heli+yc@yc.png",
+      "frames": 2
+     },
+     "center": [
+      61,
+      59
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "black-hole": {
+     "idle": {
+      "src": "baked/t_heli/t_heli+bh@bh.png",
+      "frames": 2
+     },
+     "center": [
+      60,
+      68
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    }
+   }
+  },
+  "battleCopter": {
+   "kind": "copter",
+   "maxCount": 5,
+   "fireMs": 600,
+   "fireSounds": [
+    "missile_weapon_fire.wav",
+    "mg_weapon_fire.wav"
+   ],
+   "position": [
+    -30,
+    30
+   ],
+   "flash": {
+    "src": "images/battleanimations/GeneralSprites/rocket.png",
+    "frames": 7
+   },
+   "flashOffset": [
+    -40,
+    32
+   ],
+   "flashTravel": [
+    130,
+    -80,
+    600
+   ],
+   "impact": {
+    "src": "images/battleanimations/GeneralSprites/mg_hit.png",
+    "frames": 10
+   },
+   "impactSounds": [
+    "rockets_explode.wav"
+   ],
+   "armies": {
+    "orange-star": {
+     "idle": {
+      "src": "baked/k_heli/k_heli+os@os.png",
+      "frames": 2
+     },
+     "center": [
+      35,
+      31
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": [
+      {
+       "src": "baked/k_heli/k_heli+os+mg+fire@os.png",
+       "frames": 2,
+       "offset": [
+        40,
+        0
+       ]
+      }
+     ]
+    },
+    "blue-moon": {
+     "idle": {
+      "src": "baked/k_heli/k_heli+bm@bm.png",
+      "frames": 2
+     },
+     "center": [
+      34,
+      31
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": [
+      {
+       "src": "baked/k_heli/k_heli+bm+mg+fire@bm.png",
+       "frames": 2,
+       "offset": [
+        40,
+        0
+       ]
+      }
+     ]
+    },
+    "green-earth": {
+     "idle": {
+      "src": "baked/k_heli/k_heli+ge@ge.png",
+      "frames": 2
+     },
+     "center": [
+      35,
+      34
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": [
+      {
+       "src": "baked/k_heli/k_heli+ge+mg+fire@ge.png",
+       "frames": 2,
+       "offset": [
+        40,
+        0
+       ]
+      }
+     ]
+    },
+    "yellow-comet": {
+     "idle": {
+      "src": "baked/k_heli/k_heli+yc@yc.png",
+      "frames": 2
+     },
+     "center": [
+      36,
+      31
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": [
+      {
+       "src": "baked/k_heli/k_heli+yc+mg+fire@yc.png",
+       "frames": 2,
+       "offset": [
+        40,
+        0
+       ]
+      }
+     ]
+    },
+    "black-hole": {
+     "idle": {
+      "src": "baked/k_heli/k_heli+bh@bh.png",
+      "frames": 2
+     },
+     "center": [
+      34,
+      34
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": [
+      {
+       "src": "baked/k_heli/k_heli+bh+mg+fire@bh.png",
+       "frames": 2,
+       "offset": [
+        40,
+        0
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "fighter": {
+   "kind": "air",
+   "maxCount": 5,
+   "fireMs": 800,
+   "fireSounds": [
+    "missile_weapon_fire.wav"
+   ],
+   "position": [
+    -40,
+    20
+   ],
+   "flash": {
+    "src": "images/battleanimations/GeneralSprites/rocket.png",
+    "frames": 7
+   },
+   "flashOffset": [
+    -70,
+    30
+   ],
+   "flashTravel": [
+    227,
+    0,
+    800
+   ],
+   "impact": {
+    "src": "images/battleanimations/GeneralSprites/rocket_hit_air.png",
+    "frames": 5
+   },
+   "impactSounds": [
+    "rockets_explode.wav"
+   ],
+   "armies": {
+    "orange-star": {
+     "idle": {
+      "src": "baked/fighter/fighter+os@os.png",
+      "frames": 1
+     },
+     "center": [
+      32,
+      40
+     ],
+     "fire": {
+      "src": "baked/fighter/fighter+os+fire@os.png",
+      "frames": 1
+     },
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "blue-moon": {
+     "idle": {
+      "src": "baked/fighter/fighter+bm@bm.png",
+      "frames": 1
+     },
+     "center": [
+      32,
+      40
+     ],
+     "fire": {
+      "src": "baked/fighter/fighter+bm+fire@bm.png",
+      "frames": 1
+     },
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "green-earth": {
+     "idle": {
+      "src": "baked/fighter/fighter+ge@ge.png",
+      "frames": 1
+     },
+     "center": [
+      32,
+      40
+     ],
+     "fire": {
+      "src": "baked/fighter/fighter+ge+fire@ge.png",
+      "frames": 1
+     },
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "yellow-comet": {
+     "idle": {
+      "src": "baked/fighter/fighter+yc@yc.png",
+      "frames": 2
+     },
+     "center": [
+      29,
+      41
+     ],
+     "fire": {
+      "src": "baked/fighter/fighter+yc+fire@yc.png",
+      "frames": 2
+     },
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "black-hole": {
+     "idle": {
+      "src": "baked/fighter/fighter+bh@bh.png",
+      "frames": 1
+     },
+     "center": [
+      33,
+      44
+     ],
+     "fire": {
+      "src": "baked/fighter/fighter+bh+fire@bh.png",
+      "frames": 1
+     },
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    }
+   }
+  },
+  "bomber": {
+   "kind": "air",
+   "maxCount": 1,
+   "fireMs": 800,
+   "fireSounds": [
+    "falling_bomb.wav"
+   ],
+   "position": [
+    -65,
+    40
+   ],
+   "flash": {
+    "src": "images/battleanimations/GeneralSprites/bombs_projectile.png",
+    "frames": 4
+   },
+   "flashOffset": [
+    70,
+    60
+   ],
+   "flashTravel": [
+    0,
+    -160,
+    800
+   ],
+   "impact": {
+    "src": "images/battleanimations/GeneralSprites/cannon_heavy_hit.png",
+    "frames": 4
+   },
+   "impactSounds": [
+    "impact_explosion.wav"
+   ],
+   "armies": {
+    "orange-star": {
+     "idle": {
+      "src": "baked/bomber/bomber+os@os.png",
+      "frames": 1
+     },
+     "center": [
+      105,
+      68
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "blue-moon": {
+     "idle": {
+      "src": "baked/bomber/bomber+bm@bm.png",
+      "frames": 1
+     },
+     "center": [
+      96,
+      64
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "green-earth": {
+     "idle": {
+      "src": "baked/bomber/bomber+ge@ge.png",
+      "frames": 1
+     },
+     "center": [
+      97,
+      67
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "yellow-comet": {
+     "idle": {
+      "src": "baked/bomber/bomber+yc@yc.png",
+      "frames": 1
+     },
+     "center": [
+      105,
+      68
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "black-hole": {
+     "idle": {
+      "src": "baked/bomber/bomber+bh@bh.png",
+      "frames": 1
+     },
+     "center": [
+      106,
+      69
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    }
+   }
+  },
+  "stealth": {
+   "kind": "air",
+   "maxCount": 1,
+   "fireMs": 600,
+   "fireSounds": [
+    "stealthfighter_fire.wav"
+   ],
+   "position": [
+    0,
+    60
+   ],
+   "flash": {
+    "src": "images/battleanimations/GeneralSprites/rocket.png",
+    "frames": 7
+   },
+   "flashOffset": [
+    45,
+    62
+   ],
+   "flashTravel": [
+    128,
+    0,
+    400
+   ],
+   "impact": {
+    "src": "images/battleanimations/GeneralSprites/rocket_hit.png",
+    "frames": 10
+   },
+   "impactSounds": [
+    "rockets_explode.wav"
+   ],
+   "armies": {
+    "orange-star": {
+     "idle": {
+      "src": "baked/stealthbomber/stealthbomber@os.png",
+      "frames": 1
+     },
+     "center": [
+      60,
+      30
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "blue-moon": {
+     "idle": {
+      "src": "baked/stealthbomber/stealthbomber@bm.png",
+      "frames": 1
+     },
+     "center": [
+      60,
+      30
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "green-earth": {
+     "idle": {
+      "src": "baked/stealthbomber/stealthbomber@ge.png",
+      "frames": 1
+     },
+     "center": [
+      60,
+      30
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "yellow-comet": {
+     "idle": {
+      "src": "baked/stealthbomber/stealthbomber@yc.png",
+      "frames": 1
+     },
+     "center": [
+      60,
+      30
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "black-hole": {
+     "idle": {
+      "src": "baked/stealthbomber/stealthbomber@bh.png",
+      "frames": 1
+     },
+     "center": [
+      60,
+      30
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    }
+   }
+  },
+  "blackBomb": {
+   "kind": "air",
+   "maxCount": 1,
+   "fireMs": 600,
+   "fireSounds": [],
+   "position": [
+    -1,
+    40
+   ],
+   "flash": null,
+   "flashOffset": null,
+   "flashTravel": null,
+   "impact": {
+    "src": "images/battleanimations/GeneralSprites/cannon_hit.png",
+    "frames": 4
+   },
+   "impactSounds": [
+    "tank_hit.wav",
+    "impact_explosion.wav"
+   ],
+   "armies": {
+    "orange-star": {
+     "idle": {
+      "src": "baked/black_bomb/black_bomb@os.png",
+      "frames": 1
+     },
+     "center": [
+      64,
+      40
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "blue-moon": {
+     "idle": {
+      "src": "baked/black_bomb/black_bomb@bm.png",
+      "frames": 1
+     },
+     "center": [
+      64,
+      40
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "green-earth": {
+     "idle": {
+      "src": "baked/black_bomb/black_bomb@ge.png",
+      "frames": 1
+     },
+     "center": [
+      64,
+      40
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "yellow-comet": {
+     "idle": {
+      "src": "baked/black_bomb/black_bomb@yc.png",
+      "frames": 1
+     },
+     "center": [
+      64,
+      40
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "black-hole": {
+     "idle": {
+      "src": "baked/black_bomb/black_bomb@bh.png",
+      "frames": 1
+     },
+     "center": [
+      64,
+      40
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    }
+   }
+  },
+  "blackBoat": {
+   "kind": "sea",
+   "maxCount": 1,
+   "fireMs": 600,
+   "fireSounds": [],
+   "position": [
+    -25,
+    20
+   ],
+   "flash": null,
+   "flashOffset": null,
+   "flashTravel": null,
+   "impact": {
+    "src": "images/battleanimations/GeneralSprites/cannon_hit.png",
+    "frames": 4
+   },
+   "impactSounds": [
+    "tank_hit.wav",
+    "impact_explosion.wav"
+   ],
+   "armies": {
+    "orange-star": {
+     "idle": {
+      "src": "baked/black_boat/black_boat@os.png",
+      "frames": 4
+     },
+     "center": [
+      75,
+      45
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "blue-moon": {
+     "idle": {
+      "src": "baked/black_boat/black_boat@bm.png",
+      "frames": 4
+     },
+     "center": [
+      75,
+      45
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "green-earth": {
+     "idle": {
+      "src": "baked/black_boat/black_boat@ge.png",
+      "frames": 4
+     },
+     "center": [
+      75,
+      45
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "yellow-comet": {
+     "idle": {
+      "src": "baked/black_boat/black_boat@yc.png",
+      "frames": 4
+     },
+     "center": [
+      75,
+      45
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "black-hole": {
+     "idle": {
+      "src": "baked/black_boat/black_boat@bh.png",
+      "frames": 4
+     },
+     "center": [
+      75,
+      45
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    }
+   }
+  },
+  "lander": {
+   "kind": "sea",
+   "maxCount": 1,
+   "fireMs": 600,
+   "fireSounds": [],
+   "position": [
+    -33,
+    20
+   ],
+   "flash": null,
+   "flashOffset": null,
+   "flashTravel": null,
+   "impact": {
+    "src": "images/battleanimations/GeneralSprites/cannon_hit.png",
+    "frames": 4
+   },
+   "impactSounds": [
+    "tank_hit.wav",
+    "impact_explosion.wav"
+   ],
+   "armies": {
+    "orange-star": {
+     "idle": {
+      "src": "baked/lander/lander+os@os.png",
+      "frames": 4
+     },
+     "center": [
+      88,
+      48
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "blue-moon": {
+     "idle": {
+      "src": "baked/lander/lander+bm@bm.png",
+      "frames": 4
+     },
+     "center": [
+      88,
+      48
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "green-earth": {
+     "idle": {
+      "src": "baked/lander/lander+ge@ge.png",
+      "frames": 4
+     },
+     "center": [
+      89,
+      47
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "yellow-comet": {
+     "idle": {
+      "src": "baked/lander/lander+yc@yc.png",
+      "frames": 4
+     },
+     "center": [
+      88,
+      47
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "black-hole": {
+     "idle": {
+      "src": "baked/lander/lander+bh@bh.png",
+      "frames": 4
+     },
+     "center": [
+      89,
+      46
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    }
+   }
+  },
+  "cruiser": {
+   "kind": "sea",
+   "maxCount": 1,
+   "fireMs": 600,
+   "fireSounds": [
+    "rocket_launch.wav",
+    "anti_air_gun_fire.wav"
+   ],
+   "position": [
+    -65,
+    20
+   ],
+   "flash": {
+    "src": "images/battleanimations/GeneralSprites/flak_shot.png",
+    "frames": 6
+   },
+   "flashOffset": [
+    100,
+    58
+   ],
+   "flashTravel": null,
+   "impact": {
+    "src": "images/battleanimations/GeneralSprites/flak_hit.png",
+    "frames": 10
+   },
+   "impactSounds": [
+    "impact_explosion.wav"
+   ],
+   "armies": {
+    "orange-star": {
+     "idle": {
+      "src": "baked/cruiser/cruiser+os@os.png",
+      "frames": 4
+     },
+     "center": [
+      96,
+      65
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": [
+      {
+       "src": "baked/cruiser/cruiser+os+missile@os.png",
+       "frames": 6,
+       "offset": [
+        80,
+        32
+       ]
+      },
+      {
+       "src": "baked/cruiser/cruiser+os+cannon+fire+air@os.png",
+       "frames": 2,
+       "offset": [
+        144,
+        32
+       ]
+      }
+     ]
+    },
+    "blue-moon": {
+     "idle": {
+      "src": "baked/cruiser/cruiser+bm@bm.png",
+      "frames": 4
+     },
+     "center": [
+      96,
+      65
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": [
+      {
+       "src": "baked/cruiser/cruiser+bm+missile@bm.png",
+       "frames": 6,
+       "offset": [
+        80,
+        32
+       ]
+      },
+      {
+       "src": "baked/cruiser/cruiser+bm+cannon+fire+air@bm.png",
+       "frames": 2,
+       "offset": [
+        144,
+        32
+       ]
+      }
+     ]
+    },
+    "green-earth": {
+     "idle": {
+      "src": "baked/cruiser/cruiser+ge@ge.png",
+      "frames": 4
+     },
+     "center": [
+      96,
+      65
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": [
+      {
+       "src": "baked/cruiser/cruiser+ge+missile@ge.png",
+       "frames": 6,
+       "offset": [
+        80,
+        32
+       ]
+      },
+      {
+       "src": "baked/cruiser/cruiser+ge+cannon+fire+air@ge.png",
+       "frames": 2,
+       "offset": [
+        144,
+        32
+       ]
+      }
+     ]
+    },
+    "yellow-comet": {
+     "idle": {
+      "src": "baked/cruiser/cruiser+yc@yc.png",
+      "frames": 4
+     },
+     "center": [
+      96,
+      65
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": [
+      {
+       "src": "baked/cruiser/cruiser+yc+missile@yc.png",
+       "frames": 6,
+       "offset": [
+        80,
+        32
+       ]
+      },
+      {
+       "src": "baked/cruiser/cruiser+yc+cannon+fire+air@yc.png",
+       "frames": 2,
+       "offset": [
+        144,
+        32
+       ]
+      }
+     ]
+    },
+    "black-hole": {
+     "idle": {
+      "src": "baked/cruiser/cruiser+bh@bh.png",
+      "frames": 4
+     },
+     "center": [
+      96,
+      65
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": [
+      {
+       "src": "baked/cruiser/cruiser+bh+missile@bh.png",
+       "frames": 6,
+       "offset": [
+        80,
+        32
+       ]
+      },
+      {
+       "src": "baked/cruiser/cruiser+bh+cannon+fire+air@bh.png",
+       "frames": 2,
+       "offset": [
+        144,
+        32
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "sub": {
+   "kind": "sea",
+   "maxCount": 1,
+   "fireMs": 400,
+   "fireSounds": [
+    "torpedo_fire.wav"
+   ],
+   "position": [
+    -60,
+    20
+   ],
+   "flash": {
+    "src": "images/battleanimations/GeneralSprites/torpedo.png",
+    "frames": 4
+   },
+   "flashOffset": [
+    70,
+    30
+   ],
+   "flashTravel": [
+    60,
+    0,
+    400
+   ],
+   "impact": {
+    "src": "images/battleanimations/GeneralSprites/water_hit.png",
+    "frames": 7
+   },
+   "impactSounds": [
+    "impact_explosion.wav"
+   ],
+   "armies": {
+    "orange-star": {
+     "idle": {
+      "src": "baked/submarine/submarine+os@os.png",
+      "frames": 4
+     },
+     "center": [
+      89,
+      40
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "blue-moon": {
+     "idle": {
+      "src": "baked/submarine/submarine+bm@bm.png",
+      "frames": 4
+     },
+     "center": [
+      89,
+      40
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "green-earth": {
+     "idle": {
+      "src": "baked/submarine/submarine+ge@ge.png",
+      "frames": 4
+     },
+     "center": [
+      89,
+      39
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "yellow-comet": {
+     "idle": {
+      "src": "baked/submarine/submarine+yc@yc.png",
+      "frames": 4
+     },
+     "center": [
+      89,
+      40
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "black-hole": {
+     "idle": {
+      "src": "baked/submarine/submarine+bh@bh.png",
+      "frames": 4
+     },
+     "center": [
+      89,
+      39
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    }
+   }
+  },
+  "battleship": {
+   "kind": "sea",
+   "maxCount": 1,
+   "fireMs": 1500,
+   "fireSounds": [
+    "cannon_weapon_fire.wav"
+   ],
+   "position": [
+    -100,
+    20
+   ],
+   "flash": {
+    "src": "images/battleanimations/GeneralSprites/battleship_shot.png",
+    "frames": 6
+   },
+   "flashOffset": [
+    108,
+    97
+   ],
+   "flashTravel": null,
+   "impact": {
+    "src": "images/battleanimations/GeneralSprites/artillery_heavy_hit.png",
+    "frames": 6
+   },
+   "impactSounds": [
+    "impact_explosion.wav"
+   ],
+   "armies": {
+    "orange-star": {
+     "idle": {
+      "src": "baked/battleship/battleship+os@os.png",
+      "frames": 4
+     },
+     "center": [
+      112,
+      80
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": [
+      {
+       "src": "baked/battleship/battleship+os+fire@os.png",
+       "frames": 6,
+       "offset": [
+        160,
+        64
+       ]
+      }
+     ]
+    },
+    "blue-moon": {
+     "idle": {
+      "src": "baked/battleship/battleship+bm@bm.png",
+      "frames": 4
+     },
+     "center": [
+      112,
+      80
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": [
+      {
+       "src": "baked/battleship/battleship+bm+fire@bm.png",
+       "frames": 6,
+       "offset": [
+        160,
+        64
+       ]
+      }
+     ]
+    },
+    "green-earth": {
+     "idle": {
+      "src": "baked/battleship/battleship+ge@ge.png",
+      "frames": 4
+     },
+     "center": [
+      112,
+      80
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": [
+      {
+       "src": "baked/battleship/battleship+ge+fire@ge.png",
+       "frames": 6,
+       "offset": [
+        160,
+        64
+       ]
+      }
+     ]
+    },
+    "yellow-comet": {
+     "idle": {
+      "src": "baked/battleship/battleship+yc@yc.png",
+      "frames": 4
+     },
+     "center": [
+      112,
+      80
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": [
+      {
+       "src": "baked/battleship/battleship+yc+fire@yc.png",
+       "frames": 6,
+       "offset": [
+        160,
+        64
+       ]
+      }
+     ]
+    },
+    "black-hole": {
+     "idle": {
+      "src": "baked/battleship/battleship+bh@bh.png",
+      "frames": 4
+     },
+     "center": [
+      112,
+      80
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": [
+      {
+       "src": "baked/battleship/battleship+bh+fire@bh.png",
+       "frames": 6,
+       "offset": [
+        160,
+        64
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "carrier": {
+   "kind": "sea",
+   "maxCount": 1,
+   "fireMs": 500,
+   "fireSounds": [
+    "rocket_launch.wav"
+   ],
+   "position": [
+    -130,
+    20
+   ],
+   "flash": {
+    "src": "images/battleanimations/GeneralSprites/rocket_up.png",
+    "frames": 3
+   },
+   "flashOffset": [
+    40,
+    75
+   ],
+   "flashTravel": [
+    128,
+    64,
+    500
+   ],
+   "impact": {
+    "src": "images/battleanimations/GeneralSprites/rocket_hit_air.png",
+    "frames": 5
+   },
+   "impactSounds": [
+    "rockets_explode.wav"
+   ],
+   "armies": {
+    "orange-star": {
+     "idle": {
+      "src": "baked/aircraftcarrier/aircraftcarrier@os.png",
+      "frames": 4
+     },
+     "center": [
+      131,
+      64
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "blue-moon": {
+     "idle": {
+      "src": "baked/aircraftcarrier/aircraftcarrier@bm.png",
+      "frames": 4
+     },
+     "center": [
+      131,
+      64
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "green-earth": {
+     "idle": {
+      "src": "baked/aircraftcarrier/aircraftcarrier@ge.png",
+      "frames": 4
+     },
+     "center": [
+      131,
+      64
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "yellow-comet": {
+     "idle": {
+      "src": "baked/aircraftcarrier/aircraftcarrier@yc.png",
+      "frames": 4
+     },
+     "center": [
+      131,
+      64
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    },
+    "black-hole": {
+     "idle": {
+      "src": "baked/aircraftcarrier/aircraftcarrier@bh.png",
+      "frames": 4
+     },
+     "center": [
+      131,
+      64
+     ],
+     "fire": null,
+     "move": null,
+     "stop": null,
+     "dying": null,
+     "parts": []
+    }
+   }
+  }
+ },
+ "cos": {
+  "adder": {
+   "face": "images/co/bh/co_adder+face.png",
+   "full": "images/co/bh/co_adder+nrm.png",
+   "music": "music/cos/adder.ogg"
+  },
+  "andy": {
+   "face": "images/co/os/co_andy+face.png",
+   "full": "images/co/os/co_andy+nrm.png",
+   "music": "music/cos/andy.ogg"
+  },
+  "sami": {
+   "face": "images/co/os/co_sami+face.png",
+   "full": "images/co/os/co_sami+nrm.png",
+   "music": "music/cos/sami.ogg"
+  },
+  "max": {
+   "face": "images/co/os/co_max+face.png",
+   "full": "images/co/os/co_max+nrm.png",
+   "music": "music/cos/max.ogg"
+  },
+  "hawke": {
+   "face": "images/co/bh/co_hawke+face.png",
+   "full": "images/co/bh/co_hawke+nrm.png",
+   "music": "music/cos/hawke.ogg"
+  },
+  "sturm": {
+   "face": "images/co/bh/co_sturm+face.png",
+   "full": "images/co/bh/co_sturm+nrm.png",
+   "music": "music/cos/sturm.ogg"
+  },
+  "lash": {
+   "face": "images/co/bh/co_lash+face.png",
+   "full": "images/co/bh/co_lash+nrm.png",
+   "music": "music/cos/lash.ogg"
+  },
+  "flak": {
+   "face": "images/co/bh/co_flak+face.png",
+   "full": "images/co/bh/co_flak+nrm.png",
+   "music": "music/cos/flak.ogg"
+  },
+  "kanbei": {
+   "face": "images/co/yc/co_kanbei+face.png",
+   "full": "images/co/yc/co_kanbei+nrm.png",
+   "music": "music/cos/kanbei.ogg"
+  },
+  "sonja": {
+   "face": "images/co/yc/co_sonja+face.png",
+   "full": "images/co/yc/co_sonja+nrm.png",
+   "music": "music/cos/sonja.ogg"
+  },
+  "sensei": {
+   "face": "images/co/yc/co_sensei+face.png",
+   "full": "images/co/yc/co_sensei+nrm.png",
+   "music": "music/cos/sensei.ogg"
+  },
+  "colin": {
+   "face": "images/co/bm/co_colin+face.png",
+   "full": "images/co/bm/co_colin+nrm.png",
+   "music": "music/cos/colin.ogg"
+  },
+  "drake": {
+   "face": "images/co/ge/co_drake+face.png",
+   "full": "images/co/ge/co_drake+nrm.png",
+   "music": "music/cos/drake.ogg"
+  },
+  "eagle": {
+   "face": "images/co/ge/co_eagle+face.png",
+   "full": "images/co/ge/co_eagle+nrm.png",
+   "music": "music/cos/eagle.ogg"
+  },
+  "nell": {
+   "face": "images/co/os/co_nell+face.png",
+   "full": "images/co/os/co_nell+nrm.png",
+   "music": "music/cos/nell.ogg"
+  },
+  "hachi": {
+   "face": "images/co/os/co_hachi+face.png",
+   "full": "images/co/os/co_hachi+nrm.png"
+  },
+  "olaf": {
+   "face": "images/co/bm/co_olaf+face.png",
+   "full": "images/co/bm/co_olaf+nrm.png",
+   "music": "music/cos/olaf.ogg"
+  },
+  "grit": {
+   "face": "images/co/bm/co_grit+face.png",
+   "full": "images/co/bm/co_grit+nrm.png",
+   "music": "music/cos/grit.ogg"
+  },
+  "jess": {
+   "face": "images/co/ge/co_jess+face.png",
+   "full": "images/co/ge/co_jess+nrm.png",
+   "music": "music/cos/jess.ogg"
+  },
+  "kindle": {
+   "face": "images/co/bg/co_kindle+face.png",
+   "full": "images/co/bg/co_kindle+nrm.png",
+   "music": "music/cos/kindle.ogg"
+  },
+  "grimm": {
+   "face": "images/co/yc/co_grimm+face.png",
+   "full": "images/co/yc/co_grimm+nrm.png",
+   "music": "music/cos/grimm.ogg"
+  },
+  "jake": {
+   "face": "images/co/os/co_jake+face.png",
+   "full": "images/co/os/co_jake+nrm.png",
+   "music": "music/cos/jake.ogg"
+  },
+  "javier": {
+   "face": "images/co/ge/co_javier+face.png",
+   "full": "images/co/ge/co_javier+nrm.png",
+   "music": "music/cos/javier.ogg"
+  },
+  "jugger": {
+   "face": "images/co/bg/co_jugger+face.png",
+   "full": "images/co/bg/co_jugger+nrm.png",
+   "music": "music/cos/jugger.ogg"
+  },
+  "koal": {
+   "face": "images/co/bg/co_koal+face.png",
+   "full": "images/co/bg/co_koal+nrm.png",
+   "music": "music/cos/koal.ogg"
+  },
+  "von-bolt": {
+   "face": "images/co/bg/co_von_bolt+face.png",
+   "full": "images/co/bg/co_von_bolt+nrm.png",
+   "music": "music/cos/von_bolt.ogg"
+  },
+  "sasha": {
+   "face": "images/co/bm/co_sasha+face.png",
+   "full": "images/co/bm/co_sasha+nrm.png",
+   "music": "music/cos/sasha.ogg"
+  },
+  "rachel": {
+   "face": "images/co/os/co_rachel+face.png",
+   "full": "images/co/os/co_rachel+nrm.png",
+   "music": "music/cos/rachel.ogg"
+  }
+ },
+ "explosions": {
+  "land": {
+   "src": "images/battleanimations/GeneralSprites/unit_explosion.png",
+   "frames": 14
+  },
+  "air": {
+   "src": "images/battleanimations/GeneralSprites/unit_explosion_air.png",
+   "frames": 8
+  }
+ }
+}

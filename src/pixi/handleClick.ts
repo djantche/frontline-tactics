@@ -1,3 +1,4 @@
+import { playSound } from "frontend/game/audio";
 import { throwIfCantMoveIntoUnit } from "shared/match-logic/events/handlers/move";
 import type { Position } from "shared/schemas/position";
 import { isSamePosition } from "shared/schemas/position";
@@ -150,6 +151,7 @@ export const handleClick = async (clickPosition: Position, context: GameContext)
     currentUnitClickedRef.current === null
   ) {
     resetScreen(context);
+    playSound("switchmenu.wav");
     ui.openMenu(buildUnitMenu(context, clickPosition));
   }
 
@@ -197,6 +199,7 @@ export const handleClick = async (clickPosition: Position, context: GameContext)
       //if ready, create path move tiles...
       if (unitClicked.data.isReady) {
         currentUnitClickedRef.current = unitClicked;
+        playSound("selectunit.wav");
 
         const passablePositions = getAccessibleNodes(match, unitClicked);
         const displayedPassableTiles = createTilesContainer(

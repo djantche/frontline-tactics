@@ -1,0 +1,104 @@
+Headline:Programmers
+
+Robosturm
+Fairy
+Rimi
+TheMasterCreed
+
+End
+Headline:Graphic Designer
+
+HammerGuy
+Robosturm
+Lord Spyro
+Kosheh
+Pillbox Phil
+lain'Buchanan
+Fatal Kitsune
+Kronic
+OE Patton
+K'Braid (BionicleManF)
+Fairy
+Everglass
+chopper385
+laxative
+ballin
+DerpyKong
+Sebastien
+GeneralWadaling
+Eagle Angelo
+Alex06
+Kaijira
+Vektorr
+Jocrr
+
+End
+
+Headline:Sound Mixer
+
+Custom Wars Creator's
+Koopanique
+chopper385
+JakeSamiRulez
+
+End
+
+Headline: Translation
+
+Robosturm
+Creed
+Koopanique
+UOcelot16
+Danmark
+ShaMedic
+Star Bright
+
+end
+
+Headline:Custom CW CO's
+
+Kosheh (Koshi)
+ThrawnFett (Eric, Sabaki, Tempest)
+I Blame Video Games (Smitan, Rattigan)
+Fugue (Minamoto)
+Xaif (Amy)
+Tronne_Bonne (Julia, Sophie, Ember)
+Captain Vimes (Adam)
+Tassadar (Edward)
+Xenexis (Epoch, Walter)
+Killing Edge (Alexis)
+ChessRules (Levenworth, Napoleon, Peter, Jared)
+Deoxy Knight (Carmen, Alexander,Melanthe)
+x0_000 (Robo-Andy)
+CO-Frosty (Mary)
+Ubergeneral (Zandra)
+Retsej (Varlot, Graves)
+Stuffman (Conrad)
+Ozzy (Ozzy)
+RoboCicero (Adam)
+
+end
+Headline:Development Support
+
+Kazyu The Avali
+
+end
+Headline:Game Tester
+
+Robosturm
+GuardianTempest
+Koopanique
+XnKradst
+Everglass
+Fairy
+UOcelot16
+Firewito
+
+End
+Headline:Special Thanks
+
+Nintendo and Intelligent System
+JakeSamiRulez
+The whole Custom Wars Team
+
+End

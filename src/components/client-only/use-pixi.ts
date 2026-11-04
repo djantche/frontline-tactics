@@ -1,5 +1,9 @@
 "use client";
+import { playSound } from "frontend/game/audio";
+import { battleBackgrounds } from "frontend/game/battle-backgrounds";
+import type { BattleSideView } from "frontend/game/battle-timeline";
 import type { ShaderKind } from "frontend/settings/game-settings";
+import { readSettings } from "frontend/settings/game-settings";
 import type { Container, DisplayObject } from "pixi.js";
 import { Application } from "pixi.js";
 import type { LoadedSpriteSheet } from "pixi/load-spritesheet";
@@ -8,9 +12,11 @@ import { setupScene } from "pixi/setupApp";
 import { flashTile, walkAlongPath } from "pixi/unit-animations";
 import type { MutableRefObject } from "react";
 import { useCallback, useEffect, useRef, useState } from "react";
+import { getTerrainDefenseStars } from "shared/match-logic/game-constants/terrain-properties";
 import type { MainAction } from "shared/schemas/action";
 import type { Position } from "shared/schemas/position";
 import { isSamePosition } from "shared/schemas/position";
+import type { TileType } from "shared/schemas/tile";
 import type { Emittable } from "shared/types/events";
 import type { MatchWrapper } from "shared/wrappers/match";
 import type { PlayerInMatchWrapper } from "shared/wrappers/player-in-match";
@@ -25,6 +31,17 @@ import { baseTileSize } from "./MatchRenderer";
 
 /** How long a received event may wait for the snapshot it belongs to. */
 const eventMaxAgeMs = 4000;
+
+const battleSide = (unit: UnitWrapper, tile: TileType, hpAfter: number): BattleSideView => ({
+  unitType: unit.data.type,
+  army: unit.player.data.army,
+  co: unit.player.data.coId.name,
+  hpBefore: unit.getHP(),
+  hpAfter,
+  terrain: battleBackgrounds[tile],
+  // air units don't benefit from the terrain
+  stars: unit.properties.movementType === "air" ? 0 : getTerrainDefenseStars(tile),
+});
 
 export type PendingEvent = { event: Emittable; receivedAt: number };
 
@@ -195,6 +212,7 @@ export const usePixi = ({
       ui: {
         openMenu: (menu) => uiRef.current.openMenu(menu),
         showForecast: (forecast) => uiRef.current.showForecast(forecast),
+        playBattle: (battle) => uiRef.current.playBattle(battle),
       },
     };
 
@@ -211,25 +229,61 @@ export const usePixi = ({
     const { event } = pending;
 
     if (event.type === "build") {
+      playSound("moveOut.wav");
       flashTile(app, unitContainer, event.position, "#f58f45");
+    }
+
+    if (event.type === "coPower") {
+      playSound(event.isSuper ? "superpower.wav" : "power.wav");
     }
 
     if (event.type !== "move") {
       return;
     }
 
-    const flashHit = () => {
-      const defenderPosition =
-        event.subEvent.type === "attack" ? event.subEvent.defender?.position : undefined;
-
-      if (defenderPosition !== undefined) {
-        flashTile(app, unitContainer, defenderPosition, "#ffffff");
-      }
-    };
-
     const start = event.path[0];
     const end = event.path[event.path.length - 1];
     const movedUnit = previousMatch?.getUnit(start) ?? match.getUnit(end);
+
+    const afterWalk = () => {
+      const { subEvent } = event;
+
+      if (subEvent.type === "ability" && movedUnit !== undefined) {
+        if (movedUnit.data.type === "infantry" || movedUnit.data.type === "mech") {
+          playSound("capture.wav");
+        }
+      } else if (subEvent.type === "repair") {
+        playSound("repair_1.wav");
+      } else if (subEvent.type === "unloadWait") {
+        playSound("unload.wav");
+      } else if (subEvent.type === "attack") {
+        const defenderPosition = subEvent.defender?.position;
+
+        if (defenderPosition === undefined) {
+          return;
+        }
+
+        flashTile(app, unitContainer, defenderPosition, "#ffffff");
+
+        const defender = previousMatch?.getUnit(defenderPosition);
+
+        // Only fights between units have a scene: pipe seams don't fight back.
+        if (movedUnit !== undefined && defender !== undefined && readSettings().battleAnimations) {
+          uiRef.current.playBattle({
+            attacker: battleSide(
+              movedUnit,
+              match.getTile(end).type,
+              subEvent.attacker?.HP ?? movedUnit.getHP(),
+            ),
+            defender: battleSide(
+              defender,
+              match.getTile(defenderPosition).type,
+              subEvent.defender?.HP ?? 0,
+            ),
+          });
+        }
+      }
+    };
 
     if (
       hasWalked ||
@@ -237,7 +291,7 @@ export const usePixi = ({
       event.path.length < 2 ||
       isSamePosition(start, end)
     ) {
-      flashHit();
+      afterWalk();
       return;
     }
 
@@ -263,7 +317,7 @@ export const usePixi = ({
           finalSprite.visible = true;
         }
 
-        flashHit();
+        afterWalk();
       }
     });
   }, [mutateAction, match, player, spriteSheets, sceneVersion, pendingEventRef]);
