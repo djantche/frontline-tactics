@@ -10,14 +10,14 @@ import type { MatchRules } from "shared/schemas/match-rules";
 import type { Emittable } from "shared/types/events";
 import type { UnitWithVisibleStats } from "shared/schemas/unit";
 
-const enabled = process.env.WARSWORLD_INTEGRATION_TEST === "1";
+const enabled = process.env.FRONTLINE_INTEGRATION_TEST === "1";
 
 void test(
   "two players can complete a persisted, synchronized game",
   { skip: !enabled },
   async (t) => {
     // Use a dedicated database: this suite inserts and removes only its own fixtures.
-    assert.match(process.env.DATABASE_URL ?? "", /warsworld.*test/);
+    assert.match(process.env.DATABASE_URL ?? "", /frontline.*test/);
     const prefix = `multiplayer-${randomUUID()}`;
     const users: string[] = [];
     const matches: string[] = [];
@@ -66,7 +66,7 @@ void test(
         }),
       );
       const [alice, bob, carol] = identities;
-      const map = await prisma.wWMap.create({
+      const map = await prisma.gameMap.create({
         data: {
           name: prefix,
           numberOfPlayers: 2,
@@ -410,7 +410,7 @@ void test(
       await prisma.match.deleteMany({ where: { id: { in: matches } } });
 
       if (mapId !== undefined) {
-        await prisma.wWMap.delete({ where: { id: mapId } });
+        await prisma.gameMap.delete({ where: { id: mapId } });
       }
 
       await prisma.player.deleteMany({ where: { userId: { in: users } } });

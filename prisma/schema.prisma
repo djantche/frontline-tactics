@@ -39,7 +39,7 @@ model User {
   updatedAt     DateTime  @updatedAt
   identities    Player[]
   accounts      Account[]
-  maps          WWMap[]
+  maps          GameMap[]
 }
 
 model Account {
@@ -119,7 +119,7 @@ model Player {
 }
 
 // A map can only be edited as long as no match uses it (see the map router).
-model WWMap {
+model GameMap {
   id   String @id @default(cuid())
   name String
 
@@ -200,7 +200,7 @@ model Match {
   rules  Json
   status MatchStatus
 
-  map   WWMap  @relation(fields: [mapId], references: [id])
+  map   GameMap  @relation(fields: [mapId], references: [id])
   mapId String
 
   /// [PrismaPlayerState]

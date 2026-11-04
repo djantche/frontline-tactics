@@ -18,7 +18,7 @@ import type { Army } from "shared/schemas/army";
 import type { COID } from "shared/schemas/co";
 import type { PlayerSlot } from "shared/schemas/player-slot";
 import type { Position } from "shared/schemas/position";
-import type { WWUnit } from "shared/schemas/unit";
+import type { GameUnit } from "shared/schemas/unit";
 import type { Weather } from "shared/schemas/weather";
 import type { CapturableTile, PlayerInMatch } from "./server-match-state";
 
@@ -125,7 +125,7 @@ export type SubEvent =
   | AttackEvent;
 
 type WithDiscoveries = {
-  discoveredUnits?: WWUnit[];
+  discoveredUnits?: GameUnit[];
   discoveredProperties?: CapturableTile[];
 };
 
@@ -161,7 +161,7 @@ export type EmittableMoveEvent = MoveEventWithoutSubEvent &
     /**
      * e.g. for when a unit moves from FoW into vision or when it's unloaded into vision
      */
-    appearingUnit?: WWUnit;
+    appearingUnit?: GameUnit;
   };
 
 export type EmittableEvent = (

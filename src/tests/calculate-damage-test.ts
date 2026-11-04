@@ -1,4 +1,4 @@
-import type { WWMap } from "@prisma/client";
+import type { GameMap } from "@prisma/client";
 import { attackActionToEvent } from "shared/match-logic/events/handlers/attack/attackActionToEvent";
 import type { PlayerInMatch } from "shared/types/server-match-state";
 import { MatchWrapper } from "shared/wrappers/match";
@@ -33,7 +33,7 @@ import { UnitWrapper } from "shared/wrappers/unit";
  * - Function
  */
 
-const map: WWMap = {
+const map: GameMap = {
   id: "0",
   authorId: null,
   createdAt: new Date(),

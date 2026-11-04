@@ -1,7 +1,7 @@
-import { Menu as MenuIcon, X } from "lucide-react";
+import { Menu as MenuIcon, Settings, X } from "lucide-react";
 import { cx } from "frontend/ui/cx";
 import { ToastProvider } from "frontend/ui/Toast";
-import { locales, useLocale, useT } from "i18n";
+import { useT } from "i18n";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import type { ReactNode } from "react";
@@ -18,35 +18,8 @@ function Logo() {
       <span className="@flex @h-6 @w-6 @items-center @justify-center @bg-accent" aria-hidden>
         <span className="@h-2.5 @w-2.5 @bg-accent-fg" />
       </span>
-      Wars World
+      Frontline Tactics
     </Link>
-  );
-}
-
-function LocaleSwitch() {
-  const t = useT();
-  const currentLocale = useLocale();
-  const { pathname, query, asPath } = useRouter();
-
-  return (
-    <div role="group" aria-label={t.nav.language} className="@flex @border @border-line-strong">
-      {locales.map((locale) => (
-        <Link
-          key={locale}
-          href={{ pathname, query }}
-          as={asPath}
-          locale={locale}
-          scroll={false}
-          aria-current={locale === currentLocale ? "true" : undefined}
-          className={cx(
-            "@flex @h-8 @items-center @px-2 @text-xs @font-semibold @uppercase @transition-colors",
-            locale === currentLocale ? "@bg-overlay @text-fg" : "@text-fg-muted hover:@text-fg",
-          )}
-        >
-          {locale}
-        </Link>
-      ))}
-    </div>
   );
 }
 
@@ -93,7 +66,14 @@ function Header() {
           ))}
         </nav>
         <div className="@ml-auto @flex @items-center @gap-2">
-          <LocaleSwitch />
+          <Link
+            href="/settings"
+            aria-label={t.nav.settings}
+            title={t.nav.settings}
+            className="@flex @h-8 @w-8 @items-center @justify-center @text-fg-muted hover:@text-fg"
+          >
+            <Settings className="@h-4 @w-4" aria-hidden />
+          </Link>
           <AccountMenu />
           <button
             type="button"
@@ -126,14 +106,24 @@ function Footer() {
     <footer className="@border-t @border-line @px-4 @py-4 @text-xs @text-fg-subtle smallscreen:@px-6">
       <div className="@mx-auto @flex @max-w-[96rem] @flex-wrap @items-center @justify-between @gap-x-6 @gap-y-1">
         <p>{t.footer.copyright}</p>
-        <a
-          href="https://github.com/WarsWorld/WarsWorld"
-          target="_blank"
-          rel="noreferrer"
-          className="hover:@text-fg"
-        >
-          {t.footer.sourceCode}
-        </a>
+        <p className="@flex @gap-4">
+          <a
+            href="https://github.com/WarsWorld/WarsWorld"
+            target="_blank"
+            rel="noreferrer"
+            className="hover:@text-fg"
+          >
+            {t.footer.basedOn}
+          </a>
+          <a
+            href="https://github.com/djantche/frontline-tactics"
+            target="_blank"
+            rel="noreferrer"
+            className="hover:@text-fg"
+          >
+            {t.footer.sourceCode}
+          </a>
+        </p>
       </div>
     </footer>
   );

@@ -1,4 +1,4 @@
-import type { Match, WWMap } from "@prisma/client";
+import type { Match, GameMap } from "@prisma/client";
 import { prisma } from "server/prisma/prisma-client";
 import { MatchWrapper } from "shared/wrappers/match";
 import { pageMatchIndex } from "./page-match-index";
@@ -11,7 +11,7 @@ import {
 } from "../shared/match-logic/events/apply-event-to-match";
 import { UnitWrapper } from "shared/wrappers/unit";
 
-const getChangeableTilesFromMap = (map: WWMap): ChangeableTile[] => {
+const getChangeableTilesFromMap = (map: GameMap): ChangeableTile[] => {
   const changeableTiles: ChangeableTile[] = [];
 
   for (let y = 0; y < map.tiles.length; y++) {
@@ -48,7 +48,7 @@ const getChangeableTilesFromMap = (map: WWMap): ChangeableTile[] => {
 export class MatchStore {
   private index = new Map<Match["id"], MatchWrapper>();
 
-  createMatchAndIndex(rawMatch: Match, rawMap: WWMap) {
+  createMatchAndIndex(rawMatch: Match, rawMap: GameMap) {
     const match = new MatchWrapper(
       rawMatch.id,
       rawMatch.leagueType,

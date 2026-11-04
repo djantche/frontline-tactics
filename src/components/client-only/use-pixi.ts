@@ -1,7 +1,9 @@
 "use client";
+import type { ShaderKind } from "frontend/settings/game-settings";
 import type { Container, DisplayObject } from "pixi.js";
 import { Application } from "pixi.js";
 import type { LoadedSpriteSheet } from "pixi/load-spritesheet";
+import { applyShader } from "pixi/shaders";
 import { setupScene } from "pixi/setupApp";
 import { flashTile, walkAlongPath } from "pixi/unit-animations";
 import type { MutableRefObject } from "react";
@@ -31,6 +33,7 @@ type Options = {
   spriteSheets: LoadedSpriteSheet;
   player: PlayerInMatchWrapper;
   tileSize: number;
+  shader: ShaderKind;
   ui: GameUI;
   onTileHover: (position: Position | null) => void;
   /** The last event of the match, replayed on screen with the next snapshot. */
@@ -42,6 +45,7 @@ export const usePixi = ({
   spriteSheets,
   player,
   tileSize,
+  shader,
   ui,
   onTileHover,
   pendingEventRef,
@@ -116,7 +120,8 @@ export const usePixi = ({
 
     app.renderer.resize(widthInTiles * tileSize, heightInTiles * tileSize);
     app.stage.scale.set(tileSize / baseTileSize);
-  }, [tileSize, widthInTiles, heightInTiles, sceneVersion]);
+    applyShader(app, shader);
+  }, [tileSize, shader, widthInTiles, heightInTiles, sceneVersion]);
 
   useEffect(() => {
     const app = appRef.current;

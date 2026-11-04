@@ -7,11 +7,14 @@ import {
   TurnBanner,
 } from "frontend/components/game/GameHud";
 import { GameMenuPanel } from "frontend/components/game/GameMenuPanel";
-import { Button } from "frontend/ui/Button";
+import { ShaderPicker } from "frontend/components/settings/ShaderPicker";
+import { useShader } from "frontend/settings/game-settings";
+import { Button, ButtonLink } from "frontend/ui/Button";
 import { cx } from "frontend/ui/cx";
+import { Dialog } from "frontend/ui/Dialog";
 import { trpc } from "frontend/utils/trpc-client";
 import { useT } from "i18n";
-import { ArrowLeft, Maximize, Minimize, ZoomIn, ZoomOut } from "lucide-react";
+import { ArrowLeft, Maximize, Minimize, Settings, ZoomIn, ZoomOut } from "lucide-react";
 import Link from "next/link";
 import type { ForecastView, GameMenu, GameUI } from "pixi/game-context";
 import type { LoadedSpriteSheet } from "pixi/load-spritesheet";
@@ -48,6 +51,8 @@ export function MatchRenderer({ match, player, spriteSheets, pendingEventRef }: 
   const [fitTileSize, setFitTileSize] = useState(32);
   const [zoomSteps, setZoomSteps] = useState(0);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [shader, setShader] = useShader();
   const playfieldRef = useRef<HTMLDivElement>(null);
 
   const tileSize = Math.min(
@@ -66,6 +71,7 @@ export function MatchRenderer({ match, player, spriteSheets, pendingEventRef }: 
     spriteSheets,
     player,
     tileSize,
+    shader,
     ui,
     onTileHover,
     pendingEventRef,
@@ -187,6 +193,15 @@ export function MatchRenderer({ match, player, spriteSheets, pendingEventRef }: 
           </button>
           <button
             type="button"
+            aria-label={t.game.settings}
+            title={t.game.settings}
+            className={iconButtonClass}
+            onClick={() => setIsSettingsOpen(true)}
+          >
+            <Settings className="@h-4 @w-4" aria-hidden />
+          </button>
+          <button
+            type="button"
             aria-label={isFullscreen ? t.game.exitFullscreen : t.game.enterFullscreen}
             className={iconButtonClass}
             onClick={toggleFullscreen}
@@ -230,6 +245,20 @@ export function MatchRenderer({ match, player, spriteSheets, pendingEventRef }: 
           )}
         </div>
       </div>
+
+      <Dialog
+        open={isSettingsOpen}
+        onClose={() => setIsSettingsOpen(false)}
+        title={t.settings.graphics}
+        description={t.settings.inGameHint}
+        footer={
+          <ButtonLink href="/settings" variant="ghost">
+            {t.settings.allSettings}
+          </ButtonLink>
+        }
+      >
+        <ShaderPicker value={shader} onChange={setShader} />
+      </Dialog>
 
       <TurnBanner
         turnKey={`${match.turn}-${currentPlayer.data.id}`}

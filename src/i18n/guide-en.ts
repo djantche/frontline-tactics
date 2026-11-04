@@ -3,7 +3,7 @@ import type { guideFr } from "./guide-fr";
 export const guideEn: typeof guideFr = {
   title: "How to play",
   description:
-    "Wars World follows the rules of Advance Wars 2: a turn-based tactics game where the economy matters as much as combat. Every number in this guide comes straight from the game engine.",
+    "Frontline Tactics follows the rules of Advance Wars 2: a turn-based tactics game where the economy matters as much as combat. Every number in this guide comes straight from the game engine.",
   contents: "Contents",
   sections: {
     objective: "Objective",

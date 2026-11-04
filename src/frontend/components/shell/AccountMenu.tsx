@@ -1,5 +1,5 @@
 import { Menu } from "@headlessui/react";
-import { ChevronDown, LogOut, UserRound } from "lucide-react";
+import { ChevronDown, LogOut, Settings, UserRound } from "lucide-react";
 import { usePlayers } from "frontend/context/players";
 import { Button } from "frontend/ui/Button";
 import { cx } from "frontend/ui/cx";
@@ -61,6 +61,14 @@ export function AccountMenu() {
             )}
           </Menu.Item>
         )}
+        <Menu.Item>
+          {({ active }) => (
+            <Link href="/settings" className={itemClass(active)}>
+              <Settings className="@h-4 @w-4" aria-hidden />
+              {t.account.settings}
+            </Link>
+          )}
+        </Menu.Item>
         <Menu.Item>
           {({ active }) => (
             <button type="button" onClick={logOut} className={itemClass(active)}>

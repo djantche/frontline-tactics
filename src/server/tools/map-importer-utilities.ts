@@ -1,6 +1,6 @@
 import { prisma } from "../prisma/prisma-client";
 import type { Tile } from "shared/schemas/tile";
-import type { WWMap } from "@prisma/client";
+import type { GameMap } from "@prisma/client";
 
 export type AWBWMapImportSchema = {
   name: string;
@@ -10,11 +10,11 @@ export type AWBWMapImportSchema = {
 
 export const importAWBWMap = async (data: AWBWMapImportSchema) => {
   try {
-    return await prisma.wWMap.create({
+    return await prisma.gameMap.create({
       data: {
         name: data.name,
         numberOfPlayers: data.numberOfPlayers,
-        tiles: convertAWBWMapToWWMap(data.tileDataString),
+        tiles: convertAWBWMapToGameMap(data.tileDataString),
         predeployedUnits: [] /* TODO ! */,
       },
     });
@@ -24,7 +24,7 @@ export const importAWBWMap = async (data: AWBWMapImportSchema) => {
   }
 };
 
-export const convertAWBWMapToWWMap = (tileDataString: string): WWMap["tiles"] => {
+export const convertAWBWMapToGameMap = (tileDataString: string): GameMap["tiles"] => {
   const tileData2DM = tileDataString
     .trim()
     .split("\n")
@@ -50,7 +50,7 @@ export const convertAWBWMapToWWMap = (tileDataString: string): WWMap["tiles"] =>
     parsedArray.push(emptyArray);
   }
 
-  return parsedArray as WWMap["tiles"];
+  return parsedArray as GameMap["tiles"];
 };
 
 const awbwTileMapping: Record<string, Tile> = {

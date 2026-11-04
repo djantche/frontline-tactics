@@ -9,7 +9,7 @@ export default function NewMapPage() {
   return (
     <ProtectPage>
       <Head>
-        <title>{`${t.mapEditor.titleNew} | Wars World`}</title>
+        <title>{`${t.mapEditor.titleNew} | Frontline Tactics`}</title>
       </Head>
       <MapEditor />
     </ProtectPage>

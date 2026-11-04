@@ -40,8 +40,8 @@ su - ec2-user -c "
   echo 'export PATH="\$PATH:/home/ec2-user/node-v18.16.0-linux-x64/bin"' >> /home/ec2-user/.bashrc
   source .bashrc
   node --version
-  git clone https://github.com/WarsWorld/WarsWorld.git
-  cd WarsWorld
+  git clone https://github.com/djantche/frontline-tactics.git
+  cd frontline-tactics
   npm ci
   npm run build
   echo 'build done'

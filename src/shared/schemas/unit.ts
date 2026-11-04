@@ -156,4 +156,4 @@ type UnitWithHiddenStats = Omit<UnitWithVisibleStats, "stats"> & {
   stats: "hidden";
 };
 
-export type WWUnit = UnitWithHiddenStats | UnitWithVisibleStats;
+export type GameUnit = UnitWithHiddenStats | UnitWithVisibleStats;

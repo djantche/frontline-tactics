@@ -15,7 +15,7 @@ export function Page({
   return (
     <>
       <Head>
-        <title>{`${title} | Wars World`}</title>
+        <title>{`${title} | Frontline Tactics`}</title>
       </Head>
       <div
         className={cx(

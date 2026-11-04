@@ -5,7 +5,7 @@ import type { PrismaClient } from "@prisma/client";
 import type { Awaitable } from "next-auth";
 import type { AdapterUser } from "next-auth/adapters";
 
-export default function WarsWorldAdapter(p: PrismaClient): Adapter {
+export default function AuthAdapter(p: PrismaClient): Adapter {
   return {
     createUser: async (data) => {
       const user = await p.user.create({ data });

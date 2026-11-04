@@ -206,7 +206,7 @@ function Room({ matchId, playerId }: { matchId: string; playerId: string }) {
   return (
     <div data-match-id={match.id}>
       <Head>
-        <title>{`${match.name ?? match.map.name} | Wars World`}</title>
+        <title>{`${match.name ?? match.map.name} | Frontline Tactics`}</title>
       </Head>
       <Link
         href="/"

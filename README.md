@@ -1,16 +1,10 @@
-![coverBig](https://github.com/WarsWorld/WarsWorld/assets/96269542/12c971ba-8d27-4a17-9de1-cd60db3c7e82)
+# Frontline Tactics
 
-# Wars World
+Frontline Tactics is a turn-based tactics game for the browser, based on Advance Wars 2: create a room, challenge an opponent, build your own maps and learn the game with the built-in guide. The interface is available in French and English.
 
-Wars World is an open source project made by AWBW players that want to recreate [Advance Wars By Web/AWBW](https://awbw.amarriner.com/), on a modern tech stack so we can all enjoy playing the game we love on a streamlined, blazingly fast, venue that keeps all the stuff we love plus new desperately needed features!
+This project is a fork of [WarsWorld](https://github.com/WarsWorld/WarsWorld), and like it is licensed under the [GNU AGPL-3.0](LICENSE.md). Advance Wars is (c) Nintendo and Intelligent Systems; this is an unofficial fan project.
 
-This repository contains the backend and frontend code and is based on this [starter template](https://github.com/trpc/examples-next-prisma-websockets-starter).
-
-## Interested in contributing/helping?
-
-Here are our [Contribution Guidelines](https://github.com/WarsWorld/WarsWorld/blob/main/CONTRIBUTING.md) where you can learn more about how you can help the project out!
-
-If you want to reach out the dev team/ask some questions, feel free to join our Discord server by sending a DM to femboy.io
+Want to help? See the [contribution guidelines](CONTRIBUTING.md).
 
 # Setting up your local environment
 
@@ -66,13 +60,13 @@ node --import tsx --test src/tests/multiplayer.test.ts src/tests/map-editor.test
 ```
 
 The integration suite requires a **separate PostgreSQL database**, with
-`warsworld` and `test` in its URL. It creates and removes its own fixtures. For
+`frontline` and `test` in its URL. It creates and removes its own fixtures. For
 example, with the local Docker database:
 
 ```sh
-docker exec warsworld-postgres-1 psql -U postgres -c 'CREATE DATABASE warsworld_multiplayer_test;'
-DATABASE_URL=postgresql://postgres@localhost:5932/warsworld_multiplayer_test npm exec prisma db push -- --skip-generate
-DATABASE_URL=postgresql://postgres@localhost:5932/warsworld_multiplayer_test WARSWORLD_INTEGRATION_TEST=1 node --import tsx --test src/tests/multiplayer.integration.test.ts
+docker compose exec postgres psql -U postgres -c 'CREATE DATABASE frontline_multiplayer_test;'
+DATABASE_URL=postgresql://postgres@localhost:5932/frontline_multiplayer_test npm exec prisma db push -- --skip-generate
+DATABASE_URL=postgresql://postgres@localhost:5932/frontline_multiplayer_test FRONTLINE_INTEGRATION_TEST=1 node --import tsx --test src/tests/multiplayer.integration.test.ts
 ```
 
 Coverage includes ownership and turn checks, joining and readiness, initial funds
@@ -98,9 +92,7 @@ If you are having troubleshotting issues, here are some clear steps to help you 
 
 To see the contents of the db all you need to is run `prisma studio` or `npm run prisma:studio`, this should immediatly send you to localhost:5555 and show you the database!
 
-![image](https://github.com/WarsWorld/WarsWorld/assets/96269542/e6cd369a-026a-4f65-b2fa-c8fb7752ab1a)
-
-## How to use accounts and login to WarsWorld as a dev
+## How to use accounts and log in to Frontline Tactics as a dev
 
 The following steps are optional, and it's only useful if you want to help with authentication/authorization or you just want to try to login with Discord, GitHub or Google. You also don't need to set up every provider, if you just want to try to login with discord, just follow the directions to setup discord authentication, same with the others. Furthermore you can still login and register users with email and password authentication without following the next steps.
 

@@ -49,7 +49,7 @@ export default function EditMapPage() {
   return (
     <ProtectPage>
       <Head>
-        <title>{`${map.name} | Wars World`}</title>
+        <title>{`${map.name} | Frontline Tactics`}</title>
       </Head>
       <MapEditor
         key={map.id}

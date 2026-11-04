@@ -1,4 +1,4 @@
-import type { WWUnit } from "shared/schemas/unit";
+import type { GameUnit } from "shared/schemas/unit";
 import type { PlayerInMatch } from "shared/types/server-match-state";
 import type { Position } from "../schemas/position";
 import type { MatchWrapper } from "./match";
@@ -90,7 +90,7 @@ export class TeamWrapper {
 
         return this.isPositionVisible(enemy.data.position);
       })
-      .map<WWUnit>((visibleEnemyUnit) => {
+      .map<GameUnit>((visibleEnemyUnit) => {
         if (visibleEnemyUnit.player.data.coId.name === "sonja") {
           return {
             ...visibleEnemyUnit.data,

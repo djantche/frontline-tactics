@@ -22,7 +22,7 @@ export const mapMiddleware = t.middleware(async ({ ctx, input, next }) => {
   return next({
     ctx: {
       ...ctx,
-      map: await prisma.wWMap.findFirstOrThrow({ where: { id: mapId } }),
+      map: await prisma.gameMap.findFirstOrThrow({ where: { id: mapId } }),
     },
   });
 });

@@ -2,13 +2,13 @@ import { unitPropertiesMap } from "shared/match-logic/game-constants/unit-proper
 import { clamp } from "shared/math-utils";
 import type { Position } from "shared/schemas/position";
 import { getNeighbourPositions, isSamePosition } from "shared/schemas/position";
-import type { UnitType, WWUnit } from "shared/schemas/unit";
+import type { UnitType, GameUnit } from "shared/schemas/unit";
 import { getBaseMovementCost } from "../match-logic/movement-cost";
 import { getWeatherSpecialMovement } from "../match-logic/weather";
 import type { MatchWrapper } from "./match";
 import type { PlayerInMatchWrapper } from "./player-in-match";
 
-type ExtractUnit<T extends UnitType> = Extract<WWUnit, { type: T }>;
+type ExtractUnit<T extends UnitType> = Extract<GameUnit, { type: T }>;
 
 export class UnitWrapper<
   Type extends UnitType = UnitType,

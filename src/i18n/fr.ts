@@ -2,7 +2,7 @@ import { guideFr } from "./guide-fr";
 
 export const fr = {
   common: {
-    appName: "Wars World",
+    appName: "Frontline Tactics",
     loading: "Chargement…",
     cancel: "Annuler",
     close: "Fermer",
@@ -16,11 +16,12 @@ export const fr = {
     leaderboard: "Classement",
     openMenu: "Ouvrir le menu",
     closeMenu: "Fermer le menu",
-    language: "Langue",
+    settings: "Paramètres",
   },
   account: {
     login: "Se connecter",
     signup: "Créer un compte",
+    settings: "Paramètres",
     logout: "Se déconnecter",
     profile: "Mon profil",
     menu: "Menu du compte",
@@ -165,6 +166,7 @@ export const fr = {
     menuBuild: "Production",
     menuActions: "Actions",
     menuUnload: "Décharger",
+    settings: "Paramètres",
     hp: "PV",
     fuel: "Carburant",
     ammo: "Munitions",
@@ -264,7 +266,7 @@ export const fr = {
     create: "Créer une carte",
     tabAll: "Toutes",
     tabMine: "Mes cartes",
-    officialAuthor: "Wars World",
+    officialAuthor: "Frontline Tactics",
     details: (width: number, height: number, author: string) =>
       `${width} × ${height} · par ${author}`,
     play: "Jouer",
@@ -347,6 +349,48 @@ export const fr = {
     },
   },
   guide: guideFr,
+  settings: {
+    title: "Paramètres",
+    description: "Vos préférences sont enregistrées dans ce navigateur.",
+    language: "Langue",
+    languageHint: "La langue de toute l'interface et du guide.",
+    graphics: "Rendu du jeu",
+    graphicsHint:
+      "Les shaders changent la façon dont les sprites sont agrandis pendant une partie. Comparez-les ci-dessous : le choix s'applique tout de suite.",
+    shaderLabel: "Shader",
+    previewOriginal: "Original",
+    previewLoading: "Chargement de l'aperçu…",
+    previewFailed: "L'aperçu n'a pas pu être chargé.",
+    zoom: "Zoom de l'aperçu",
+    allSettings: "Tous les paramètres",
+    inGameHint: "Le changement s'applique directement sur la carte.",
+    shaders: {
+      pixel: {
+        name: "Pixel",
+        description: "Les pixels d'origine, sans aucun traitement. Le plus rapide.",
+      },
+      sharp: {
+        name: "Net",
+        description: "Pixels nets avec des bords adoucis, pour un rendu propre à tout zoom.",
+      },
+      soft: {
+        name: "Doux",
+        description: "Lissage simple de toute l'image, un peu flou.",
+      },
+      scale2x: {
+        name: "Scale2x",
+        description: "Arrondit les escaliers en gardant un aspect très pixel.",
+      },
+      xbr: {
+        name: "xBR",
+        description: "Détecte les contours et les lisse : le rendu le plus net à fort zoom.",
+      },
+      crt: {
+        name: "Écran cathodique",
+        description: "Lignes de balayage et masque de couleurs, comme une vieille télé.",
+      },
+    },
+  },
   notFound: {
     title: "Page introuvable",
     text: "Cette position n'existe pas sur la carte.",
@@ -355,6 +399,7 @@ export const fr = {
   footer: {
     copyright:
       "Advance Wars est © 1990-2001 Nintendo et © 2001 Intelligent Systems. Les images appartiennent à leurs propriétaires respectifs.",
+    basedOn: "Basé sur WarsWorld",
     sourceCode: "Code source",
   },
 };

@@ -1,11 +1,11 @@
-import type { LeagueType, Match, MatchStatus, Player, WWMap } from "@prisma/client";
+import type { LeagueType, Match, MatchStatus, Player, GameMap } from "@prisma/client";
 import { DispatchableError } from "shared/DispatchedError";
 import type { MatchRules } from "shared/schemas/match-rules";
 import type { PlayerSlot } from "shared/schemas/player-slot";
 import type { Position } from "shared/schemas/position";
 import { getDistance, isSamePosition } from "shared/schemas/position";
 import type { Tile } from "shared/schemas/tile";
-import type { WWUnit } from "shared/schemas/unit";
+import type { GameUnit } from "shared/schemas/unit";
 import type { Weather } from "shared/schemas/weather";
 import {
   createNeutralPlayerInMatch,
@@ -54,10 +54,10 @@ export class MatchWrapper<
     public changeableTiles: ChangeableTileType[], //TODO change to map from position to changeableTile for better performance
     public rules: MatchRules,
     public status: MatchStatus,
-    map: WWMap,
+    map: GameMap,
     players: PlayerInMatch[],
-    units: WWUnit[],
-    UnitWrapperClass: new (unit: WWUnit, match: MatchWrapper) => UnitWrapperType,
+    units: GameUnit[],
+    UnitWrapperClass: new (unit: GameUnit, match: MatchWrapper) => UnitWrapperType,
     public turn: number,
     public name: string | null = null,
   ) {

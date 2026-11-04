@@ -34,7 +34,7 @@ const throwIfInvalid = (tiles: Tile[][]) => {
 
 /** Matches rebuild themselves from their map, so a map in use can never change. */
 const getEditableMap = async (mapId: string, userId: string) => {
-  const map = await prisma.wWMap.findUnique({
+  const map = await prisma.gameMap.findUnique({
     where: { id: mapId },
     select: { authorId: true, _count: { select: { matches: true } } },
   });
@@ -55,7 +55,7 @@ const getEditableMap = async (mapId: string, userId: string) => {
 export const mapRouter = router({
   getAll: publicBaseProcedure.query(async () => {
     // TODO pagination / filter / search
-    const allMaps = await prisma.wWMap.findMany({
+    const allMaps = await prisma.gameMap.findMany({
       orderBy: { createdAt: "asc" },
       include: {
         author: { select: { name: true } },
@@ -94,7 +94,7 @@ export const mapRouter = router({
   save: playerBaseProcedure.input(mapSchema).mutation(async ({ input, ctx }) => {
     throwIfInvalid(input.tiles);
 
-    const { id } = await prisma.wWMap.create({
+    const { id } = await prisma.gameMap.create({
       data: {
         name: input.name,
         tiles: input.tiles,
@@ -112,7 +112,7 @@ export const mapRouter = router({
       throwIfInvalid(input.tiles);
       await getEditableMap(input.mapId, ctx.currentPlayer.userId);
 
-      await prisma.wWMap.update({
+      await prisma.gameMap.update({
         where: { id: input.mapId },
         data: {
           name: input.name,
@@ -124,6 +124,6 @@ export const mapRouter = router({
     .input(z.object({ mapId: z.string() }))
     .mutation(async ({ input, ctx }) => {
       await getEditableMap(input.mapId, ctx.currentPlayer.userId);
-      await prisma.wWMap.delete({ where: { id: input.mapId } });
+      await prisma.gameMap.delete({ where: { id: input.mapId } });
     }),
 });

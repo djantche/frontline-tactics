@@ -5,7 +5,7 @@ export type COTexts = { dayToDay?: string; power?: string; superPower?: string }
 export const guideFr = {
   title: "Comment jouer",
   description:
-    "Wars World reprend les règles d'Advance Wars 2 : un jeu de tactique au tour par tour où l'économie compte autant que le combat. Tous les chiffres de ce guide viennent directement du moteur du jeu.",
+    "Frontline Tactics reprend les règles d'Advance Wars 2 : un jeu de tactique au tour par tour où l'économie compte autant que le combat. Tous les chiffres de ce guide viennent directement du moteur du jeu.",
   contents: "Sommaire",
   sections: {
     objective: "Objectif",

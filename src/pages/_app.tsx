@@ -19,8 +19,8 @@ const MyApp: AppType<{ session: Session | null }> = ({
   return (
     <SessionProvider session={session}>
       <Head>
-        <title>Wars World</title>
-        <link rel="icon" href="/favicon.ico" />
+        <title>Frontline Tactics</title>
+        <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
         <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
       </Head>
       <ProvidePlayers>

@@ -3,7 +3,7 @@ import { guideEn } from "./guide-en";
 
 export const en: Dictionary = {
   common: {
-    appName: "Wars World",
+    appName: "Frontline Tactics",
     loading: "Loading…",
     cancel: "Cancel",
     close: "Close",
@@ -17,11 +17,12 @@ export const en: Dictionary = {
     leaderboard: "Leaderboard",
     openMenu: "Open menu",
     closeMenu: "Close menu",
-    language: "Language",
+    settings: "Settings",
   },
   account: {
     login: "Log in",
     signup: "Sign up",
+    settings: "Settings",
     logout: "Log out",
     profile: "My profile",
     menu: "Account menu",
@@ -166,6 +167,7 @@ export const en: Dictionary = {
     menuBuild: "Production",
     menuActions: "Actions",
     menuUnload: "Unload",
+    settings: "Settings",
     hp: "HP",
     fuel: "Fuel",
     ammo: "Ammo",
@@ -265,7 +267,7 @@ export const en: Dictionary = {
     create: "Create a map",
     tabAll: "All",
     tabMine: "My maps",
-    officialAuthor: "Wars World",
+    officialAuthor: "Frontline Tactics",
     details: (width: number, height: number, author: string) =>
       `${width} × ${height} · by ${author}`,
     play: "Play",
@@ -347,6 +349,48 @@ export const en: Dictionary = {
     },
   },
   guide: guideEn,
+  settings: {
+    title: "Settings",
+    description: "Your preferences are saved in this browser.",
+    language: "Language",
+    languageHint: "The language of the whole interface and of the guide.",
+    graphics: "Game rendering",
+    graphicsHint:
+      "Shaders change how sprites are scaled up during a game. Compare them below: your choice applies right away.",
+    shaderLabel: "Shader",
+    previewOriginal: "Original",
+    previewLoading: "Loading the preview…",
+    previewFailed: "The preview couldn't be loaded.",
+    zoom: "Preview zoom",
+    allSettings: "All settings",
+    inGameHint: "The change applies directly to the map.",
+    shaders: {
+      pixel: {
+        name: "Pixel",
+        description: "The original pixels, untouched. The fastest.",
+      },
+      sharp: {
+        name: "Sharp",
+        description: "Crisp pixels with softened edges, for a clean look at any zoom.",
+      },
+      soft: {
+        name: "Soft",
+        description: "Simple smoothing of the whole picture, a little blurry.",
+      },
+      scale2x: {
+        name: "Scale2x",
+        description: "Rounds off the staircases while keeping a very pixel look.",
+      },
+      xbr: {
+        name: "xBR",
+        description: "Detects outlines and smooths them: the cleanest look at high zoom.",
+      },
+      crt: {
+        name: "CRT screen",
+        description: "Scanlines and a colour mask, like an old TV.",
+      },
+    },
+  },
   notFound: {
     title: "Page not found",
     text: "This position doesn't exist on the map.",
@@ -355,6 +399,7 @@ export const en: Dictionary = {
   footer: {
     copyright:
       "Advance Wars is © 1990-2001 Nintendo and © 2001 Intelligent Systems. All images are copyright of their respective owners.",
+    basedOn: "Based on WarsWorld",
     sourceCode: "Source code",
   },
 };

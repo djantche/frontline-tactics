@@ -15,9 +15,9 @@ import { prisma } from "server/prisma/prisma-client";
 import { isDevAccountEmail } from "shared/dev-accounts";
 import { loginSchema } from "shared/schemas/auth";
 import { z } from "zod";
-import WarsWorldAdapter from "./WarsWorldAdapter";
+import AuthAdapter from "./AuthAdapter";
 
-const adapter = WarsWorldAdapter(prisma) as Adapter;
+const adapter = AuthAdapter(prisma) as Adapter;
 
 const envCredential = z.string().trim().min(1);
 

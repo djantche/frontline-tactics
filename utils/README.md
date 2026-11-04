@@ -1,4 +1,4 @@
-## WarsWorld utils
+## Frontline Tactics utils
 
 In this directory you will find miscellaneous standalone utilities.
 

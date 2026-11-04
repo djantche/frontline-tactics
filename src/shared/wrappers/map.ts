@@ -1,11 +1,11 @@
-import type { WWMap } from "@prisma/client";
+import type { GameMap } from "@prisma/client";
 import type { Position } from "shared/schemas/position";
 
 export class MapWrapper {
   public width: number;
   public height: number;
 
-  constructor(public data: WWMap) {
+  constructor(public data: GameMap) {
     this.width = this.data.tiles[0].length;
     this.height = this.data.tiles.length;
   }
