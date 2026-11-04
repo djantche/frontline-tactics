@@ -1,42 +1,134 @@
-// pixiEventHandlers.ts
-import type { Container } from "pixi.js";
-import { Assets } from "pixi.js";
-import type { MutableRefObject } from "react";
 import { throwIfCantMoveIntoUnit } from "shared/match-logic/events/handlers/move";
-import type { MainAction } from "shared/schemas/action";
 import type { Position } from "shared/schemas/position";
 import { isSamePosition } from "shared/schemas/position";
-import type { MatchWrapper } from "shared/wrappers/match";
 import { isUnitProducingProperty } from "../shared/schemas/tile";
-import type { PlayerInMatchWrapper } from "../shared/wrappers/player-in-match";
-import type { UnitWrapper } from "../shared/wrappers/unit";
 import { displayEnemyRange } from "./displayEnemyRange";
+import type { GameContext } from "./game-context";
 import { buildUnitMenu } from "./in-game-menus/buildUnitMenu";
 import subActionMenu from "./in-game-menus/subActionMenu";
 import { createUnloadMenu } from "./in-game-menus/unloadSubactionMenu";
 import { createTilesContainer } from "./interactiveTileFunctions";
-import type { LoadedSpriteSheet } from "./load-spritesheet";
 import { renderAttackTiles } from "./renderAttackTiles";
-import { renderUnitSprite } from "./renderUnitSprite";
-import type { PathNode } from "./show-pathing";
 import { getAccessibleNodes, showPath, updatePath } from "./show-pathing";
+import { movingUnitName, walkAlongPath } from "./unit-animations";
 
-export const handleClick = async (
-  clickPosition: Position,
-  match: MatchWrapper,
-  player: PlayerInMatchWrapper,
-  mapContainer: Container,
-  unitContainer: Container,
-  interactiveContainer: Container,
-  currentUnitClickedRef: MutableRefObject<UnitWrapper | null>,
-  moveTilesRef: MutableRefObject<Map<Position, PathNode> | null>,
-  unitRangeShowRef: MutableRefObject<"attack" | "movement" | "vision">,
-  pathRef: MutableRefObject<Position[] | null>,
-  spriteSheets: LoadedSpriteSheet,
-  sendAction: (action: MainAction) => Promise<void>,
-) => {
-  //lets load our font
-  await Assets.load("/aw2Font.fnt");
+/** Removes everything temporary (menus, paths, the walking unit) and clears the selection. */
+export const resetScreen = (context: GameContext) => {
+  const {
+    mapContainer,
+    unitContainer,
+    interactiveContainer,
+    currentUnitClickedRef,
+    moveTilesRef,
+    pathRef,
+    hasWalkedRef,
+    ui,
+  } = context;
+
+  ui.openMenu(null);
+  ui.showForecast(null);
+  interactiveContainer.getChildByName("preAttackBox")?.destroy();
+  interactiveContainer.getChildByName("repairUnitsBox")?.destroy();
+  interactiveContainer.getChildByName("launchMissileClickableBox")?.destroy();
+  interactiveContainer.getChildByName("unloadUnitsBox")?.destroy();
+  mapContainer.getChildByName("highlightedTiles")?.destroy();
+  mapContainer.getChildByName("pathArrows")?.destroy();
+  unitContainer.getChildByName(movingUnitName)?.destroy();
+
+  const selectedPosition = currentUnitClickedRef.current?.data.position;
+
+  if (selectedPosition !== undefined) {
+    const original = unitContainer.getChildByName(
+      `unit-${selectedPosition[0]}-${selectedPosition[1]}`,
+    );
+
+    if (original !== null) {
+      original.visible = true;
+    }
+  }
+
+  moveTilesRef.current = null;
+  currentUnitClickedRef.current = null;
+  pathRef.current = null;
+  hasWalkedRef.current = false;
+};
+
+const walkToDestination = async (context: GameContext, destination: Position) => {
+  const {
+    app,
+    match,
+    player,
+    mapContainer,
+    unitContainer,
+    interactiveContainer,
+    currentUnitClickedRef,
+    moveTilesRef,
+    pathRef,
+    hasWalkedRef,
+    isWalkingRef,
+    spriteSheets,
+    ui,
+  } = context;
+
+  const unit = currentUnitClickedRef.current;
+
+  if (unit === null || moveTilesRef.current === null) {
+    return;
+  }
+
+  const origin = unit.data.position;
+
+  // on a touch screen there was no hover to draw the path
+  const path = updatePath(unit, moveTilesRef.current, pathRef.current ?? [origin], destination);
+  pathRef.current = path;
+
+  mapContainer.getChildByName("highlightedTiles")?.destroy();
+  mapContainer.getChildByName("pathArrows")?.destroy();
+  interactiveContainer.getChildByName("preAttackBox")?.destroy();
+  moveTilesRef.current = null;
+
+  if (path.length > 1) {
+    const original = unitContainer.getChildByName(`unit-${origin[0]}-${origin[1]}`);
+
+    if (original !== null) {
+      original.visible = false;
+    }
+
+    isWalkingRef.current = true;
+    await walkAlongPath({
+      app,
+      parent: unitContainer,
+      spriteSheets,
+      unitType: unit.data.type,
+      army: unit.player.data.army,
+      path: [...path],
+    });
+    isWalkingRef.current = false;
+    hasWalkedRef.current = true;
+  }
+
+  // the player may have left the selection, or the scene was rebuilt during the walk
+  if (currentUnitClickedRef.current === unit) {
+    ui.openMenu(subActionMenu(context, match, player, destination, unit));
+  }
+};
+
+export const handleClick = async (clickPosition: Position, context: GameContext) => {
+  const {
+    match,
+    player,
+    mapContainer,
+    interactiveContainer,
+    currentUnitClickedRef,
+    moveTilesRef,
+    unitRangeShowRef,
+    isWalkingRef,
+    ui,
+  } = context;
+
+  if (isWalkingRef.current) {
+    return;
+  }
 
   //Check if there is a unit in the tile/position clicked
   const unitClicked = match.getUnit(clickPosition);
@@ -57,16 +149,8 @@ export const handleClick = async (
     match.getCurrentTurnPlayer().data.id === player.data.id &&
     currentUnitClickedRef.current === null
   ) {
-    resetScreen();
-    const buildMenu = buildUnitMenu(
-      spriteSheets[player.data.army],
-      match,
-      player,
-      clickPosition,
-      sendAction,
-    );
-
-    interactiveContainer.addChild(buildMenu);
+    resetScreen(context);
+    ui.openMenu(buildUnitMenu(context, clickPosition));
   }
 
   //there is an currentUnitClickedRef and move tiles (the blue squares)
@@ -74,63 +158,39 @@ export const handleClick = async (
   // so now we can process those movements
   else if (currentUnitClickedRef.current && moveTilesRef.current) {
     const currentUnit = currentUnitClickedRef.current;
-    //flag to determine if we clicked on path
-    let clickedOnPathFlag = false;
+    const isOnAccessibleTile = [...moveTilesRef.current.keys()].some((pos) =>
+      isSamePosition(clickPosition, pos),
+    );
 
-    for (const [pos] of moveTilesRef.current) {
-      //we found the path / user clicked on a legal path
-      if (isSamePosition(clickPosition, pos)) {
-        const unitInTile = match.getUnit(clickPosition);
-
-        let canUnitMoveIntoOther = false;
-
-        if (unitInTile) {
-          try {
-            throwIfCantMoveIntoUnit(currentUnit, unitInTile);
-            canUnitMoveIntoOther = true;
-          } catch (_e) {}
-        }
-
-        const canMoveToTile =
-          unitInTile === undefined || //empty tile
-          isSamePosition(currentUnit.data.position, pos) || //same position
-          (unitInTile?.player.data.slot === currentUnit.player.data.slot && canUnitMoveIntoOther); //join or load
-
-        if (canMoveToTile) {
-          // display subaction menu next to unit in new position
-          interactiveContainer.addChild(
-            subActionMenu(
-              match,
-              player,
-              pos,
-              currentUnit,
-              currentUnitClickedRef,
-              pathRef,
-              mapContainer,
-              interactiveContainer,
-              spriteSheets,
-              sendAction,
-            ),
-          );
-          moveTilesRef.current = null;
-        } else {
-          resetScreen();
-        }
-
-        clickedOnPathFlag = true;
-        break;
-      }
+    if (!isOnAccessibleTile) {
+      resetScreen(context);
+      return;
     }
 
-    if (!clickedOnPathFlag) {
-      //we clicked outside the path
-      resetScreen();
+    let canUnitMoveIntoOther = false;
+
+    if (unitClicked) {
+      try {
+        throwIfCantMoveIntoUnit(currentUnit, unitClicked);
+        canUnitMoveIntoOther = true;
+      } catch (_e) {}
+    }
+
+    const canMoveToTile =
+      unitClicked === undefined || //empty tile
+      isSamePosition(currentUnit.data.position, clickPosition) || //same position
+      (unitClicked.player.data.slot === currentUnit.player.data.slot && canUnitMoveIntoOther); //join or load
+
+    if (canMoveToTile) {
+      await walkToDestination(context, clickPosition);
+    } else {
+      resetScreen(context);
     }
   }
 
   //DID WE CLICK ON A UNIT?
   else if (unitClicked) {
-    resetScreen();
+    resetScreen(context);
 
     //Do we own said unit and is it our turn?
     if (player.owns(unitClicked) && match.getCurrentTurnPlayer().data.id === player.data.id) {
@@ -148,18 +208,7 @@ export const handleClick = async (
 
         moveTilesRef.current = passablePositions;
         mapContainer.addChild(displayedPassableTiles);
-
-        interactiveContainer.addChild(
-          renderAttackTiles(
-            interactiveContainer,
-            match,
-            currentUnitClickedRef,
-            spriteSheets,
-            pathRef,
-            mapContainer,
-            sendAction,
-          ),
-        );
+        interactiveContainer.addChild(renderAttackTiles(context));
       }
       //if not ready but it's a transport with units and the rules allow to always unload...
       else if (
@@ -168,90 +217,34 @@ export const handleClick = async (
         !player.getVersionProperties().unloadOnlyAfterMove
       ) {
         //Show subaction menu of transport to drop off units
-        const unloadMenu = createUnloadMenu(
-          match,
-          player,
-          clickPosition,
-          unitClicked,
-          currentUnitClickedRef,
-          pathRef,
-          interactiveContainer,
-          spriteSheets,
-          sendAction,
-        );
-        unloadMenu.zIndex = 999;
-        interactiveContainer.addChild(unloadMenu);
+        ui.openMenu(createUnloadMenu(context, clickPosition, unitClicked));
       }
     }
 
-    //TODO: We clicked on a unit we do not own OR its not our turn. Display unit movement/attack range/vision
+    //We clicked on a unit we do not own OR it's not our turn: display its range
     else {
-      //show unit path/move/stuff
-
       mapContainer.addChild(displayEnemyRange(match, unitClicked, unitRangeShowRef));
     }
   }
   //we did not clicked on a facility nor a unit nor a path/move tiles, so we will do nothing other than ensure the state has been resetted clean
   else {
-    resetScreen();
-  }
-
-  function resetScreen() {
-    //removes all temporary sprites (menus, paths, tempunit)
-    interactiveContainer.getChildByName("buildMenu")?.destroy();
-    interactiveContainer.getChildByName("subActionMenu")?.destroy();
-    interactiveContainer.getChildByName("preAttackBox")?.destroy(); //TODO ??
-    mapContainer.getChildByName("highlightedTiles")?.destroy();
-    mapContainer.getChildByName("pathArrows")?.destroy();
-
-    if (currentUnitClickedRef.current) {
-      //lets add the original unit back to its original position only if the original doesnt exist
-      if (
-        match.getUnit(currentUnitClickedRef.current.data.position) &&
-        !unitContainer.getChildByName(
-          `unit-${currentUnitClickedRef.current.data.position[0]}-${currentUnitClickedRef.current.data.position[1]}`,
-        )
-      ) {
-        unitContainer.addChild(renderUnitSprite(currentUnitClickedRef.current, spriteSheets));
-      }
-    }
-
-    moveTilesRef.current = null;
-    currentUnitClickedRef.current = null;
-    pathRef.current = null;
+    resetScreen(context);
   }
 };
 
-export const handleHover = async (
-  hoverPosition: Position,
-  match: MatchWrapper,
-  player: PlayerInMatchWrapper,
-  mapContainer: Container,
-  unitContainer: Container,
-  interactiveContainer: Container,
-  currentUnitClickedRef: MutableRefObject<UnitWrapper | null>,
-  moveTilesRef: MutableRefObject<Map<Position, PathNode> | null>,
-  unitRangeShowRef: MutableRefObject<"attack" | "movement" | "vision">,
-  pathRef: MutableRefObject<Position[] | null>,
-  spriteSheets: LoadedSpriteSheet,
-  _sendAction: (action: MainAction) => Promise<void>, // TODO: unused yet
-) => {
-  await Assets.load("/aw2Font.fnt");
+export const handleHover = (hoverPosition: Position, context: GameContext) => {
+  const { mapContainer, currentUnitClickedRef, moveTilesRef, pathRef, spriteSheets } = context;
 
   const currentUnit = currentUnitClickedRef.current;
   const moveTiles = moveTilesRef.current;
 
-  let hoveredMoveTile = false;
-
-  if (moveTiles !== null) {
-    for (const [key, _] of moveTiles) {
-      if (isSamePosition(hoverPosition, key)) {
-        hoveredMoveTile = true;
-      }
-    }
+  if (currentUnit === null || moveTiles === null) {
+    return;
   }
 
-  if (currentUnit != null && moveTiles != null && hoveredMoveTile) {
+  const hoveredMoveTile = [...moveTiles.keys()].some((key) => isSamePosition(hoverPosition, key));
+
+  if (hoveredMoveTile) {
     const newPath = updatePath(
       currentUnit,
       moveTiles,

@@ -1,207 +1,265 @@
 "use client";
-import { ArmyChip } from "frontend/components/rooms/ArmyChip";
-import { Badge } from "frontend/ui/Badge";
+import {
+  COPowerControls,
+  ForecastPanel,
+  PlayerCard,
+  TileInfo,
+  TurnBanner,
+} from "frontend/components/game/GameHud";
+import { GameMenuPanel } from "frontend/components/game/GameMenuPanel";
 import { Button } from "frontend/ui/Button";
 import { cx } from "frontend/ui/cx";
-import { COPortrait } from "frontend/ui/COPortrait";
 import { trpc } from "frontend/utils/trpc-client";
 import { useT } from "i18n";
-import { ArrowLeft, Coins, Shield, Sparkles, Zap } from "lucide-react";
+import { ArrowLeft, Maximize, Minimize, ZoomIn, ZoomOut } from "lucide-react";
 import Link from "next/link";
+import type { ForecastView, GameMenu, GameUI } from "pixi/game-context";
 import type { LoadedSpriteSheet } from "pixi/load-spritesheet";
-import { getCOProperties } from "shared/match-logic/co";
+import type { MutableRefObject } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import type { Position } from "shared/schemas/position";
 import type { MatchWrapper } from "shared/wrappers/match";
 import type { PlayerInMatchWrapper } from "shared/wrappers/player-in-match";
 import type { FrontendUnit } from "../../frontend/components/match/FrontendUnit";
 import type { ChangeableTileWithSprite } from "../../frontend/components/match/types";
+import type { PendingEvent } from "./use-pixi";
 import { usePixi } from "./use-pixi";
 
 type Props = {
   match: MatchWrapper<ChangeableTileWithSprite, FrontendUnit>;
   player: PlayerInMatchWrapper;
   spriteSheets: LoadedSpriteSheet;
+  pendingEventRef: MutableRefObject<PendingEvent | null>;
 };
 
 export const baseTileSize = 16;
-export const renderMultiplier = 2;
-export const renderedTileSize = baseTileSize * renderMultiplier;
 export const mapBorder = baseTileSize / 2;
 
-function PlayerPanel({
-  player,
-  isCurrent,
-  isMe,
-}: {
-  player: PlayerInMatchWrapper;
-  isCurrent: boolean;
-  isMe: boolean;
-}) {
-  const t = useT();
+// Small enough to fill the screen, sprites stay crisp with nearest neighbour scaling.
+const tileSizeStep = 4;
+const minTileSize = 16;
+const maxTileSize = 96;
 
-  return (
-    <div
-      aria-current={isCurrent ? "true" : undefined}
-      className={cx(
-        "@flex @items-center @gap-2.5 @border @px-2.5 @py-1.5",
-        isCurrent ? "@border-accent @bg-accent-soft" : "@border-line @bg-raised",
-      )}
-    >
-      <COPortrait co={player.data.coId.name} className="@h-9 @w-9" />
-      <div className="@min-w-0">
-        <p className="@flex @items-center @gap-1.5 @text-sm @font-semibold">
-          <ArmyChip army={player.data.army} />
-          <span className="@max-w-[9rem] @truncate">{player.data.name}</span>
-          {isMe && <span className="@font-normal @text-fg-muted">({t.room.you})</span>}
-        </p>
-        <p className="@flex @gap-3 @text-xs @text-fg-muted">
-          <span className="@inline-flex @items-center @gap-1" title={t.game.funds}>
-            <Coins className="@h-3 @w-3" aria-hidden />
-            <span className="@sr-only">{t.game.funds} </span>
-            {player.data.funds}
-          </span>
-          <span className="@inline-flex @items-center @gap-1" title={t.game.units}>
-            <Shield className="@h-3 @w-3" aria-hidden />
-            <span className="@sr-only">{t.game.units} </span>
-            {player.getUnits().length}
-          </span>
-        </p>
-      </div>
-    </div>
+export function MatchRenderer({ match, player, spriteSheets, pendingEventRef }: Props) {
+  const t = useT();
+  const [menu, setMenu] = useState<GameMenu | null>(null);
+  const [forecast, setForecast] = useState<ForecastView | null>(null);
+  const [hovered, setHovered] = useState<Position | null>(null);
+  const [fitTileSize, setFitTileSize] = useState(32);
+  const [zoomSteps, setZoomSteps] = useState(0);
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const playfieldRef = useRef<HTMLDivElement>(null);
+
+  const tileSize = Math.min(
+    maxTileSize,
+    Math.max(minTileSize, fitTileSize + zoomSteps * tileSizeStep),
   );
-}
 
-function COPowerControls({
-  player,
-  isMyTurn,
-}: {
-  player: PlayerInMatchWrapper;
-  isMyTurn: boolean;
-}) {
-  const t = useT();
-  const powerMutation = trpc.action.send.useMutation();
+  const widthInTiles = match.map.width + 1;
+  const heightInTiles = match.map.height + 1;
 
-  const { COPower, superCOPower } = getCOProperties(player.data.coId).powers;
-  const texts = t.guide.cos.texts[player.data.coId.name];
-  const starCost = player.getPowerStarCost();
-  const filledStars = Math.floor((player.data.powerMeter / starCost) * 10) / 10;
-  const totalStars = superCOPower?.stars ?? COPower?.stars ?? 0;
-  const powerState = player.data.COPowerState;
+  const ui: GameUI = useMemo(() => ({ openMenu: setMenu, showForecast: setForecast }), []);
+  const onTileHover = useCallback((position: Position | null) => setHovered(position), []);
 
-  const activate = (isSuper: boolean) => {
-    powerMutation.mutate({
-      type: "coPower",
-      isSuper,
-      playerId: player.data.id,
-      matchId: player.match.id,
-    });
+  const { pixiContainerRef, actionError, cancelSelection } = usePixi({
+    match,
+    spriteSheets,
+    player,
+    tileSize,
+    ui,
+    onTileHover,
+    pendingEventRef,
+  });
+
+  useEffect(() => {
+    const playfield = playfieldRef.current;
+
+    if (playfield === null) {
+      return;
+    }
+
+    const fit = () => {
+      const padding = 16;
+      const ideal = Math.min(
+        (playfield.clientWidth - padding) / widthInTiles,
+        (playfield.clientHeight - padding) / heightInTiles,
+      );
+      setFitTileSize(Math.max(minTileSize, Math.floor(ideal / tileSizeStep) * tileSizeStep));
+    };
+
+    fit();
+
+    const observer = new ResizeObserver(fit);
+    observer.observe(playfield);
+
+    return () => observer.disconnect();
+  }, [widthInTiles, heightInTiles]);
+
+  useEffect(() => {
+    const onChange = () => setIsFullscreen(document.fullscreenElement !== null);
+    document.addEventListener("fullscreenchange", onChange);
+
+    return () => document.removeEventListener("fullscreenchange", onChange);
+  }, []);
+
+  useEffect(() => {
+    const onKeyDown = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        cancelSelection();
+      }
+    };
+
+    window.addEventListener("keydown", onKeyDown);
+
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [cancelSelection]);
+
+  const toggleFullscreen = () => {
+    if (document.fullscreenElement === null) {
+      void document.documentElement.requestFullscreen();
+    } else {
+      void document.exitFullscreen();
+    }
   };
 
-  const canUse = (stars: number | undefined) =>
-    isMyTurn && powerState === "no-power" && stars !== undefined && filledStars >= stars;
-
-  return (
-    <div className="@flex @items-center @gap-2">
-      <div title={t.game.powerMeter} className="@w-24">
-        <div
-          role="meter"
-          aria-label={t.game.powerMeter}
-          aria-valuemin={0}
-          aria-valuemax={totalStars}
-          aria-valuenow={Math.min(filledStars, totalStars)}
-          className="@h-1.5 @w-full @bg-overlay"
-        >
-          <div
-            className="@h-full @bg-accent"
-            style={{ width: `${Math.min(100, (filledStars / Math.max(totalStars, 1)) * 100)}%` }}
-          />
-        </div>
-        <p className="@mt-0.5 @text-[0.7rem] @text-fg-muted">
-          {t.game.stars(Math.min(filledStars, totalStars), totalStars)}
-        </p>
-      </div>
-      {powerState === "no-power" ? (
-        <>
-          {COPower !== undefined && (
-            <Button
-              size="sm"
-              variant="secondary"
-              title={texts?.power ?? COPower.description}
-              disabled={!canUse(COPower.stars)}
-              loading={powerMutation.isLoading}
-              icon={<Zap className="@h-3.5 @w-3.5" aria-hidden />}
-              onClick={() => activate(false)}
-            >
-              {t.game.power}
-            </Button>
-          )}
-          {superCOPower !== undefined && (
-            <Button
-              size="sm"
-              variant="secondary"
-              title={texts?.superPower ?? superCOPower.description}
-              disabled={!canUse(superCOPower.stars)}
-              loading={powerMutation.isLoading}
-              icon={<Sparkles className="@h-3.5 @w-3.5" aria-hidden />}
-              onClick={() => activate(true)}
-            >
-              {t.game.superPower}
-            </Button>
-          )}
-        </>
-      ) : (
-        <Badge tone="accent" dot>
-          {powerState === "co-power" ? t.game.powerActive : t.game.superPowerActive}
-        </Badge>
-      )}
-    </div>
-  );
-}
-
-export function MatchRenderer({ match, player, spriteSheets }: Props) {
-  const t = useT();
-  const { pixiContainerRef, actionError } = usePixi(match, spriteSheets, player);
   const passTurnMutation = trpc.action.send.useMutation();
   const currentPlayer = match.getCurrentTurnPlayer();
   const isMyTurn = match.status === "playing" && currentPlayer.data.id === player.data.id;
   const error = passTurnMutation.error ?? actionError;
+  const [firstPlayer, secondPlayer] = [...match.getAllPlayers()].sort(
+    (a, b) => a.data.slot - b.data.slot,
+  );
+
+  const turnText = isMyTurn ? t.game.yourTurn : t.game.opponentTurn(currentPlayer.data.name);
+
+  const iconButtonClass =
+    "@flex @h-9 @w-9 @items-center @justify-center @text-fg-muted @transition-colors hover:@bg-raised hover:@text-fg disabled:@opacity-40";
 
   return (
-    <div className="@flex @min-h-0 @flex-1 @flex-col">
-      <div className="@flex @flex-wrap @items-center @gap-x-4 @gap-y-2 @border-b @border-line @bg-surface @px-4 @py-2">
-        <Link
-          href="/"
-          aria-label={t.game.backToRooms}
-          className="@flex @h-8 @w-8 @items-center @justify-center @text-fg-muted hover:@text-fg"
+    <div className="@fixed @inset-0 @flex @flex-col @bg-canvas">
+      <header className="@grid @shrink-0 @grid-cols-[1fr_auto_1fr] @items-center @gap-3 @border-b @border-line @bg-surface @px-2">
+        <div className="@flex @min-w-0 @items-center @gap-1">
+          <Link href="/" aria-label={t.game.backToRooms} className={iconButtonClass}>
+            <ArrowLeft className="@h-5 @w-5" aria-hidden />
+          </Link>
+          <h1 className="@hidden @truncate @text-lg @leading-none laptop:@block">
+            {match.name ?? match.map.data.name}
+          </h1>
+        </div>
+
+        <div className="@flex @min-w-0 @items-stretch">
+          <PlayerCard
+            player={firstPlayer}
+            isCurrent={firstPlayer.data.id === currentPlayer.data.id}
+            isMe={firstPlayer.data.id === player.data.id}
+            alignRight
+          />
+          <div className="@flex @shrink-0 @items-center @border-x @border-line @px-4">
+            <p className="@whitespace-nowrap @font-display @text-2xl @font-bold @uppercase">
+              {t.game.day(match.turn)}
+            </p>
+          </div>
+          <PlayerCard
+            player={secondPlayer}
+            isCurrent={secondPlayer.data.id === currentPlayer.data.id}
+            isMe={secondPlayer.data.id === player.data.id}
+          />
+        </div>
+
+        <div className="@flex @items-center @justify-end @gap-0.5">
+          <button
+            type="button"
+            aria-label={t.game.zoomOut}
+            disabled={tileSize <= minTileSize}
+            className={iconButtonClass}
+            onClick={() => setZoomSteps(zoomSteps - 1)}
+          >
+            <ZoomOut className="@h-4 @w-4" aria-hidden />
+          </button>
+          <button
+            type="button"
+            aria-label={t.game.zoomIn}
+            disabled={tileSize >= maxTileSize}
+            className={iconButtonClass}
+            onClick={() => setZoomSteps(zoomSteps + 1)}
+          >
+            <ZoomIn className="@h-4 @w-4" aria-hidden />
+          </button>
+          <button
+            type="button"
+            aria-label={isFullscreen ? t.game.exitFullscreen : t.game.enterFullscreen}
+            className={iconButtonClass}
+            onClick={toggleFullscreen}
+          >
+            {isFullscreen ? (
+              <Minimize className="@h-4 @w-4" aria-hidden />
+            ) : (
+              <Maximize className="@h-4 @w-4" aria-hidden />
+            )}
+          </button>
+        </div>
+      </header>
+
+      {error && (
+        <p role="alert" className="@shrink-0 @bg-danger-soft @px-4 @py-1.5 @text-sm">
+          {t.game.actionFailed} ({error.message})
+        </p>
+      )}
+
+      <div
+        ref={playfieldRef}
+        className="game-playfield @relative @flex @min-h-0 @flex-1 @overflow-auto"
+      >
+        <div
+          className="@relative @m-auto @shrink-0 @shadow-2xl @shadow-black/70"
+          style={{ width: widthInTiles * tileSize, height: heightInTiles * tileSize }}
+          onPointerLeave={() => setHovered(null)}
         >
-          <ArrowLeft className="@h-5 @w-5" aria-hidden />
-        </Link>
-        <div className="@min-w-0">
-          <h1 className="@truncate @text-xl @leading-tight">{match.name ?? match.map.data.name}</h1>
-          <p className="@text-xs @text-fg-muted">{t.game.day(match.turn)}</p>
-        </div>
-        <div className="@flex @flex-wrap @gap-2">
-          {match.getAllPlayers().map((matchPlayer) => (
-            <PlayerPanel
-              key={matchPlayer.data.id}
-              player={matchPlayer}
-              isCurrent={matchPlayer.data.id === currentPlayer.data.id}
-              isMe={matchPlayer.data.id === player.data.id}
+          <div ref={pixiContainerRef} />
+          {menu !== null && (
+            <GameMenuPanel
+              menu={menu}
+              tileSize={tileSize}
+              mapWidth={match.map.width}
+              mapHeight={match.map.height}
+              onCancel={cancelSelection}
             />
-          ))}
+          )}
+          {forecast !== null && (
+            <ForecastPanel forecast={forecast} tileSize={tileSize} mapWidth={match.map.width} />
+          )}
         </div>
-        <div className="@ml-auto @flex @flex-wrap @items-center @gap-3">
-          <COPowerControls player={player} isMyTurn={isMyTurn} />
+      </div>
+
+      <TurnBanner
+        turnKey={`${match.turn}-${currentPlayer.data.id}`}
+        day={t.game.day(match.turn)}
+        text={turnText}
+        isMyTurn={isMyTurn}
+      />
+
+      <footer className="@grid @h-16 @shrink-0 @grid-cols-[1fr_auto_1fr] @items-center @gap-3 @border-t @border-line @bg-surface @px-3">
+        <div className="@min-w-0">
+          <TileInfo match={match} position={hovered} />
+        </div>
+        <COPowerControls player={player} isMyTurn={isMyTurn} />
+        <div className="@flex @items-center @justify-end @gap-3">
           <p
             aria-live="polite"
-            className={cx("@text-sm @font-semibold", isMyTurn ? "@text-accent" : "@text-fg-muted")}
+            className={cx(
+              "@hidden @text-sm @font-semibold smallscreen:@block",
+              isMyTurn ? "@text-accent-hover" : "@text-fg-muted",
+            )}
           >
-            {isMyTurn ? t.game.yourTurn : t.game.opponentTurn(currentPlayer.data.name)}
+            {turnText}
           </p>
           <Button
+            size="lg"
             className="@select-none"
             disabled={!isMyTurn}
             loading={passTurnMutation.isLoading}
             onClick={() => {
+              cancelSelection();
               passTurnMutation
                 .mutateAsync({
                   type: "passTurn",
@@ -216,13 +274,7 @@ export function MatchRenderer({ match, player, spriteSheets }: Props) {
             {isMyTurn ? t.game.endTurn : t.game.waiting}
           </Button>
         </div>
-      </div>
-      {error && (
-        <p role="alert" className="@bg-danger-soft @px-4 @py-2 @text-sm">
-          {t.game.actionFailed} ({error.message})
-        </p>
-      )}
-      <div ref={pixiContainerRef} className="@flex-1 @overflow-auto @bg-canvas @p-4" />
+      </footer>
     </div>
   );
 }

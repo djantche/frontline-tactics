@@ -10,9 +10,10 @@ import { trpc } from "frontend/utils/trpc-client";
 import { useT } from "i18n";
 import { Trophy } from "lucide-react";
 import { loadSpritesFromSpriteMap } from "pixi/load-spritesheet";
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 import { MatchWrapper } from "shared/wrappers/match";
 import { MatchRenderer } from "./MatchRenderer";
+import type { PendingEvent } from "./use-pixi";
 
 type Props = {
   matchId: string;
@@ -41,11 +42,16 @@ export function MatchLoader({ matchId, playerId, spritesheetDataByArmy }: Props)
     void utils.match.full.invalidate({ matchId, playerId });
   };
 
+  const pendingEventRef = useRef<PendingEvent | null>(null);
+
   trpc.action.onEvent.useSubscription(
     { matchId, playerId },
     {
       onStarted: refreshMatch,
-      onData: refreshMatch,
+      onData: (event) => {
+        pendingEventRef.current = { event, receivedAt: Date.now() };
+        refreshMatch();
+      },
     },
   );
 
@@ -154,5 +160,12 @@ export function MatchLoader({ matchId, playerId, spritesheetDataByArmy }: Props)
     );
   }
 
-  return <MatchRenderer match={match} spriteSheets={spriteSheetQuery.data} player={player} />;
+  return (
+    <MatchRenderer
+      match={match}
+      spriteSheets={spriteSheetQuery.data}
+      player={player}
+      pendingEventRef={pendingEventRef}
+    />
+  );
 }

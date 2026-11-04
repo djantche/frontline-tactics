@@ -87,7 +87,7 @@ export function renderMap(
 export const renderInvisInteractiveTiles = (
   match: MatchWrapper<ChangeableTileWithSprite, FrontendUnit>,
   onTileClick: (pos: Position) => Promise<void>,
-  onTileHover: (pos: Position) => Promise<void>,
+  onTileHover: (pos: Position) => void,
 ) => {
   const mapContainer = new Container();
   mapContainer.x = baseTileSize / 2;
@@ -110,7 +110,7 @@ export const renderInvisInteractiveTiles = (
         void onTileClick([x, y]);
       });
       tileSprite.on("pointerenter", () => {
-        void onTileHover([x, y]);
+        onTileHover([x, y]);
       });
 
       mapContainer.addChild(tileSprite);

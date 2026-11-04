@@ -57,4 +57,61 @@
   .pixelated {
     image-rendering: pixelated;
   }
+
+  .game-playfield {
+    background-color: theme("colors.canvas");
+    background-image:
+      linear-gradient(theme("colors.surface") 1px, transparent 1px),
+      linear-gradient(90deg, theme("colors.surface") 1px, transparent 1px);
+    background-size: 32px 32px;
+  }
+
+  .game-panel-in {
+    animation: game-panel-in 120ms ease-out;
+  }
+
+  .game-turn-banner {
+    animation: game-turn-banner 1500ms ease-in-out both;
+  }
+
+  .game-power-active {
+    animation: game-power-active 1400ms ease-in-out infinite;
+  }
+}
+
+@keyframes game-panel-in {
+  from {
+    opacity: 0;
+    transform: translateY(4px);
+  }
+}
+
+@keyframes game-turn-banner {
+  0% {
+    opacity: 0;
+    transform: translateX(-6%);
+  }
+  18%,
+  82% {
+    opacity: 1;
+    transform: none;
+  }
+  100% {
+    opacity: 0;
+    transform: translateX(6%);
+  }
+}
+
+@keyframes game-power-active {
+  50% {
+    box-shadow: 0 0 14px theme("colors.accent");
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .game-panel-in,
+  .game-turn-banner,
+  .game-power-active {
+    animation: none;
+  }
 }

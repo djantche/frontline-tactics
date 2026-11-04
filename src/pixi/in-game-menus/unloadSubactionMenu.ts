@@ -1,59 +1,49 @@
-import { baseTileSize } from "components/client-only/MatchRenderer";
 import { Container } from "pixi.js";
-import type { MutableRefObject } from "react";
 import { getUnloadablePositions } from "shared/match-logic/events/handlers/unload/checkUnloadTiles";
 import { getDirection, isSamePosition, type Position } from "shared/schemas/position";
+import type { UnitType } from "shared/schemas/unit";
 import type { UnitWrapper } from "shared/wrappers/unit";
-import type { MainAction } from "../../shared/schemas/action";
-import type { MatchWrapper } from "../../shared/wrappers/match";
-import type { PlayerInMatchWrapper } from "../../shared/wrappers/player-in-match";
-import type { LoadedSpriteSheet } from "../load-spritesheet";
+import type { GameContext, GameMenu } from "../game-context";
 import { tileConstructor } from "../sprite-constructor";
-import { createMenuElementsForUnits } from "./buildUnitMenu";
-import { createInGameMenu } from "./menuTemplate";
-import { actionLabel } from "../menu-labels";
-import { createSubActionMenuElement } from "./subActionMenu";
+
+type LoadedUnitChoice = {
+  isFirstUnit: boolean;
+  unitType: UnitType;
+  hp: number;
+  positions: Position[];
+};
 
 export const createUnloadMenu = (
-  match: MatchWrapper,
-  player: PlayerInMatchWrapper,
+  context: GameContext,
   newPosition: Position,
   unit: UnitWrapper,
-  currentUnitClickedRef: React.MutableRefObject<UnitWrapper | null>,
-  pathRef: MutableRefObject<Position[] | null>,
-  interactiveContainer: Container,
-  spriteSheets: LoadedSpriteSheet,
-  sendAction: (action: MainAction) => Promise<void>,
   /**
    * Function can be called as 2nd unload. In this case, this variable will have the info of the first unload
    */
   firstUnloadInfo?: { unloadedPosition: Position; isFirstUnit: boolean },
-) => {
+): GameMenu => {
+  const { player, interactiveContainer, currentUnitClickedRef, pathRef, sendAction, ui } = context;
+
   if (!unit.isTransport() || unit.data.loadedUnit === null) {
     throw new Error("Asked to create unlaod menu for unit without loaded units");
   }
 
-  let unloadPositions1: Position[] | undefined = undefined;
-  let unloadPositions2: Position[] | undefined = undefined;
-  let menuInfo1 = undefined;
-  let menuInfo2 = undefined;
-  const infosForMenu = [];
+  const withoutFirstUnload = (positions: Position[]) =>
+    firstUnloadInfo === undefined
+      ? positions
+      : positions.filter((pos) => !isSamePosition(pos, firstUnloadInfo.unloadedPosition));
+
+  const choices: LoadedUnitChoice[] = [];
 
   if (firstUnloadInfo === undefined || !firstUnloadInfo.isFirstUnit) {
-    unloadPositions1 = getUnloadablePositions(unit, unit.data.loadedUnit, newPosition);
-
-    if (firstUnloadInfo !== undefined) {
-      unloadPositions1.filter((pos) => {
-        return !isSamePosition(pos, firstUnloadInfo.unloadedPosition);
-      });
-    }
-
-    menuInfo1 = {
+    choices.push({
+      isFirstUnit: true,
       unitType: unit.data.loadedUnit.type,
-      selectable: unloadPositions1.length > 0,
-      num: Math.ceil(unit.data.loadedUnit.stats.hp / 10),
-    };
-    infosForMenu.push(menuInfo1);
+      hp: Math.ceil(unit.data.loadedUnit.stats.hp / 10),
+      positions: withoutFirstUnload(
+        getUnloadablePositions(unit, unit.data.loadedUnit, newPosition),
+      ),
+    });
   }
 
   if (
@@ -61,26 +51,15 @@ export const createUnloadMenu = (
     unit.data.loadedUnit2 !== null &&
     (firstUnloadInfo === undefined || firstUnloadInfo.isFirstUnit)
   ) {
-    unloadPositions2 = getUnloadablePositions(unit, unit.data.loadedUnit2, newPosition);
-
-    if (firstUnloadInfo !== undefined) {
-      unloadPositions2.filter((pos) => {
-        return !isSamePosition(pos, firstUnloadInfo.unloadedPosition);
-      });
-    }
-
-    menuInfo2 = {
+    choices.push({
+      isFirstUnit: false,
       unitType: unit.data.loadedUnit2.type,
-      selectable: unloadPositions2.length > 0,
-      num: Math.ceil(unit.data.loadedUnit2.stats.hp / 10), //visual hp
-    };
-    infosForMenu.push(menuInfo2);
+      hp: Math.ceil(unit.data.loadedUnit2.stats.hp / 10), //visual hp
+      positions: withoutFirstUnload(
+        getUnloadablePositions(unit, unit.data.loadedUnit2, newPosition),
+      ),
+    });
   }
-
-  const { menuElements, yValue } = createMenuElementsForUnits(
-    spriteSheets[player.data.army],
-    infosForMenu,
-  );
 
   const clickedUnloadPosition = (
     unloadPos: Position,
@@ -90,9 +69,7 @@ export const createUnloadMenu = (
     if (canOtherUnitBeUnloaded) {
       //there were no other options (or the only unloadable position for the other unit was this one), commit the unload action
       if (currentUnitClickedRef.current !== null) {
-        const path = pathRef.current
-          ? pathRef.current
-          : [currentUnitClickedRef.current.data.position];
+        const path = pathRef.current ?? [currentUnitClickedRef.current.data.position];
 
         const unloads = [
           { isSecondUnit: !isFirstUnit, direction: getDirection(newPosition, unloadPos) },
@@ -116,121 +93,92 @@ export const createUnloadMenu = (
 
         currentUnitClickedRef.current = null;
       }
-    } else {
-      const unitSize = baseTileSize / 2;
 
-      const unload2Option = createSubActionMenuElement(actionLabel("Unload"), 0);
-      unload2Option.on("pointerdown", () => {
-        const step2Menu = createUnloadMenu(
-          match,
-          player,
-          newPosition,
-          unit,
-          currentUnitClickedRef,
-          pathRef,
-          interactiveContainer,
-          spriteSheets,
-          sendAction,
-          { unloadedPosition: unloadPos, isFirstUnit: isFirstUnit },
-        );
-
-        step2Menu.zIndex = 999;
-        interactiveContainer.addChild(step2Menu);
-        unload2Option.parent.destroy();
-      });
-
-      const waitOption = createSubActionMenuElement(actionLabel("Wait"), 1);
-      waitOption.on("pointerdown", () => {
-        void sendAction({
-          type: "move",
-          subAction: {
-            type: "unloadWait",
-            unloads: [
-              { isSecondUnit: !isFirstUnit, direction: getDirection(newPosition, unloadPos) },
-            ],
-          },
-          path: pathRef.current ?? [newPosition],
-        });
-
-        currentUnitClickedRef.current = null;
-        waitOption.parent.destroy();
-      });
-
-      const unload2OrWaitMenu = createInGameMenu(match, newPosition, 2 * unitSize * 2, 3.6, [
-        unload2Option,
-        waitOption,
-      ]);
-      unload2OrWaitMenu.name = "unloadStep2ActionMenu";
-      interactiveContainer.addChild(unload2OrWaitMenu);
+      return;
     }
+
+    ui.openMenu({
+      kind: "actions",
+      position: newPosition,
+      items: [
+        {
+          id: "unload",
+          kind: "action",
+          action: "Unload",
+          onSelect: () => {
+            ui.openMenu(
+              createUnloadMenu(context, newPosition, unit, {
+                unloadedPosition: unloadPos,
+                isFirstUnit,
+              }),
+            );
+          },
+        },
+        {
+          id: "wait",
+          kind: "action",
+          action: "Wait",
+          onSelect: () => {
+            ui.openMenu(null);
+            void sendAction({
+              type: "move",
+              subAction: {
+                type: "unloadWait",
+                unloads: [
+                  { isSecondUnit: !isFirstUnit, direction: getDirection(newPosition, unloadPos) },
+                ],
+              },
+              path: pathRef.current ?? [newPosition],
+            });
+
+            currentUnitClickedRef.current = null;
+          },
+        },
+      ],
+    });
   };
 
-  if (unloadPositions1 !== undefined && unloadPositions1.length > 0) {
-    menuElements[0].on("pointerdown", () => {
-      const unloadTilesContainer = new Container();
-      unloadTilesContainer.name = "unloadUnitsBox";
+  const openUnloadTiles = (choice: LoadedUnitChoice) => {
+    const unloadTilesContainer = new Container();
+    unloadTilesContainer.name = "unloadUnitsBox";
 
-      for (const unloadPos of unloadPositions1 ?? []) {
-        const unloadTile = tileConstructor(unloadPos, "#43d9e4");
-        unloadTile.eventMode = "static";
+    for (const unloadPos of choice.positions) {
+      const unloadTile = tileConstructor(unloadPos, "#43d9e4");
+      unloadTile.eventMode = "static";
 
-        unloadTile.on("pointerdown", () => {
-          const canOtherUnitBeUnloaded =
-            player.getVersionProperties().unloadOnlyAfterMove &&
-            (infosForMenu.length === 1 ||
-              unloadPositions2?.every((pos) => {
-                return isSamePosition(pos, unloadPos);
-              }) === true);
+      unloadTile.on("pointerdown", () => {
+        const otherChoice = choices.find((other) => other !== choice);
+        const canOtherUnitBeUnloaded =
+          player.getVersionProperties().unloadOnlyAfterMove &&
+          (otherChoice === undefined ||
+            otherChoice.positions.every((pos) => isSamePosition(pos, unloadPos)));
 
-          unloadTilesContainer.visible = false;
-          clickedUnloadPosition(unloadPos, true, canOtherUnitBeUnloaded);
-          unloadTilesContainer.destroy();
-        });
+        clickedUnloadPosition(unloadPos, choice.isFirstUnit, canOtherUnitBeUnloaded);
+        unloadTilesContainer.destroy();
+      });
 
-        unloadTilesContainer.addChild(unloadTile);
-      }
+      unloadTilesContainer.addChild(unloadTile);
+    }
 
-      unloadTilesContainer.zIndex = 999;
-      interactiveContainer.addChild(unloadTilesContainer);
-      //as soon a selection is done, destroy/erase the menu
-      menuElements[0].parent.destroy();
-    });
-  }
+    unloadTilesContainer.zIndex = 999;
+    interactiveContainer.addChild(unloadTilesContainer);
+  };
 
-  if (unloadPositions2 !== undefined && unloadPositions2.length > 0) {
-    const meIndex = unloadPositions1 === undefined ? 0 : 1; //if unit1 wasnt unloadable, the index will be 0
-    menuElements[meIndex].on("pointerdown", () => {
-      const unloadTilesContainer = new Container();
-      unloadTilesContainer.name = "unloadUnitsBox";
-
-      for (const unloadPos of unloadPositions2 ?? []) {
-        const unloadTile = tileConstructor(unloadPos, "#43d9e4");
-        unloadTile.eventMode = "static";
-
-        unloadTile.on("pointerdown", () => {
-          const canOtherUnitBeUnloaded =
-            player.getVersionProperties().unloadOnlyAfterMove &&
-            (infosForMenu.length === 1 ||
-              unloadPositions1?.every((pos) => {
-                return isSamePosition(pos, unloadPos);
-              }) === true);
-
-          unloadTilesContainer.visible = false;
-          clickedUnloadPosition(unloadPos, false, canOtherUnitBeUnloaded);
-          unloadTilesContainer.destroy();
-        });
-
-        unloadTilesContainer.addChild(unloadTile);
-      }
-
-      unloadTilesContainer.zIndex = 999;
-      interactiveContainer.addChild(unloadTilesContainer);
-      //as soon a selection is done, destroy/erase the menu
-      menuElements[0].parent.destroy();
-    });
-  }
-
-  const unloadUnitSelectMenu = createInGameMenu(match, newPosition, yValue, 6, menuElements);
-  unloadUnitSelectMenu.name = "unloadUnitSelect";
-  return unloadUnitSelectMenu;
+  return {
+    kind: "unload",
+    position: newPosition,
+    items: choices.map((choice) => ({
+      id: choice.isFirstUnit ? "first" : "second",
+      kind: "unit",
+      unitType: choice.unitType,
+      army: player.data.army,
+      value: choice.hp,
+      valueKind: "hp",
+      disabled: choice.positions.length === 0,
+      onSelect: () => {
+        ui.openMenu(null);
+        openUnloadTiles(choice);
+      },
+    })),
+  };
 };

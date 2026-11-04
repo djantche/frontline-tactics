@@ -7,17 +7,20 @@ import type { LoadedSpriteSheet } from "./load-spritesheet";
 import { renderInvisInteractiveTiles, renderMap } from "./renderMap";
 import { renderUnits } from "./renderUnits";
 
-export function setupApp(
+/** Replaces the scene of the application with the one of this match state. */
+export function setupScene(
   app: Application,
   match: MatchWrapper<ChangeableTileWithSprite, FrontendUnit>,
-  renderMultiplier: number,
   spriteSheets: LoadedSpriteSheet,
   onTileClick: (pos: Position) => Promise<void>,
-  onTileHover: (pos: Position) => Promise<void>,
+  onTileHover: (pos: Position) => void,
 ) {
+  for (const child of app.stage.removeChildren()) {
+    child.destroy({ children: true, texture: false, baseTexture: false });
+  }
+
   app.stage.position.set(0, 0);
   app.stage.sortableChildren = true;
-  app.stage.scale.set(renderMultiplier, renderMultiplier);
 
   const mapContainer = renderMap(match, spriteSheets);
   const unitContainer = renderUnits(match, spriteSheets);
@@ -25,6 +28,7 @@ export function setupApp(
 
   mapContainer.name = "mapContainer";
   unitContainer.name = "childContainer";
+  unitContainer.sortableChildren = true;
   interactiveContainer.name = "interactiveTilesContainer";
 
   app.stage.addChild(mapContainer, unitContainer, interactiveContainer);

@@ -3,6 +3,8 @@ import test from "node:test";
 import { browserWebSocketUrl } from "frontend/utils/connection-url";
 import { createEmitter } from "server/emitter/create-emitter";
 import { getCOProperties } from "shared/match-logic/co";
+import { applyMoveEvent } from "shared/match-logic/events/handlers/move";
+import type { MatchWrapper } from "shared/wrappers/match";
 import { unitPropertiesMap } from "shared/match-logic/game-constants/unit-properties";
 
 void test("battle copters have six movement points", () => {
@@ -47,4 +49,13 @@ void test("a second device connects to the server rather than its own localhost"
     browserWebSocketUrl("ws://localhost:3001", "http://localhost:3000"),
     "ws://localhost:3001/",
   );
+});
+
+void test("a unit that acts without moving has used its turn", () => {
+  const unit = { data: { isReady: true } };
+  const match = { getUnitOrThrow: () => unit } as unknown as MatchWrapper;
+
+  applyMoveEvent(match, { type: "move", path: [[4, 2]], trap: false });
+
+  assert.equal(unit.data.isReady, false);
 });

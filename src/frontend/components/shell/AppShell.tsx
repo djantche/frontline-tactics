@@ -139,18 +139,18 @@ function Footer() {
   );
 }
 
-/** The frame of every page. Screens that need all the room, like a match, opt out of the footer. */
+/** The frame of every page. A match gets the whole screen, the map editor all but the footer. */
 export function AppShell({ children }: { children: ReactNode }) {
   const { pathname } = useRouter();
-  const isFullscreen =
-    pathname.startsWith("/game") || pathname === "/maps/new" || pathname === "/maps/[id]/edit";
+  const isGame = pathname.startsWith("/game");
+  const isEditor = pathname === "/maps/new" || pathname === "/maps/[id]/edit";
 
   return (
     <ToastProvider>
-      <div className={cx("@flex @flex-col", isFullscreen ? "@h-screen" : "@min-h-screen")}>
-        <Header />
+      <div className={cx("@flex @flex-col", isEditor ? "@h-screen" : "@min-h-screen")}>
+        {!isGame && <Header />}
         <main className="@flex @min-h-0 @flex-1 @flex-col">{children}</main>
-        {!isFullscreen && <Footer />}
+        {!isGame && !isEditor && <Footer />}
       </div>
       <AuthDialog />
     </ToastProvider>

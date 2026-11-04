@@ -262,14 +262,15 @@ const getOneTileFuelCost = (match: MatchWrapper, unit: UnitWrapper): number => {
 };
 
 export const applyMoveEvent = (match: MatchWrapper, event: MoveEventWithoutSubEvent) => {
+  const unit = match.getUnitOrThrow(event.path[0]);
+
+  // also for a unit standing still: attacking or capturing is its action of the turn
+  unit.data.isReady = false;
+
   //check if unit is moving or just standing still
   if (event.path.length <= 1) {
     return;
   }
-
-  const unit = match.getUnitOrThrow(event.path[0]);
-
-  unit.data.isReady = false;
 
   //if unit was capturing, interrupt capture
   if ("currentCapturePoints" in unit.data) {
