@@ -5,10 +5,11 @@ import { getCOProperties } from "shared/match-logic/co";
 import { calculateDamage } from "shared/match-logic/calculate-damage";
 import { applyCOPowerEvent } from "shared/match-logic/events/handlers/coPower";
 import {
-  commanderWarsCOs,
+  daysOfRuinCOs,
   describeEffects,
   englishEffectPhrases,
-} from "shared/match-logic/game-constants/cos/commander-wars";
+} from "shared/match-logic/game-constants/cos/days-of-ruin";
+import { getWeatherSpecialMovement } from "shared/match-logic/weather";
 import type { CO } from "shared/schemas/co";
 import { coSchema } from "shared/schemas/co";
 import type { PlayerInMatch } from "shared/types/server-match-state";
@@ -89,7 +90,7 @@ const matchWith = (co: CO, enemyCo: CO = "andy") => {
 const noLuck = { goodLuck: 0, badLuck: 0 };
 
 void test("every CO can be played: effects, powers and damage stay valid in each state", () => {
-  assert.equal(coSchema.options.length, 76);
+  assert.equal(coSchema.options.length, 40);
 
   for (const co of coSchema.options) {
     const properties = getCOProperties({ name: co, version: "AW2" });
@@ -127,7 +128,7 @@ void test("every CO can be played: effects, powers and damage stay valid in each
 });
 
 void test("the powers of the two strongest star costs are ordered and described", () => {
-  for (const definition of Object.values(commanderWarsCOs)) {
+  for (const definition of Object.values(daysOfRuinCOs)) {
     assert.ok(definition.superPower.stars > definition.power.stars, definition.name);
     assert.ok(
       describeEffects(definition.superPower.effects, englishEffectPhrases).length > 0,
@@ -137,18 +138,17 @@ void test("the powers of the two strongest star costs are ordered and described"
 });
 
 void test("a power's table is what the game applies", () => {
-  const { match, attacker, defender } = matchWith("beast");
+  const { match, attacker, defender } = matchWith("brenner");
 
-  defender.setHp(100);
   attacker.setHp(50);
   applyCOPowerEvent(match, { type: "coPower", isSuper: false } as never);
 
-  // Steroids: +2 HP, +60% firepower and a total of +10% defense
-  assert.equal(attacker.getVisualHP(), 7);
-  assert.equal(attacker.player.getHook("attack")?.({ attacker, defender }), 160);
+  // Reinforce: +3 HP, +10% firepower and a total of +30% defense, of which the engine gives 10
+  assert.equal(attacker.getVisualHP(), 8);
+  assert.equal(attacker.player.getHook("attack")?.({ attacker, defender }), 110);
   assert.equal(
     attacker.player.getHook("defense")?.({ attacker: defender, defender: attacker }),
-    100,
+    120,
   );
 });
 
@@ -163,17 +163,6 @@ void test("activating a power turns its hooks on until the next turn resets it",
   assert.equal(player.getHook("attack")?.({ attacker, defender }), 130);
 });
 
-void test("the firepower of Julia doesn't drop with the HP", () => {
-  const { attacker, defender } = matchWith("julia");
-
-  const full = calculateDamage({ attacker, defender }, noLuck, false);
-  attacker.setHp(30);
-  const wounded = calculateDamage({ attacker, defender }, noLuck, false);
-
-  assert.ok(full !== null && wounded !== null);
-  assert.ok(Math.abs(full - wounded) <= 1, `${full} ${wounded}`);
-});
-
 void test("an instant effect only damages its targets, and never kills", () => {
   const { match, attacker, defender } = matchWith("tabitha");
 
@@ -184,20 +173,27 @@ void test("an instant effect only damages its targets, and never kills", () => {
   assert.ok(match.units.includes(defender));
 });
 
-void test("the funds taken from the enemy go to the CO, and ammo can be drained", () => {
-  const stealing = matchWith("alexander");
+void test("Penny brings the rain and her units keep moving through it", () => {
+  const { match, attacker } = matchWith("penny");
 
-  applyCOPowerEvent(stealing.match, { type: "coPower", isSuper: true } as never);
+  applyCOPowerEvent(match, { type: "coPower", isSuper: false } as never);
 
-  assert.equal(stealing.enemy.data.funds, 5000);
-  assert.equal(stealing.player.data.funds, 15000);
+  assert.equal(match.getCurrentWeather(), "rain");
+  assert.equal(getWeatherSpecialMovement(attacker.player), "clear");
+});
 
-  const draining = matchWith("walter");
+void test("each CO shows its own name", () => {
+  const names = coSchema.options.map(
+    (name) => getCOProperties({ name, version: "AW2" }).displayName,
+  );
 
-  applyCOPowerEvent(draining.match, { type: "coPower", isSuper: true } as never);
+  assert.equal(new Set(names).size, names.length);
+});
 
-  assert.equal(draining.defender.getAmmo(), 1);
-  assert.equal(draining.attacker.getAmmo(), 5);
+void test("only the official COs of the GBA and DS games are left", () => {
+  for (const fanMade of ["adam", "beast", "julia", "ik-486-b7", "zandra", "roboandy"]) {
+    assert.ok(!coSchema.options.includes(fanMade as CO), fanMade);
+  }
 });
 
 void test("a huge defense blocks the damage instead of healing the target", () => {

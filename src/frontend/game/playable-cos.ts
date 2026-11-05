@@ -2,12 +2,12 @@ import { coSchema } from "shared/schemas/co";
 import type { CO } from "shared/schemas/co";
 import type { COTexts } from "i18n/guide-fr";
 import { getCOProperties } from "shared/match-logic/co";
-import type { COEffectPhrases } from "shared/match-logic/game-constants/cos/commander-wars";
+import type { COEffectPhrases } from "shared/match-logic/game-constants/cos/days-of-ruin";
 import {
-  commanderWarsCOs,
+  daysOfRuinCOs,
   describeEffects,
-  isCommanderWarsCO,
-} from "shared/match-logic/game-constants/cos/commander-wars";
+  isDaysOfRuinCO,
+} from "shared/match-logic/game-constants/cos/days-of-ruin";
 
 /** The COs playable in the app, all with the AW2 rules that rooms are created with. */
 export const playableCOs: CO[] = [...coSchema.options].sort((a, b) =>
@@ -23,11 +23,11 @@ export function coTextsOf(
   co: CO,
   labels: { texts: Partial<Record<CO, COTexts>>; effects: COEffectPhrases },
 ): COTexts | undefined {
-  if (!isCommanderWarsCO(co)) {
+  if (!isDaysOfRuinCO(co)) {
     return labels.texts[co];
   }
 
-  const { dayToDay, power, superPower } = commanderWarsCOs[co];
+  const { dayToDay, power, superPower } = daysOfRuinCOs[co];
 
   return {
     dayToDay: dayToDay.length > 0 ? describeEffects(dayToDay, labels.effects) : undefined,

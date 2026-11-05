@@ -113,22 +113,40 @@ PLACEMENTS = {
     "carrier": {"position": [-130, 20], "shot": ("rocket_up", [40, 75], [128, 64, 500])},
 }
 
+# The COs of the official GBA and DS games. Commander Wars has many more: they are fan made.
 COS = [
     "adder", "andy", "sami", "max", "hawke", "sturm", "lash", "flak", "kanbei", "sonja", "sensei",
     "colin", "drake", "eagle", "nell", "hachi", "olaf", "grit", "jess", "kindle", "grimm", "jake",
-    "javier", "jugger", "koal", "von-bolt", "sasha", "rachel", "adam", "aira", "alexander", "alexis",
-    "amy", "beast", "brenner", "cairn", "cassidy", "caulder", "conrad", "davis", "epoch", "forsythe",
-    "gage", "graves", "greyfield", "ik-486-b7", "isabella", "joey", "julia", "lin", "mary", "meiyo",
-    "melanthe", "mina", "minamoto", "nana", "napoleon", "ozzy", "penny", "peter", "rattigan",
-    "roboandy", "robosturm", "sabaki", "sanjuro", "smitan", "sophie", "tabitha", "tasha", "varlot",
-    "walter", "waylon", "will", "xavier", "yukio", "zandra",
+    "javier", "jugger", "koal", "von-bolt", "sasha", "rachel", "brenner", "caulder", "forsythe",
+    "gage", "greyfield", "isabella", "lin", "penny", "tabitha", "tasha", "waylon", "will",
 ]
+
+# Themes of fan made COs, in the same folder as the official ones.
+FAN_MADE_THEMES = {
+    "adam", "aira", "alexander", "alexis", "amy", "beast", "carmen", "carrie", "cassidy", "conrad",
+    "davis", "epoch", "graves", "ik-486-b7", "joey", "julia", "koshi", "mary", "meiyo", "melanthe",
+    "mina", "minamoto", "nana", "napoleon", "ozzy", "peter", "rattigan", "roboandy", "robosturm",
+    "sabaki", "sanjuro", "smitan", "sophie", "varlot", "walter", "xavier", "yukio", "zandra",
+}
+
+
+def is_fan_made(file):
+    """Fan made COs, and the alternate looks that the game gives to the official ones."""
+    name, *variant = file.stem.split("+")
+
+    if file.parent.name == "cos":
+        return name in FAN_MADE_THEMES
+
+    if "co" not in file.parts or not name.startswith("co_"):
+        return False
+
+    return name[3:].replace("_", "-") not in COS or any(part.startswith("alt") for part in variant)
 
 
 def copy_media():
     for folder, extensions in COPIED.items():
         for file in (source / folder).rglob("*"):
-            if file.is_file() and file.suffix in extensions:
+            if file.is_file() and file.suffix in extensions and not is_fan_made(file):
                 destination = target / folder / file.relative_to(source / folder)
                 destination.parent.mkdir(parents=True, exist_ok=True)
                 shutil.copyfile(file, destination)

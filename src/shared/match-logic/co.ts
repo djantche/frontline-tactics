@@ -8,7 +8,7 @@ import { adderAWDS } from "./game-constants/cos/adder/adder-awds";
 import { andyAW1 } from "./game-constants/cos/andy/andy-aw1";
 import { andyAW2 } from "./game-constants/cos/andy/andy-aw2";
 import { andyAWDS } from "./game-constants/cos/andy/andy-awds";
-import { commanderWarsCOProperties } from "./game-constants/cos/commander-wars";
+import { daysOfRuinCOProperties } from "./game-constants/cos/days-of-ruin";
 import { colinAW2 } from "./game-constants/cos/colin/colin-aw2";
 import { colinAWDS } from "./game-constants/cos/colin/colin-awds";
 import { drakeAW1 } from "./game-constants/cos/drake/drake-aw1";
@@ -135,7 +135,7 @@ const COIndex: Record<GameVersion, Map<CO, COProperties>> = {
     ["koal", koalAWDS],
     ["kindle", kindleAWDS],
     ["von-bolt", vonBoltAWDS],
-    ...commanderWarsCOProperties,
+    ...daysOfRuinCOProperties,
   ]),
   AWDS: new Map<CO, COProperties>([
     ["andy", andyAWDS],

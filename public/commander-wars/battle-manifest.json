@@ -3422,69 +3422,15 @@
    "full": "images/co/os/co_rachel+nrm.png",
    "music": "music/cos/rachel.ogg"
   },
-  "adam": {
-   "face": "images/co/bd/co_adam+face.png",
-   "full": "images/co/bd/co_adam+nrm.png",
-   "music": "music/cos/adam.ogg"
-  },
-  "aira": {
-   "face": "images/co/pf/co_aira+face.png",
-   "full": "images/co/pf/co_aira+nrm.png",
-   "music": "music/cos/aira.ogg"
-  },
-  "alexander": {
-   "face": "images/co/bm/co_alexander+face.png",
-   "full": "images/co/bm/co_alexander+nrm.png",
-   "music": "music/cos/alexander.ogg"
-  },
-  "alexis": {
-   "face": "images/co/pf/co_alexis+face.png",
-   "full": "images/co/pf/co_alexis+nrm.png",
-   "music": "music/cos/alexis.ogg"
-  },
-  "amy": {
-   "face": "images/co/pf/co_amy+face.png",
-   "full": "images/co/pf/co_amy+nrm.png",
-   "music": "music/cos/amy.ogg"
-  },
-  "beast": {
-   "face": "images/co/dm/co_beast+face.png",
-   "full": "images/co/dm/co_beast+nrm.png",
-   "music": "music/cos/beast.ogg"
-  },
   "brenner": {
    "face": "images/co/ac/co_brenner+face.png",
    "full": "images/co/ac/co_brenner+nrm.png",
    "music": "music/cos/brenner.ogg"
   },
-  "cairn": {
-   "face": "images/co/bd/co_cairn+face.png",
-   "full": "images/co/bd/co_cairn+nrm.png"
-  },
-  "cassidy": {
-   "face": "images/co/ti/co_cassidy+face.png",
-   "full": "images/co/ti/co_cassidy+nrm.png",
-   "music": "music/cos/cassidy.ogg"
-  },
   "caulder": {
    "face": "images/co/dm/co_caulder+face.png",
    "full": "images/co/dm/co_caulder+nrm.png",
    "music": "music/cos/caulder.ogg"
-  },
-  "conrad": {
-   "face": "images/co/ti/co_conrad+face.png",
-   "full": "images/co/ti/co_conrad+nrm.png",
-   "music": "music/cos/conrad.ogg"
-  },
-  "davis": {
-   "face": "images/co/ti/co_davis+face.png",
-   "full": "images/co/ti/co_davis+nrm.png",
-   "music": "music/cos/davis.ogg"
-  },
-  "epoch": {
-   "face": "images/co/ma/co_epoch+face.png",
-   "full": "images/co/ma/co_epoch+nrm.png",
-   "music": "music/cos/epoch.ogg"
   },
   "forsythe": {
    "face": "images/co/bd/co_forsythe+face.png",
@@ -3496,124 +3442,25 @@
    "full": "images/co/bd/co_gage+nrm.png",
    "music": "music/cos/gage.ogg"
   },
-  "graves": {
-   "face": "images/co/dm/co_graves+face.png",
-   "full": "images/co/dm/co_graves+nrm.png",
-   "music": "music/cos/graves.ogg"
-  },
   "greyfield": {
    "face": "images/co/ti/co_greyfield+face.png",
    "full": "images/co/ti/co_greyfield+nrm.png",
    "music": "music/cos/greyfield.ogg"
-  },
-  "ik-486-b7": {
-   "face": "images/co/ma/co_ik_486_b7+face.png",
-   "full": "images/co/ma/co_ik_486_b7+nrm.png"
   },
   "isabella": {
    "face": "images/co/ac/co_isabella+face.png",
    "full": "images/co/ac/co_isabella+nrm.png",
    "music": "music/cos/isabella.ogg"
   },
-  "joey": {
-   "face": "images/co/ti/co_joey+face.png",
-   "full": "images/co/ti/co_joey+nrm.png",
-   "music": "music/cos/joey.ogg"
-  },
-  "julia": {
-   "face": "images/co/dm/co_julia+face.png",
-   "full": "images/co/dm/co_julia+nrm.png",
-   "music": "music/cos/julia.ogg"
-  },
   "lin": {
    "face": "images/co/ac/co_lin+face.png",
    "full": "images/co/ac/co_lin+nrm.png",
    "music": "music/cos/lin.ogg"
   },
-  "mary": {
-   "face": "images/co/ac/co_mary+face.png",
-   "full": "images/co/ac/co_mary+nrm.png",
-   "music": "music/cos/mary.ogg"
-  },
-  "meiyo": {
-   "face": "images/co/gs/co_meiyo+face.png",
-   "full": "images/co/gs/co_meiyo+nrm.png",
-   "music": "music/cos/meiyo.ogg"
-  },
-  "melanthe": {
-   "face": "images/co/dm/co_melanthe+face.png",
-   "full": "images/co/dm/co_melanthe+nrm.png",
-   "music": "music/cos/melanthe.ogg"
-  },
-  "mina": {
-   "face": "images/co/pf/co_mina+face.png",
-   "full": "images/co/pf/co_mina+nrm.png",
-   "music": "music/cos/mina.ogg"
-  },
-  "minamoto": {
-   "face": "images/co/gs/co_minamoto+face.png",
-   "full": "images/co/gs/co_minamoto+nrm.png",
-   "music": "music/cos/minamoto.ogg"
-  },
-  "nana": {
-   "face": "images/co/pf/co_nana+face.png",
-   "full": "images/co/pf/co_nana+nrm.png",
-   "music": "music/cos/nana.ogg"
-  },
-  "napoleon": {
-   "face": "images/co/ma/co_napoleon+face.png",
-   "full": "images/co/ma/co_napoleon+nrm.png",
-   "music": "music/cos/napoleon.ogg"
-  },
-  "ozzy": {
-   "face": "images/co/ac/co_ozzy+face.png",
-   "full": "images/co/ac/co_ozzy+nrm.png",
-   "music": "music/cos/ozzy.ogg"
-  },
   "penny": {
    "face": "images/co/dm/co_penny+face.png",
    "full": "images/co/dm/co_penny+nrm.png",
    "music": "music/cos/penny.ogg"
-  },
-  "peter": {
-   "face": "images/co/ge/co_peter+face.png",
-   "full": "images/co/ge/co_peter+nrm.png",
-   "music": "music/cos/peter.ogg"
-  },
-  "rattigan": {
-   "face": "images/co/yc/co_rattigan+face.png",
-   "full": "images/co/yc/co_rattigan+nrm.png",
-   "music": "music/cos/rattigan.ogg"
-  },
-  "roboandy": {
-   "face": "images/co/ma/co_roboandy+face.png",
-   "full": "images/co/ma/co_roboandy+nrm.png",
-   "music": "music/cos/roboandy.ogg"
-  },
-  "robosturm": {
-   "face": "images/co/ma/co_robosturm+face.png",
-   "full": "images/co/ma/co_robosturm+nrm.png",
-   "music": "music/cos/robosturm.ogg"
-  },
-  "sabaki": {
-   "face": "images/co/ac/co_sabaki+face.png",
-   "full": "images/co/ac/co_sabaki+nrm.png",
-   "music": "music/cos/sabaki.ogg"
-  },
-  "sanjuro": {
-   "face": "images/co/gs/co_sanjuro+face.png",
-   "full": "images/co/gs/co_sanjuro+nrm.png",
-   "music": "music/cos/sanjuro.ogg"
-  },
-  "smitan": {
-   "face": "images/co/ge/co_smitan+face.png",
-   "full": "images/co/ge/co_smitan+nrm.png",
-   "music": "music/cos/smitan.ogg"
-  },
-  "sophie": {
-   "face": "images/co/ac/co_sophie+face.png",
-   "full": "images/co/ac/co_sophie+nrm.png",
-   "music": "music/cos/sophie.ogg"
   },
   "tabitha": {
    "face": "images/co/dm/co_tabitha+face.png",
@@ -3625,16 +3472,6 @@
    "full": "images/co/bd/co_tasha+nrm.png",
    "music": "music/cos/tasha.ogg"
   },
-  "varlot": {
-   "face": "images/co/dm/co_varlot+face.png",
-   "full": "images/co/dm/co_varlot+nrm.png",
-   "music": "music/cos/varlot.ogg"
-  },
-  "walter": {
-   "face": "images/co/ti/co_walter+face.png",
-   "full": "images/co/ti/co_walter+nrm.png",
-   "music": "music/cos/walter.ogg"
-  },
   "waylon": {
    "face": "images/co/ti/co_waylon+face.png",
    "full": "images/co/ti/co_waylon+nrm.png",
@@ -3644,21 +3481,6 @@
    "face": "images/co/ac/co_will+face.png",
    "full": "images/co/ac/co_will+nrm.png",
    "music": "music/cos/will.ogg"
-  },
-  "xavier": {
-   "face": "images/co/gs/co_xavier+face.png",
-   "full": "images/co/gs/co_xavier+nrm.png",
-   "music": "music/cos/xavier.ogg"
-  },
-  "yukio": {
-   "face": "images/co/dm/co_yukio+face.png",
-   "full": "images/co/dm/co_yukio+nrm.png",
-   "music": "music/cos/yukio.ogg"
-  },
-  "zandra": {
-   "face": "images/co/bd/co_zandra+face.png",
-   "full": "images/co/bd/co_zandra+nrm.png",
-   "music": "music/cos/zandra.ogg"
   }
  },
  "explosions": {

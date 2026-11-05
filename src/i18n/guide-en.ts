@@ -1,4 +1,4 @@
-import { englishEffectPhrases } from "shared/match-logic/game-constants/cos/commander-wars";
+import { englishEffectPhrases } from "shared/match-logic/game-constants/cos/days-of-ruin";
 import type { guideFr } from "./guide-fr";
 
 export const guideEn: typeof guideFr = {

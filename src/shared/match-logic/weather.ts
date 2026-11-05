@@ -82,9 +82,6 @@ export const getWeatherSpecialMovement = (player: PlayerInMatchWrapper): Weather
     case "penny": {
       return "clear";
     }
-    case "zandra": {
-      return weather === "sandstorm" ? "clear" : weather;
-    }
 
     default: {
       return weather;

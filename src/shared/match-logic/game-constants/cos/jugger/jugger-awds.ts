@@ -1,7 +1,7 @@
 import type { COProperties } from "../../../co";
 
 export const juggerAWDS: COProperties = {
-  displayName: "Flak",
+  displayName: "Jugger",
   gameVersion: "AW2",
   dayToDay: {
     description:

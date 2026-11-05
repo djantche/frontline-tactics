@@ -1,8 +1,8 @@
 import { baseTileSize, mapBorder } from "components/client-only/MatchRenderer";
 import type { FrontendUnit } from "frontend/components/match/FrontendUnit";
-import type { SpriteAnimationKeys } from "frontend/components/match/getSpritesheetData";
+
 import type { ChangeableTileWithSprite } from "frontend/components/match/types";
-import type { Resource } from "pixi.js";
+
 import { AnimatedSprite, Container, Sprite, Texture } from "pixi.js";
 import type { Position } from "shared/schemas/position";
 import type { Tile } from "shared/schemas/tile";
@@ -10,44 +10,71 @@ import type { ChangeableTile } from "shared/types/server-match-state";
 import type { MatchWrapper } from "shared/wrappers/match";
 import type { LoadedSpriteSheet } from "./load-spritesheet";
 
-type AnimationsProperty = Record<SpriteAnimationKeys, Texture<Resource>[]>;
+import { coastalSpriteCandidates } from "shared/map/coastal-sprites";
+import { terrainFrameCandidates, propertyAnimationName } from "shared/map/terrain-appearance";
+import { coastalWeather } from "frontend/map/coastal-atlas";
 
 function getTileSprite(
   match: MatchWrapper,
   tile: ChangeableTile | Tile,
   spriteSheets: LoadedSpriteSheet,
+  x: number,
+  y: number,
+  tiles: Tile[][],
 ): Sprite {
-  if (!("playerSlot" in tile)) {
-    let spriteName: string = tile.type;
+  const weather = match.getCurrentWeather();
+  const coast = spriteSheets.coastal?.[coastalWeather(weather)];
+  const coastal =
+    coast === undefined
+      ? undefined
+      : coastalSpriteCandidates(tile as Tile, x, y, tiles).find(
+          (name) => coast.animations[name] !== undefined,
+        );
 
-    if ("fired" in tile && tile.fired) {
-      spriteName = "usedSilo";
+  if (coast !== undefined && coastal !== undefined) {
+    const sprite = new AnimatedSprite(coast.animations[coastal]);
+    sprite.animationSpeed = 0.1;
+    sprite.play();
+
+    if (tile.type === "reef") {
+      const water = coastalSpriteCandidates({ type: "sea" }, x, y, tiles).find(
+        (name) => coast.animations[name] !== undefined,
+      );
+
+      if (water !== undefined) {
+        const background = new AnimatedSprite(coast.animations[water]);
+        background.animationSpeed = 0.1;
+        background.play();
+        sprite.anchor.set(0, 1);
+        background.addChild(sprite);
+        return background;
+      }
     }
 
-    if ("variant" in tile) {
-      spriteName += `-${tile.variant}`;
-    }
-
-    return new Sprite(spriteSheets.neutral.textures[`${spriteName}.png`]);
+    return sprite;
   }
 
-  if (tile.playerSlot === -1) {
-    return new Sprite(spriteSheets.neutral.textures[tile.type + "-0.png"]);
+  if (!("playerSlot" in tile) || tile.playerSlot === -1) {
+    const visibleTile =
+      "fired" in tile && tile.fired ? { type: "usedSilo" as const } : (tile as Tile);
+    const frame = terrainFrameCandidates(visibleTile, weather).find(
+      (name) => spriteSheets.neutral.textures[name] !== undefined,
+    );
+    return new Sprite(frame === undefined ? Texture.EMPTY : spriteSheets.neutral.textures[frame]);
   }
 
   const player = match.getPlayerBySlot(tile.playerSlot);
 
   if (player === undefined) {
-    throw new Error("Could not find player while rendering tile with playerSlot");
+    throw new Error("Could not find player while rendering owned tile");
   }
 
-  // for some reason pixi's spritesheet type doesn't index the generic properly, hence overwriting.
-  const animations = spriteSheets[player.data.army].animations as AnimationsProperty;
-  const tileSprite = new AnimatedSprite(animations[tile.type]);
-  tileSprite.animationSpeed = 0.04;
-  tileSprite.play();
-
-  return tileSprite;
+  const animations = spriteSheets[player.data.army].animations as Record<string, Texture[]>;
+  const frames = animations[propertyAnimationName(tile.type, weather)] ?? animations[tile.type];
+  const sprite = new AnimatedSprite(frames);
+  sprite.animationSpeed = 0.04;
+  sprite.play();
+  return sprite;
 }
 
 export function renderMap(
@@ -58,11 +85,15 @@ export function renderMap(
   mapContainer.x = mapBorder;
   mapContainer.y = mapBorder;
 
+  const visibleTiles = match.map.data.tiles.map((row, y) =>
+    row.map((_, x) => match.getTile([x, y]) as Tile),
+  );
+
   for (let y = 0; y < match.map.data.tiles.length; y++) {
     for (let x = 0; x < match.map.data.tiles[y].length; x++) {
       const tile = match.getTile([x, y]);
 
-      const tileSprite = getTileSprite(match, tile, spriteSheets);
+      const tileSprite = getTileSprite(match, tile, spriteSheets, x, y, visibleTiles);
 
       // makes our sprites render at the bottom, not from the top.
       tileSprite.anchor.set(0, 1);
